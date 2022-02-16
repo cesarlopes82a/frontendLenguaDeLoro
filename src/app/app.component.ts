@@ -11,8 +11,6 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./app.component.css']
 })
 
-
-
 export class AppComponent {
   
   constructor(
