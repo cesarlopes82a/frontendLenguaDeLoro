@@ -1,0 +1,88 @@
+
+<div class="cuerpoContenido conteiner col-md-8 offset-md-3 mt-5">
+    <h2>{{title}}</h2>
+    <div *ngIf="this.ruta == 'tienda'">Esto es una tienda.
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Estadisticas</h5>
+                        <p class="card-text">Aqui podras consultar estadisticas de ventas por sucursal, por usuario, por fechas y horarios</p>
+                        <a [routerLink]="['/tienda', this.storeId,'estadisticas']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Usuarios</h5>
+                        <p class="card-text">Acceda a esta seccion para administrar usuarios y sus permisos</p>
+                        <a [routerLink]="['/tienda', this.storeId,'usuarios']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Productos</h5>
+                        <p class="card-text">Desde aquí podrás definir los productos que se comercializan en esta tienda.</p>
+                        <a [routerLink]="['/tienda', this.storeId,'productos']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Listas de Precios</h5>
+                        <p class="card-text">Desde aquí podrás definir diferentes listas de precios que luego aplicaras a una o mas sucursales.</p>
+                        <a [routerLink]="['/tienda', this.storeId,'listadp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Sucursales</h5>
+                        <p class="card-text">Desde aquí podrás administrar las sucursales para esta tienda.</p>
+                        <a [routerLink]="['/tienda', this.storeId,'sucursales']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div *ngIf="this.ruta == 'sucursal'">Esto es una sucursal.
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Stock</h5>
+                        <p class="card-text">Lleva un control de los productos en stock</p>
+                        <a href="#">CHECK GYM</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Vender</h5>
+                        <p class="card-text">Comenzar a vender productos.</p>
+                        <a href="#">CHECK GYM</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+ 

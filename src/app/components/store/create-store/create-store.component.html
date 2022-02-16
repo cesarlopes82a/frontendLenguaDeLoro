@@ -1,0 +1,12 @@
+
+
+<div class="cuerpoContenido conteiner col-md-6 offset-md-3 mt-5">
+    <h2>{{title}}</h2>
+    <form #storeForm="ngForm"(ngSubmit)="onSubmit(storeForm)">
+        <p>
+            <label for="name"> Nombre </label>
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="store.storeName" required/>
+        </p>
+        <input type="submit" value="Guardar"/>
+    </form>
+</div>

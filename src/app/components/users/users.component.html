@@ -1,0 +1,52 @@
+
+
+<div class="container">
+    <h2>{{title}}</h2>
+    <div class="row">
+        <div class="col">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+    
+                <th>Opciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--<tr *ngFor="let producto of productos | filtroProductos:filterProductos"></tr>-->
+            <tr *ngFor="let usuario of usuarios">
+                <td>{{usuario.username}}</td>
+                <td>{{usuario.email}}</td>
+                <td>
+                    <p *ngIf="consultoEstadoEliminar(usuario._id)==false">
+                    <a class="iconoenlinea" [routerLink]="['/productos/producto',usuario._id]"><i class="fas fa-eye"></i>&nbsp;&nbsp;</a>
+                    <a class="iconoenlinea" [routerLink]="['/productos/editar/', usuario._id]"><i class="fas fa-pen"></i>&nbsp;&nbsp;</a>
+                    <a (click)="pidoEliminar(usuario._id)" class="iconoenlinea"><i class="fas fa-trash-alt"></i></a>
+                    </p>
+                    <p *ngIf="consultoEstadoEliminar(usuario._id)==true">
+                    <a (click)="deleteUsuario(usuario._id)">
+          
+                        <a (click)="deleteUsuario(usuario._id)"><i class="fas fa-check" style="color: rgb(24, 185, 24);"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        <a (click)="pidoCancelarEliminar()"><i class="fas fa-check" style="color: red;"></i></a>
+                        <!--
+                        <div class="botonEnLinea">
+                            
+                        <img (click)="deleteUsuario(usuario._id)" src="../../../assets/iconitos/trash-can_115312.png">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <img (click)="pidoCancelarEliminar()" src="../../../assets/img/iconitos/cancel_77947.png">
+                        </div>
+                        -->
+                    </a>
+                </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+  
+
+ 

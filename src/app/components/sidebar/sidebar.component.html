@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="sidenav">
+        <div class="row menuSidebar">
+            <div class="barra-lateral col-12 col-sm-auto">
+                <nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
+                    <a [routerLink]="['/estadisticas']" ><i class="far fa-chart-bar"></i><span>Estadisticas</span></a>
+                    <a [routerLink]="['/usuarios']" ><i class="fas fa-user"></i><span> Usuarios</span></a>
+    
+                    <a class="activado"><i class="fas fa-home"></i><span>Tiendas</span><i class="icono derecha fas fa-angle-down"></i></a>
+
+                    <div *ngIf="user" class="sub-menu">
+                        <div *ngFor="let tienda of user.tiendas" class="sub-menuTiendas">
+                            <a [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']"><span>{{tienda.store.storeName}}</span></a>
+                            <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
+                                <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" ><i class="fas fa-store"></i><span>{{branch.branchName}}</span></a>
+                            </div>
+                        </div>
+                        <a href="#"><span>Crear Tienda</span></a>
+                    </div>
+                    <a href="#"><i class="fas fa-home"></i><span>Inicio</span></a>
+                </nav>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<!---
+<div class="sidenav">
+    <div class ="logo">
+        <a href="/" class="simple-text logo-mini">
+            <div class="logo-img">
+                <img src="../../../assets/images/logo2.png"/>
+            </div>
+        </a>
+        <a href="/" class="simple-text logo-normal">
+            MiEmpresa
+        </a>
+    </div>
+    <ul class="nav">
+        <li><a [routerLink]="['/estadisticas']" class="activado"><i class="far fa-chart-bar"></i><span>Estadisticas</span></a></li>
+        <li><a [routerLink]="['/usuarios']" class="activado"><i class="fas fa-user"></i><span> Usuarios</span></a></li>
+        <li><a class="activado"><i class="fas fa-home"></i><span>Tiendas     </span><i class="icono derecha fas fa-angle-down"></i></a></li>
+        <div *ngIf="user" class="sub-menu">
+            <div *ngFor="let tienda of user.tiendas" class="sub-menuTiendas">
+                <li><a [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']"><span>{{tienda.store.storeName}}</span></a></li>
+                <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
+                    <li><a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" ><i class="fas fa-store"></i><span>{{branch.branchName}}</span></a></li>
+                </div>
+            </div>
+            <a href="#"><span>Crear Tienda</span></a>
+        </div>
+    </ul>
+</div>
+
+-->
+

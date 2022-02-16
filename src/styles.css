@@ -1,1 +1,303 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*BARRA LATERAL*/
+
+
+
+.barra-lateral {
+    position:absolute;
+    background: #df4343;
+    color: #fff;
+    min-width: 250px;
+    min-height: 100vh;
+    padding: 0 !important;
+    
+}
+.container-fluid {
+    position: relative;
+} 
+.row.menuSidebar { 
+    position:absolute;
+}
+
+.barra-lateral a {
+    
+    color: #fff;
+}
+
+/*ESTILOS MENU*/
+
+.barra-lateral .menu a {
+    display: block;
+    padding: 20px;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.034);
+}
+
+.barra-lateral .menu a:hover {
+    background-color: #f5908e59;
+    text-decoration: none;
+}
+.barra-lateral .menu .activado {
+    background-color: #f5908e59;
+    text-decoration: none;
+}
+.barra-lateral .menu {
+    border-top: 5px #fff solid;
+}
+
+.barra-lateral .menu a i {
+    margin-right: 20px;
+}
+
+.barra-lateral .menu .sub-menu {
+    
+    list-style:none;
+    display: block;
+    background: #424242;
+    color: #e9e9e9;
+}
+.sub-menuBranches{
+    background: #313131;
+    line-height: 13px;
+    font-size: 13px;
+    padding-left: 5%;
+}
+.barra-lateral .menu .sub-menu a:hover {
+    background-color: #4b454477;
+    color: #e9e9e9;
+}
+.barra-lateral .menu .activado > a{
+    background: #d67979;
+}
+.barra-lateral .menu .icono{
+    font-size: 15px;
+    line-height: 18px;
+}
+.barra-lateral .menu .icono.derecha{
+    float: right;
+    margin-right: 2px;
+}
+/*MAIN*/
+
+.main {
+    padding-top: 40px;
+}
+
+.main .columna {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+
+/*********** cards ************/
+.card-body {
+    box-shadow: 0 0 20px 7px rgba(0,0,0,0.1);
+}
+.card {
+    margin: 10px 10px;
+}
+.card-body a {
+    color: #0c7f90;
+    text-decoration: none;
+    font-size: 15px;
+    margin-top: auto;
+    font-weight: 600;
+}
+.card-body a:hover {
+    color: #63a6b0;
+    text-decoration: none;
+}
+.card-img-top {
+    width: 100%;
+    height: 12vw;
+    object-fit: cover;
+}
+/**********************************/
+
+
+
+
+/*mediaquerys*/
+
+@media screen and (max-width:1300px) {
+    
+    .cuerpoContenido{
+        margin-left: 11%;
+    }
+    .barra-lateral {
+        min-width: auto;
+    }
+    .barra-lateral .menu a span {
+        display: none;
+    }
+    .barra-lateral .menu a i {
+        margin: 0;
+    }
+    .barra {
+        min-width: auto;
+    }
+}
+@media screen and (max-width:767px) {
+    .cuerpoContenido{
+        
+        display: inline-block;
+    }
+    .offset-md-3 {
+        margin-left: 11%;
+    }
+}
+
+@media screen and (max-width:575px) {
+    .cuerpoContenido{
+        padding: 100px;
+        display: inline-block;
+    }
+    
+    .barra-lateral {
+        min-height: auto;
+    }
+    .barra-lateral .menu a {
+        display: inline-block;
+        border-bottom: none;
+    }
+    
+    body {
+        background: #D3D3D3;
+        font-size: 16px;
+        overflow: visible;
+    }
+}
+
+
+.menu {
+    border-top: 5px #fff solid;
+}
+
+
+@media screen and (max-width:575px) {
+    
+    .barra-lateral {
+        height: auto;
+    }
+    .barra-lateral.menu a {
+        display: inline-block;
+        border-bottom: none;
+        
+    }
+    body {
+        background: #D3D3D3;
+        font-size: 16px;
+        overflow: visible;
+    }
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/*******************************************************************************/
+.sidenav {
+
+	height: 100%;
+	width: 205px;
+	display: block;
+	box-shadow: 0 0 45px 0 rgba(0,0,0,.6);
+	margin-right: 15px;
+	border-radius: 5px;
+	transition: .5s cubic-bazier(.685,.0473,.346,1);
+}
+/*********************************NUEVO***********************************
+
+.sidenav {
+	background: #ec250d;
+	background: linear-gredient(0deg,#ec250d 0, #fd5d93 100%);
+	height: 100%;
+	width: 230px;
+	display: block;
+	box-shadow: 0 0 45px 0 rgba(0,0,0,.6);
+	margin-right: 15px;
+	border-radius: 5px;
+	transition: .5s cubic-bazier(.685,.0473,.346,1);
+}
+.logo {
+	position: relative;
+	paddng: 0.5rem 0.7rem;
+	z-index: 4;
+}
+.logo a.logo-mini {
+	opacity: 1;
+	float: left;
+	width: 34px;
+	text-align: center;
+	margin-left: 10px;
+	margin-right: 12px;
+}
+.logo a.logo-normal {
+	display: block;
+	opacity: 1;
+	-webkit-transform: translate3d(0px, 0, 0);
+	-moz-transform: translate3d(0px, 0, 0);
+	-o-transform: translate3d(0px, 0, 0);
+	-ms-transform: translate3d(0px, 0, 0);
+	transform: translate3d(0px, 0, 0);
+}
+.logo:after { 
+	content: '';
+	position: absolute;
+	bottom: 0;
+	right: 15px;
+	height: 1px;
+	width: calc(100% - 30px);
+	background: rgba(255, 255, 255, 0.5);
+}
+.logo .simple-text {
+	text-transform: uppercase;
+	padding: 0.5rem 0;
+	display: block;
+	white-space: nowrap;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 400;
+	line-height: 30px;
+	overflow: hidden;
+}
+.logo-img img {
+	width: 35px;
+}
+.nav li>a {
+	margin: 10px 15px 0;
+	border-radius: 30px;
+	color: rgba(255, 255, 255, .8);
+	width: 200px;
+	display: block;
+	text-decoration: none;
+	position: relative;
+	text-transform: uppercase;
+	cursor: pointer;
+	font-size: 0.75rem;
+	font-weight: 300;
+	padding: 10px 15px;
+	line-height: 1.5rem;
+	transition: all .3s ease 0s;
+}
+.nav li>a i {
+	width: 20px;
+	margin-right: 10px;
+	font-size: 1.125rem;
+}
+.nav li>a:hover, .nav li>a:hover i {
+	color: rgba(255, 255, 255, 1);
+	transition: all .3s ease 0s;
+}
+.nav li.active>a:before { 
+	content: " ";
+	position: absolute;
+	height: 6px;
+	width: 6px;
+	top: 17px;
+	left: -2px;
+	background: #fff;
+	border-radius: 50%;
+}
+
+*/
