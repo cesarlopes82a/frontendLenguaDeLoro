@@ -1,1 +1,12 @@
-<p>nueva-suc works!</p>
+<div class="cuerpoContenido conteiner col-md-6 offset-md-3 mt-5">
+    <h2>N U E V A     S U C U R S A L</h2>
+    <form #storeForm="ngForm"(ngSubmit)="onSubmit(storeForm)">
+        <p>
+            <label for="name"> Nombre </label>
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="sucursal.branchName" required/>
+            <label for="address"> Direccion </label>
+            <input type="text" name="address" #address="ngModel" [(ngModel)]="sucursal.address" required/>
+        </p>
+        <input type="submit" value="Guardar"/>
+    </form>
+</div>

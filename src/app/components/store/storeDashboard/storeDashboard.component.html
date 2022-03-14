@@ -1,5 +1,5 @@
 
-<div class="cuerpoContenido conteiner col-md-8 offset-md-3 mt-5">
+<div class="conteiner col-md-10 offset-md-1 center">
     <h2>{{title}}</h2>
     <div *ngIf="this.ruta == 'tienda'">Esto es una tienda.
         <div class="row">
@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Usuarios</h5>
                         <p class="card-text">Acceda a esta seccion para administrar usuarios y sus permisos</p>
-                        <a [routerLink]="['/tienda', this.storeId,'usuarios']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                        
+                        <a [routerLink]="['/tienda', this.storeId,'usuarios']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                                                                     
                     </div>
                 </div>
             </div>

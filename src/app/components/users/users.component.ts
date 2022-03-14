@@ -7,11 +7,12 @@ import { UserService } from 'src/app/services/user.service';
   selector: 'app-users',
   templateUrl: './users.component.html',
   styles: [
-  ]
+  ],
 })
 export class UsersComponent implements OnInit {
   public title: string;
   public usuarios!: any;
+  public usuariosPopulated!: any;
   public quieroEliminarEsteUsuario!:string;
   public url!:string;
 
@@ -22,9 +23,16 @@ export class UsersComponent implements OnInit {
     this.title = "U S U A R I O S"
   }
 
-  ngOnInit(): void {
-    this.getUsers()
+  ngOnInit(){
+    //this.getUsers()
+    this.getUsersAndPopulate()
+
     console.log("ya cargue los usuarios")
+    console.log(this.usuarios)
+  }
+
+  testClick(){
+    console.log("hice click en el boton")
   }
 
   pidoEliminar(idUsuario:string){
@@ -38,12 +46,20 @@ export class UsersComponent implements OnInit {
   pidoCancelarEliminar(){
     this.quieroEliminarEsteUsuario="";
   }
-  getUsers(){
-    this._userService.getUsers()
+  async getUsersAndPopulate(){
+    this._userService.getUsersAndPopulate()
     .subscribe({
       next: (v) => {
+        console.log("estos son los usuarios getUsersAndPopulate")
         console.log(v)
         this.usuarios =  v
+        this.usuarios.forEach((usuario: any) => {
+          console.log("el rol")
+          usuario.roles.forEach((role: any) => {
+            console.log(role.roleName)  
+          });
+          
+        });
       },
       error: (e) => console.error(e),
       complete: () => console.info('este es el complete') 
@@ -52,5 +68,20 @@ export class UsersComponent implements OnInit {
   deleteUsuario(idUsuario:string){
     console.log("intento eliminar el usuario")
   }
+
+  async getUsers(){
+    this._userService.getUsers()
+    .subscribe({
+      next: (v) => {
+        console.log("estos son los usuarios")
+        console.log(v)
+        this.usuarios =  v
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('este es el complete') 
+    })
+  }
+
+
 
 }

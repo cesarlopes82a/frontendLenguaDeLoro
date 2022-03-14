@@ -1,5 +1,12 @@
-<app-navbar></app-navbar>
-<app-sidebar></app-sidebar>
-<div class="cuerpoContenido conteiner col-md-8 offset-md-3 mt-5">
-    <p>nuevo-usuario works!</p>
+<div class="cuerpoContenido conteiner col-md-6 offset-md-3 mt-5">
+    <h2>{{title}}</h2>
+    <form #newUserForm="ngForm"(ngSubmit)="onSubmit(newUserForm)">
+        <p>
+            <label for="name"> Nombre </label>
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="nuevoUsuario.username" required/>
+            <label for="name"> Password </label>
+            <input type="text" name="password" #name="ngModel" [(ngModel)]="nuevoUsuario.password" required/>
+        </p>
+        <input type="submit" value="Guardar"/>
+    </form>
 </div>

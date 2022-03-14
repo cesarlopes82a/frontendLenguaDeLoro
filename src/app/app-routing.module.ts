@@ -19,9 +19,16 @@ import { StoreProductosComponent } from './components/store/storeDashboard/store
 import { StoreLdPComponent } from './components/store/storeDashboard/store-ld-p/store-ld-p.component';
 import { StoreSucursalesComponent } from './components/store/storeDashboard/store-sucursales/store-sucursales.component';
 
+import { NuevaSucComponent } from './components/store/storeDashboard/storeSucursales/nueva-suc/nueva-suc.component';
+
 import { UsersComponent } from './components/users/users.component';
+//este va por fuera del dashboard
+import { NuevoUsuarioGlobalComponent } from './components/users/nuevo-usuario/nuevo-usuario.component';
+//este va por dentro del dashboard
+import { NuevoUsuarioComponent } from './components/store/storeDashboard/storeUsuarios/nuevo-usuario/nuevo-usuario.component';
 
 import { EstadisticasGlobalComponent } from './components/statistics/estadisticas/estadisticas.component';
+
 
 
 
@@ -35,18 +42,21 @@ const routes: Routes = [
   { path: 'private', component: PrivateComponent, canActivate:[AuthGuard] },
   { path: 'signup', component:SignupComponent },
   { path: 'signin', component: SigninComponent },
-  { path: 'crearTienda', component: CreateStoreComponent },
+  { path: 'tienda/crearTienda', component: CreateStoreComponent },
   { path: 'tienda/:id', component: StoreDashboardComponent },
   { path: 'tienda/:id/usuarios', component: StoreUsuariosComponent },
+  { path: 'tienda/:id/usuarios/crearUsuario', component: NuevoUsuarioComponent },
   { path: 'tienda/:id/productos', component: StoreProductosComponent },
   { path: 'tienda/:id/listadp', component: StoreLdPComponent },
   { path: 'tienda/:id/sucursales', component: StoreSucursalesComponent },
+  { path: 'tienda/:id/sucursales/crearSucursal', component: NuevaSucComponent },
   
   { path: 'sucursal/:id', component: StoreDashboardComponent },
 
   { path: 'estadisticas', component: EstadisticasGlobalComponent },
 
-  { path: 'usuarios', component: UsersComponent }
+  { path: 'usuarios', component: UsersComponent },
+  { path: 'usuarios/crearUsuario', component: NuevoUsuarioGlobalComponent }
 
 ];
 

@@ -21,7 +21,7 @@ export class SidebarComponent implements OnInit {
   @ViewChild('sidenav', {static: true}) sidenav!: MatSidenav;
   public stores:any;
   public users:any;
-  public user:any;
+  public user:any = null;
 
   constructor(
     private _storeService:StoreService,

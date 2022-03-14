@@ -39,7 +39,7 @@ export class StoreDashboardComponent implements OnInit {
     this.title = "Tienda-Sucursal " 
 
    }
-
+ 
   ngOnInit(): void {
     console.log("OnInit desde StoreDashboardComponent.components")
  //   console.log(" global.reloadNeeded: " + global.reloadNeeded)

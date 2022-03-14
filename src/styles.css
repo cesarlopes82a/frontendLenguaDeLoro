@@ -125,7 +125,9 @@
 @media screen and (max-width:1300px) {
     
     .cuerpoContenido{
-        margin-left: 11%;
+        width: auto;
+        margin-left: 3%;
+
     }
     .barra-lateral {
         min-width: auto;
@@ -139,10 +141,11 @@
     .barra {
         min-width: auto;
     }
+    
 }
 @media screen and (max-width:767px) {
     .cuerpoContenido{
-        
+
         display: inline-block;
     }
     .offset-md-3 {
@@ -154,6 +157,7 @@
     .cuerpoContenido{
         padding: 100px;
         display: inline-block;
+
     }
     
     .barra-lateral {

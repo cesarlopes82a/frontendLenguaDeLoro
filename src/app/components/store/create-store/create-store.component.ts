@@ -14,6 +14,7 @@ export class CreateStoreComponent implements OnInit {
     public title: string;
     public store: Store;
   
+    
     constructor(
       private _storeService: StoreService
     ) {
