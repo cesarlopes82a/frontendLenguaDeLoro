@@ -1,8 +1,9 @@
 
     
+    
     <app-navbar [inputSideNav]="sideNav"></app-navbar>
-
     <!--
+        
     <mat-sidenav #sideNav mode="side" opened>
         <app-sidebar></app-sidebar>
     </mat-sidenav>
@@ -11,13 +12,12 @@
     </mat-sidenav-content>
     -->
    
-    <mat-sidenav-container>
+    <mat-sidenav-container [inputSideNav]="sideNav">
         <mat-sidenav #sideNav mode="side">
-            <app-sidebar></app-sidebar>
+            <app-sidebar ></app-sidebar>
         </mat-sidenav>
-        <mat-sidenav-content style="height:1000px">
-            
-            <router-outlet></router-outlet>
+        <mat-sidenav-content [inputSideNav]="sideNav" style="height:1000px">
+            <router-outlet [inputSideNav]="sideNav"></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
 

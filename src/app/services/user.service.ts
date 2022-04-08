@@ -32,7 +32,7 @@ export class UserService {
     //return this._http.get(this.url + '/stores/',{headers:headers})
     return this._http.get(this.url + '/users/')   
   }
-  getUsersAndPopulate(){
+  getUsersAndPopulate():Observable<any>{
     //let headers = new HttpHeaders().set('Content-Type', 'application/json');
     //return this._http.get(this.url + '/stores/',{headers:headers})
     return this._http.get(this.url + '/users/all/')   
@@ -52,6 +52,17 @@ export class UserService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this._http.post(this.url+'/users/createUser',params,{headers});
+  }
+
+  addStoreToUserFromRoute(userId:string, storeId:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let datos={
+      userId:userId,
+      storeId:storeId
+    }
+    let params = JSON.stringify(datos)
+    console.log("llamo a la ruta -------------------")
+    return this._http.post(this.url + '/users/addStoreToUserFromRoute',params,{headers})   
   }
 
 }

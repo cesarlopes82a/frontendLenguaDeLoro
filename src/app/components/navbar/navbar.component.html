@@ -34,6 +34,9 @@
                 </ng-container>
                 <ng-template #loggedIn>
                   <li class="nav-item">
+                    <a class="nav-link" >Usuario</a>
+                  </li>
+                  <li class="nav-item">
                     <a (click)="inputSideNav.close()" class="nav-link" style="cursor: pointer;" (click)="authService.logout()">Logout</a>
                   </li>
                 </ng-template>

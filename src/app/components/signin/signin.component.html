@@ -1,11 +1,11 @@
-<div class="container p-5" onload="inputSideNav.close()">
+<div class="container p-5">
     <div class="row">
         <div class="col-md-4 mx-auto">
             <div class="card">
                 <div class="card-header">
                     SignIn
                 </div>
-                <div class="card-body" (onLoad)="inputSideNav.close()">
+                <div class="card-body">
                     <form (submit)="signIn()">
                         <div class="form-group">
                             <input type="text" [(ngModel)]="user.email" name="email" class="form-control" placeholder="Email" required autofocus>

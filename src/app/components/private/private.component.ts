@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StoreService } from 'src/app/services/store.service';
 import { MatSidenav } from '@angular/material/sidenav';
-import { SidebarService } from '../../services/sidebar.service';
 
 
 @Component({
@@ -14,18 +12,14 @@ export class PrivateComponent implements OnInit {
   @Input()
   inputSideNav!: MatSidenav;
 
-  stores = []
-
   constructor(
-    private storeService:StoreService,
-    private sidenav: SidebarService
-    ) { }
 
- 
+  ) { }
 
   ngOnInit(): void {
     console.log("oninit")
+    //this.inputSideNav.toggle()
   }
-  
+   
 
 }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { MatSidenav } from '@angular/material/sidenav';
+
 
 
 @Component({
@@ -12,8 +12,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class SigninComponent implements OnInit {
 
-  @Input()
-  inputSideNav!: MatSidenav;
+
 
   user={
     userName:'',
