@@ -55,6 +55,8 @@ import { NuevoUsuarioGlobalComponent } from './components/users/nuevo-usuario/nu
 
 import { EstadisticasGlobalComponent } from './components/statistics/estadisticas/estadisticas.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListarVendedoresComponent } from './components/store/storeDashboard/storeSucursales/listar-vendedores/listar-vendedores.component';
+import { NuevoVendedorComponent } from './components/store/storeDashboard/storeSucursales/nuevo-vendedor/nuevo-vendedor.component';
 
 
 
@@ -94,7 +96,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EditarUsuarioGlobalComponent,
     ListarUsuariosGlobalComponent,
     NuevoUsuarioGlobalComponent,
-    EstadisticasGlobalComponent
+    EstadisticasGlobalComponent,
+    ListarVendedoresComponent,
+    NuevoVendedorComponent
   ],
   imports: [
     BrowserModule,

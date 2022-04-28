@@ -12,20 +12,20 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class NuevoUsuarioGlobalComponent implements OnInit {
   public title!: string;
   public url!:string;
+  public storeId!:string;
 
   nuevoUsuario={
     username:'',
-    password:'',
-    roles:["admin"]
+    password:''
   }
-
 
   constructor(
     private _userService:UserService,
     private _router: Router,
+    private _route:ActivatedRoute
   ) {
     this.url = global.url,
-    this.title = "N U E V O    U S U A R I O"
+    this.title = "N U E V O    U S U A R I O     adminGlobal"
 
    }
 
@@ -33,16 +33,22 @@ export class NuevoUsuarioGlobalComponent implements OnInit {
   }
 
   onSubmit(form: any){
-    
-    this._userService.createNewUser(this.nuevoUsuario)
-    .subscribe({
-      next: (v) => {
-        console.log("userService.createNewUser")
-        console.log(v)
-        this._router.navigate(['/usuarios']);     
-      },
-      error: (e) => console.error(e),
-      complete: () => console.info('este es el complete') 
-    })   
+    //obtengo el id de la tienda que estoy visitando
+    console.log("INTENTANDO CREAR USUARIO adminGlobal")
+    this._route.params.subscribe(
+      params => {
+        this.storeId = params['id']
+        this._userService.createNewUser(this.nuevoUsuario)
+        .subscribe({
+          next: (v) => {
+            console.log("userService.createNewUser")
+            console.log(v)
+            this._router.navigate(['/usuarios']);     
+          },
+          error: (e) => console.error(e),
+          complete: () => console.info('este es el complete') 
+        })   
+      }
+    )    
   }
 }

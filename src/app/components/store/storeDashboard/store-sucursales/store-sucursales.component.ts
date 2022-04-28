@@ -10,7 +10,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class StoreSucursalesComponent implements OnInit {
   public url: string = "";
-  public loggedUser:any;
+  public loggedUserRole:any;
+
   public storeId:any;
 
   constructor(
@@ -23,7 +24,8 @@ export class StoreSucursalesComponent implements OnInit {
    
     this.url = global.url
     
-    this.loggedUser = global.loggedUser
+    this.loggedUserRole = global.loggedUserRole
+
     
     //obtengo el id de la tienda que estoy visitando
     this._route.params.subscribe(

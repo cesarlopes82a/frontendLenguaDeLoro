@@ -1,4 +1,62 @@
 
-<div class="cuerpoContenido conteiner col-md-8 offset-md-3 mt-5">
-    <p>store-productos works!</p>
+<h1>P R O D U C T O S</h1>
+
+
+
+<div class="conteiner col-md-10 offset-md-1 center">
+  <a [routerLink]="['/tienda/'+ this.storeId +'/productos/nuevoProducto']" [routerLinkActive]="['actived']"><span>Nuevo Producto</span></a>
 </div>
+<div class="row">
+  <div class="col">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Unidad de Medida</th>
+          <th>Categoria/Rubro</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos"><!--| filtroProductos:filterProductos"> -->
+            <td>{{producto.codigo}}</td>
+            <td>{{producto.productName}}</td>
+            <td>{{producto.unidadMedida}}</td>
+            <td>{{producto.categoriaRubro}}</td>
+           
+
+            <td>
+              <p *ngIf="consultoEstadoEliminar(producto._id)==false">
+                <a class="iconoenlinea" [routerLink]="['/productos/producto',producto._id]"><i class="fas fa-eye"></i>&nbsp;&nbsp;</a>
+                <a class="iconoenlinea" [routerLink]="['/productos/editar/', producto._id]"><i class="fas fa-pen"></i>&nbsp;&nbsp;</a>
+                <a (click)="pidoEliminar(producto._id)" class="iconoenlinea"><i class="fas fa-trash-alt"></i></a>
+              </p>
+              <p *ngIf="consultoEstadoEliminar(producto._id)==true">
+                <a (click)="deletePrducto(producto._id)">
+                  <div class="botonEnLinea">
+                    
+                    <img (click)="deletePrducto(producto._id)" src="../../../../assets/img/iconitos/trash-can_115312.png">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <img (click)="pidoCancelarEliminar()" src="../../../../assets/img/iconitos/cancel_77947.png">
+                  </div>
+                  
+                </a>
+            </p>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

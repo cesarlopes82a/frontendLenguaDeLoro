@@ -26,16 +26,13 @@
                             </thead>
                             
                             <tbody *ngFor="let usuario of usuarios; let i = index;">
-                            
                                 <tr data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     <td>{{usuario.username}}</td>
                                     <td>{{usuario.email}}</td>
                                     <td>
-
                                         <p *ngFor="let role of usuario.roles">
                                             {{role.roleName}}
-                                        </p>
-                                         
+                                        </p>   
                                     </td>
                                     <td>
                                         <p *ngIf="consultoEstadoEliminar(usuario._id)==false">
@@ -93,7 +90,7 @@
         -->
         <div class="d-flex  justify-content-center">
             <button class="btn btn-primary" [routerLink]="['/usuarios/crearUsuario']"> 
-                Nuevo Usuario 
+                Nuevo Administrador GLOBAL
             </button>
         </div>
 

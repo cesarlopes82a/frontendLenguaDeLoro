@@ -59,13 +59,6 @@ export class StoreUsuariosComponent implements OnInit {
         console.log("estos son los usuarios getUsersAndPopulate")
         console.log(v)
         this.usuarios =  v
-        this.usuarios.forEach((usuario: any) => {
-          console.log("el rol")
-          usuario.roles.forEach((role: any) => {
-            console.log(role.roleName)  
-          });
-          
-        });
       },
       error: (e) => console.error(e),
       complete: () => console.info('este es el complete') 

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { global } from './global';
 import { User } from '../models/user'
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,10 +49,35 @@ export class UserService {
   }
 
   createNewUser(user: any): Observable<any>{
+    if(global.loggedUserRole ="adminMaster"){
+      user.roles=["adminGlobal"]
+    }
     let params = JSON.stringify(user)
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-
+    
     return this._http.post(this.url+'/users/createUser',params,{headers});
+  }
+
+  createNewAdminTiendaUser(storeId:string, user: any): Observable<any>{
+    
+    user.roles=["adminTienda"]
+    user.storeId=storeId
+
+    let params = JSON.stringify(user)
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    
+    return this._http.post(this.url+'/users/createAdminTiendaUser',params,{headers});
+  }
+
+  createNewVendedorUser(branchId:string, user: any): Observable<any>{
+  
+    user.roles=["vendedor"]
+    user.branchId=branchId
+
+    let params = JSON.stringify(user)
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    
+    return this._http.post(this.url+'/users/createVendedorUser',params,{headers});
   }
 
   addStoreToUserFromRoute(userId:string, storeId:string):Observable<any>{

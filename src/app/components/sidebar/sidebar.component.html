@@ -4,18 +4,21 @@
             <div class="barra-lateral col-12 col-sm-auto">
                 <nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
                     <a [routerLink]="['/estadisticas']" ><i class="far fa-chart-bar"></i><span>Estadisticas</span></a>
-                    <a [routerLink]="['/usuarios']" ><i class="fas fa-user"></i><span> Usuarios</span></a>
+                    <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/usuarios']" ><i class="fas fa-user"></i><span> Usuarios</span></a>
     
                     <a class="activado"><i class="fas fa-home"></i><span>Tiendas</span><i class="icono derecha fas fa-angle-down"></i></a>
 
-                    <div *ngIf="user" class="sub-menu">
-                        <div *ngFor="let tienda of user.tiendas " class="sub-menuTiendas">
+                    <div *ngIf="loggedUser" class="sub-menu">
+                        <div *ngFor="let tienda of loggedUser.tiendas " class="sub-menuTiendas">
                             <a [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']"><span>{{tienda.store.storeName}}</span></a>
                             <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
                                 <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" ><i class="fas fa-store"></i><span>{{branch.branchName}}</span></a>
                             </div>
                         </div>
-                        <a href="/tienda/crearTienda"><span>Crear Tienda</span></a>
+                        <div>
+                            <a *ngIf="loggedUserRole=='adminMaster' || loggedUserRole==='adminGlobal'" href="/tienda/crearTienda"><span>Crear Tienda</span></a>
+                        </div>
+                        
                     </div>
                     <a href="#"><i class="fas fa-home"></i><span>Inicio</span></a>
                 </nav>

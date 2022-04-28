@@ -16,8 +16,12 @@ import { CreateStoreComponent } from './components/store/create-store/create-sto
 import { StoreDashboardComponent } from './components/store/storeDashboard/storeDashboard.component';
 import { StoreUsuariosComponent } from './components/store/storeDashboard/store-usuarios/store-usuarios.component';
 import { StoreProductosComponent } from './components/store/storeDashboard/store-productos/store-productos.component';
+import { NuevoProductoComponent } from './components/store/storeDashboard/storeProductos/nuevo-producto/nuevo-producto.component'
 import { StoreLdPComponent } from './components/store/storeDashboard/store-ld-p/store-ld-p.component';
 import { StoreSucursalesComponent } from './components/store/storeDashboard/store-sucursales/store-sucursales.component';
+
+import { ListarVendedoresComponent } from './components/store/storeDashboard/storeSucursales/listar-vendedores/listar-vendedores.component';
+import { NuevoVendedorComponent } from './components/store/storeDashboard/storeSucursales/nuevo-vendedor/nuevo-vendedor.component'
 
 import { NuevaSucComponent } from './components/store/storeDashboard/storeSucursales/nueva-suc/nueva-suc.component';
 
@@ -47,12 +51,15 @@ const routes: Routes = [
   { path: 'tienda/:id/usuarios', component: StoreUsuariosComponent },
   { path: 'tienda/:id/usuarios/crearUsuario', component: NuevoUsuarioComponent },
   { path: 'tienda/:id/productos', component: StoreProductosComponent },
+  { path: 'tienda/:id/productos/nuevoProducto', component: NuevoProductoComponent },
   { path: 'tienda/:id/listadp', component: StoreLdPComponent },
   { path: 'tienda/:id/sucursales', component: StoreSucursalesComponent },
   { path: 'tienda/:id/sucursales/crearSucursal', component: NuevaSucComponent },
   
   { path: 'sucursal/:id', component: StoreDashboardComponent },
-
+  { path: 'sucursal/:id/usuarios', component: ListarVendedoresComponent },
+  { path: 'sucursal/:id/usuarios/crearVendedor', component: NuevoVendedorComponent },
+  
   { path: 'estadisticas', component: EstadisticasGlobalComponent },
 
   { path: 'usuarios', component: UsersComponent },

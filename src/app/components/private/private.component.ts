@@ -11,15 +11,21 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class PrivateComponent implements OnInit {
   @Input()
   inputSideNav!: MatSidenav;
+  private reload:boolean=true
 
   constructor(
+    
 
-  ) { }
+  ) {
+    //window.location.reload();
+   }
 
   ngOnInit(): void {
     console.log("oninit")
+    
+
     //this.inputSideNav.toggle()
   }
    
-
+ 
 }

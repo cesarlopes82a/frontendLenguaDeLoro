@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <div class="container-fluid" >
-          <ng-container *ngIf="!authService.loggedIn() ; else sidebarShowEnabled">
+          <ng-container *ngIf="!_authService.loggedIn() ; else sidebarShowEnabled">
             <a class="navbar-brand" routerLink="/private">Lengua De Loro</a>
           </ng-container>
           <ng-template #sidebarShowEnabled>
@@ -24,20 +24,31 @@
                 </li>
               </ul>
               <ul class="navbar-nav ml-auto" >
-                <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
+                <ng-container *ngIf="!_authService.loggedIn(); else loggedIn">
+                  
                   <li class="nav-item">
-                    <a class="nav-link" routerLink="/signup" routerLinkActive="active">Signup</a>
+                    <a class="nav-link" routerLink="/signup" >Signup</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" routerLink="/signin" routerLinkActive="active">Signin</a>
+                    <a class="nav-link" routerLink="/signin" >Signin</a>
                   </li>
                 </ng-container>
                 <ng-template #loggedIn>
                   <li class="nav-item">
-                    <a class="nav-link" >Usuario</a>
+                    <a class="nav-link" >{{this.loggedUserName}}</a>
                   </li>
                   <li class="nav-item">
-                    <a (click)="inputSideNav.close()" class="nav-link" style="cursor: pointer;" (click)="authService.logout()">Logout</a>
+                    <a class="nav-link" >{{this.loggedUserEmail}}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" >{{this.loggedUserRole}}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" >    </a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <a (click)="inputSideNav.close()" class="btn btn-outline-warning btn-sm" style="cursor: pointer;" (click)="_authService.logout()">Logout</a>
                   </li>
                 </ng-template>
               </ul>

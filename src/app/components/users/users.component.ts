@@ -17,12 +17,13 @@ export class UsersComponent implements OnInit {
   public url!:string;
   public adminMasterTiendas!:any;
   public tiendasSeleccionadas: Array<any> = [];
-  public estadoDeTiendas: Array<any>=[];
+  public estadoDeTiendas: Array<any>=[];   // es un array de todas las stores que tiene el adminMaster + un booleano asignada:true/false que me dice si el usuario ya la tiene asignada o no
   public usrAlQLQuieroAddTienda!:string
   
 
   constructor(
     private _userService:UserService,
+    private _router: Router,
   ) {
     this.url = global.url,
     this.title = "U S U A R I O S"
@@ -30,8 +31,17 @@ export class UsersComponent implements OnInit {
 
   
   ngOnInit(){
-    //this.getUsers()
-    this.getUsersAndPopulate()
+
+    console.log("-----------------voy a llamar al promise-------------------")
+    const allUsersAndPopilate = Promise.resolve(this.getUsersAndPopulate());
+    console.log("-----------------despues de llamarlo -------------------")
+    allUsersAndPopilate.then((response)=>{
+      console.log("lo que me devuelve el pomise..................")
+      console.log(this.usuarios)
+
+    })
+
+  //  this.getUsersAndPopulate()
     console.log("######### Cargué los usuarios #########")
     console.log(this.usuarios)
   }
@@ -55,13 +65,6 @@ export class UsersComponent implements OnInit {
 
     //vacio el array de tiendasSeleccionadas
     this.tiendasSeleccionadas.splice(0, this.tiendasSeleccionadas.length);
-
-
-    console.log("el id de usuario que le paso: " + usuarioId)
-    //this.tiendasAsignadas.splice(0, this.tiendasAsignadas.length);
-    console.log("#############################################################################")
-    console.log(this.estadoDeTiendas.length)
-    console.log(this.estadoDeTiendas)
  
     //voy a buscar el adminMaster para obtener el listado de todas las tiendas.
     this.usuarios.every((usuario: any) =>{
@@ -73,15 +76,14 @@ export class UsersComponent implements OnInit {
     });
 
     //voy a buscar el usuario por el id que me pasan y lleno el array de tiendasAsignadas a este usuario
-    
     this.usuarios.every((usuario: any) =>{  //uso el every en lugar del forEach para poder salir (return=false) una vez que encuentro el usuario._id
      //voy a llenar el array tiendasAsignadas con objetos de tipo objTienda
       if(usuario._id == usuarioId){
-        if(usuario.tiendas.length>0){
-        
+        if(usuario.tiendas.length>0){  // <-- esto me dice si el usuario tiene alguna tienda asignada o no tiene ninguna. si es =0 meto todas las tiendas con el parametro asignadas=false
           //reviso todas las tiendas que tiene para saber si el estado de objTienda.asignada va a ser true o false
           var contador=0
           this.adminMasterTiendas.forEach((adminMasterTienda:any)=>{
+            //inicializo un objeto tienda para tenerlo precargado
             let objTienda = {
               'store': "",
               'asignada': false
@@ -91,6 +93,7 @@ export class UsersComponent implements OnInit {
             objTienda.store=adminMasterTienda.store
             objTienda.asignada = false
             
+            //ahora voy a recorrer el las tiendas del usuario para hacer un mach 
             var contadorUsuario = 0
             usuario.tiendas.every((usuarioTienda:any)=>{
               contadorUsuario = contadorUsuario+1
@@ -152,7 +155,7 @@ export class UsersComponent implements OnInit {
   guardarSeleccion(){
     console.log("GUARDO!")
     this.tiendasSeleccionadas.forEach((tiendasSeleccionada:any)=>{
-      
+      console.log("intentando asignar la tienda " + tiendasSeleccionada + " al user " + this.usrAlQLQuieroAddTienda )
       this.addStoreToUserFromRoute(this.usrAlQLQuieroAddTienda,tiendasSeleccionada)
       console.log("esta es una tienda seleccionada")
       console.log(tiendasSeleccionada)
@@ -166,7 +169,9 @@ export class UsersComponent implements OnInit {
       next: (v) => {
         console.log("this._userService.addStoreToUserFromRoute(userId, storeId)")
         console.log("this._userService.addStoreToUserFromRoute("+userId+", "+storeId+")")
-        console.log(v)        
+        console.log(v)   
+        this._router.navigate(['/usuarios']); 
+
       },
       error: (e) => console.error(e),
       complete: () => console.info('este es el complete del addStoreToUserFromRoute()') 
@@ -191,10 +196,12 @@ export class UsersComponent implements OnInit {
   }
 
   async getUsersAndPopulate(){
+    console.log("estoy en el getUsersAndPopulate(). voy a llamar a _userService.getUsersAndPopulate() ")
     this._userService.getUsersAndPopulate()
     .subscribe({
       next: (v) => {
-        console.log("estos son los usuarios getUsersAndPopulate")
+        console.log("el next del _userService.getUsersAndPopulate()")
+        console.log("muestro el V")
         console.log(v)
         this.usuarios =  v
         this.usuarios.forEach((usuario: any) => {
@@ -202,7 +209,6 @@ export class UsersComponent implements OnInit {
           usuario.roles.forEach((role: any) => {
             console.log(role.roleName)  
           });
-          
         });
       },
       error: (e) => console.error(e),

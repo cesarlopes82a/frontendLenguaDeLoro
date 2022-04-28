@@ -1,1 +1,94 @@
-<p>nuevo-producto works!</p>
+<h1>P R O D U C T O S</h1>
+
+  <div class="card ">
+    <div class="card-header">
+        Alta de nuevo producto
+    </div>
+    <div class="card-body">
+      <p class="card-text">Complete los datos del nuevo producto a continuacion.</p>
+
+      <form #productoForm="ngForm" (ngSubmit)="onSubmit(productoForm)">
+        <div class="form-group row">
+          <label for="inputProductName" class="col-sm-2 col-form-label">Nombre</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="productName" placeholder="Ingrese el nombre del producto" name="productName" #productName="ngModel" [(ngModel)]="producto.productName" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputProductCodigo" class="col-sm-2 col-form-label">Codigo</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="codigo" placeholder="Escanee el codigo de barras" name="codigo" #codigo="ngModel" [(ngModel)]="producto.codigo" required>
+          </div>
+        </div>
+        <fieldset class="form-group" (change)="onChangeUnidadMedida($event)">
+          <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Unidad de Medida</legend>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="Unidades" checked>
+                <label class="form-check-label" for="gridRadios1">
+                  Unidades
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="Kilogramos">
+                <label class="form-check-label" for="gridRadios2">
+                  Kilogramos
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="Litros">
+                <label class="form-check-label" for="gridRadios3">
+                  Litros
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="Metros">
+                <label class="form-check-label" for="gridRadios4">
+                  Metros
+                </label>
+              </div>
+              
+            </div>
+          </div>
+        </fieldset>
+        
+        <div class="form-group row">
+          <div class="col-sm-2">Rubro / Categoria</div>
+            <div class="form-group col-md-4">
+                <select class="form-control" (change)="onChangeCategoria($event)">
+                  <option disabled selected [value]="null">Seleccione una categoria</option>
+                  <option *ngFor="let categoria of categoriasRubros" [value]="categoria._id">{{categoria.categoryName}}</option>            
+                </select>
+            </div>
+          
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" [disabled]="!productoForm.form.valid">Confirmar</button>
+            
+          
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="productName.touched && !productName.valid">
+                Ingrese el <strong>nombre del producto</strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="codigo.touched && !codigo.valid">
+                Escanee el <strong>codigo del producto </strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+          </div>
+          
+        </div>
+      </form>
+
+
+
+
+
+
+

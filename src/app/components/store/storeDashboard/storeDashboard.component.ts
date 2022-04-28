@@ -24,6 +24,7 @@ export class StoreDashboardComponent implements OnInit {
   public storeId:any;
   public branchId:any;
   public loggedUser:any;
+  public loggedUserRole!: string;
 
   @Input() userService!: UserService;
 
@@ -48,6 +49,8 @@ export class StoreDashboardComponent implements OnInit {
       //obtengo la ruta desde la url para ver si estoy en tieneda o una sucursal
       this.ruta = String(this._route.snapshot.url[0])
       this.loggedUser = global.loggedUser
+      this.loggedUserRole = String(localStorage.getItem("loggedUserRole"))
+      
       
       //console.log(this._route.snapshot.url[0])
       if(this.ruta == "tienda"){
