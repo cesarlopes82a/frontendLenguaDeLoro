@@ -57,6 +57,9 @@ import { EstadisticasGlobalComponent } from './components/statistics/estadistica
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListarVendedoresComponent } from './components/store/storeDashboard/storeSucursales/listar-vendedores/listar-vendedores.component';
 import { NuevoVendedorComponent } from './components/store/storeDashboard/storeSucursales/nuevo-vendedor/nuevo-vendedor.component';
+import { SupplierComponent } from './components/supplier/supplier.component';
+import { EditarSupplierComponent } from './components/supplier/editar-supplier/editar-supplier.component';
+import { NuevoSupplierComponent } from './components/supplier/nuevo-supplier/nuevo-supplier.component';
 
 
 
@@ -98,7 +101,10 @@ import { NuevoVendedorComponent } from './components/store/storeDashboard/storeS
     NuevoUsuarioGlobalComponent,
     EstadisticasGlobalComponent,
     ListarVendedoresComponent,
-    NuevoVendedorComponent
+    NuevoVendedorComponent,
+    SupplierComponent,
+    EditarSupplierComponent,
+    NuevoSupplierComponent
   ],
   imports: [
     BrowserModule,

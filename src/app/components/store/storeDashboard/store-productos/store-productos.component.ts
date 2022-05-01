@@ -35,6 +35,7 @@ export class StoreProductosComponent implements OnInit {
     
     
   }
+  
   getProductos(){
     console.log("estoy dentro del getProductos()")
     this._productService.getProductos()

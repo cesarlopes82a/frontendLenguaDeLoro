@@ -33,6 +33,9 @@ import { NuevoUsuarioComponent } from './components/store/storeDashboard/storeUs
 
 import { EstadisticasGlobalComponent } from './components/statistics/estadisticas/estadisticas.component';
 
+import { SupplierComponent } from './components/supplier/supplier.component';
+import { NuevoSupplierComponent } from './components/supplier/nuevo-supplier/nuevo-supplier.component'
+
 
 
 
@@ -63,7 +66,10 @@ const routes: Routes = [
   { path: 'estadisticas', component: EstadisticasGlobalComponent },
 
   { path: 'usuarios', component: UsersComponent },
-  { path: 'usuarios/crearUsuario', component: NuevoUsuarioGlobalComponent }
+  { path: 'usuarios/crearUsuario', component: NuevoUsuarioGlobalComponent },
+
+  { path: 'proveedores', component: SupplierComponent },
+  { path: 'proveedores/crearProveedor', component: NuevoSupplierComponent }
 
 ];
 

@@ -3,7 +3,7 @@ import { Product } from '../../../../../models/product';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
+ 
 @Component({
   selector: 'app-nuevo-producto',
   templateUrl: './nuevo-producto.component.html',
