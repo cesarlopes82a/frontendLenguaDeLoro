@@ -1,0 +1,124 @@
+<h1>C  O  M  P  R  A  S</h1>
+
+  <div class="card ">
+    <div class="card-header">
+        Registro de compras
+    </div>
+    <div class="card-body">
+      <p class="card-text">Complete el detalle de la compra a continuacion.</p>
+
+      <form #proveedorForm="ngForm" (ngSubmit)="onSubmit(proveedorForm)">
+
+        <div class="form-group row">
+            <div class="col-md-2">Proveedor</div>
+            <div class="form-group col-md-4">
+                <select class="form-control" (change)="onChangeProveedor($event)" >
+                <option disabled selected [value]="null">Seleccione proveedor</option>
+                <option *ngFor="let proveedor of proveedores" [value]="proveedor._id">{{proveedor.proveedorName}}</option>            
+                </select>
+            </div>          
+        </div>
+        
+
+        <div class="form-group row">
+            <div class="col-md-2">Producto</div>
+            <div class="form-group col-md-4">
+                <select class="form-control" name="productoSelect" (change)="onChangeProducto($event)" >
+                <option disabled selected [value]="null">Seleccione el producto</option>
+                <option *ngFor="let producto of productos" [value]="producto._id" >{{producto.productName}}</option>            
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <input type="text" class="form-control" id="prodCodigo" placeholder="Escanee el código" name="prodCodigo" #prodCodigo="ngModel" [(ngModel)]="productoCodigo" required>
+            </div>       
+        </div>
+
+        <div class="container">
+          <div class="row">
+             <div class='col-sm-6'>
+                <input type='text' class="form-control" id='datetimepicker4' />
+             </div>
+             <script type="text/javascript">
+                $(function () {
+                  console.log("entro a la funcion....................")
+                    $('#datetimepicker4').datetimepicker();
+                });
+             </script>
+          </div>
+       </div>
+
+        <div class="resultado"></div>
+
+        <div class="row">
+            <div class="col-sm-8">
+              <div class="form-group">
+                <label><span class="hidden-xs">Vencimiento</span></label>
+                <div class="input-group">
+                  <input type="number" placeholder="DD" name="" class="form-control" required>
+                  <input type="number" placeholder="MM" name="" class="form-control" required>
+                  <input type="number" placeholder="YY" name="" class="form-control" required>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+<!--
+        <div class="form-group row">
+          <label for="inputProveedorName" class="col-sm-2 col-form-label">Nombre</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="proveedorName" placeholder="Ingrese el nombre del proveedor" name="proveedorName" #proveedorName="ngModel" [(ngModel)]="proveedor.proveedorName" required>
+          </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputProveedorNroCto" class="col-sm-2 col-form-label">Telefono de contacto</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="proveedorNroCto" placeholder="Ingrese el telefono de contacto proveedor" name="proveedorNroCto" #proveedorNroCto="ngModel" [(ngModel)]="proveedor.nroContacto" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputProveedorEmailCto" class="col-sm-2 col-form-label">Email de contacto</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="proveedorEmailCto" placeholder="Ingrese el email del proveedor" name="proveedorEmailCto" #proveedorEmailCto="ngModel" [(ngModel)]="proveedor.emailContacto" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputProveedorDescrip" class="col-sm-2 col-form-label">Informacion relevante del proveedor</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="proveedorDescrip" placeholder="Ingrese Informacion relevante del proveedor" name="proveedorDescrip" #proveedorDescrip="ngModel" [(ngModel)]="proveedor.descripProovedor">
+            </div>
+        </div>
+        
+       
+        
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" [disabled]="!proveedorForm.form.valid  ">Confirmar</button>
+            
+          
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorName.touched && !proveedorName.valid">
+                Ingrese el <strong>nombre del proveedor</strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorNroCto.touched && !proveedorNroCto.valid">
+                Ingrese un <strong>numero de telefono valido </strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorEmailCto.touched && !proveedorEmailCto.valid">
+                Ingrese un <strong>Email valido </strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+         
+
+
+          </div>
+         
+        </div>
+-->
+      </form>
+

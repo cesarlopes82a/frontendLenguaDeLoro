@@ -60,6 +60,9 @@ import { NuevoVendedorComponent } from './components/store/storeDashboard/storeS
 import { SupplierComponent } from './components/supplier/supplier.component';
 import { EditarSupplierComponent } from './components/supplier/editar-supplier/editar-supplier.component';
 import { NuevoSupplierComponent } from './components/supplier/nuevo-supplier/nuevo-supplier.component';
+import { ComprasComponent } from './components/store/storeDashboard/storeSucursales/compras/main/compras/compras.component';
+import { RegistrarCompraComponent } from './components/store/storeDashboard/storeSucursales/compras/new/registrar-compra/registrar-compra.component';
+import { StockComponent } from './components/store/storeDashboard/storeSucursales/stock/main/stock/stock.component';
 
 
 
@@ -104,7 +107,10 @@ import { NuevoSupplierComponent } from './components/supplier/nuevo-supplier/nue
     NuevoVendedorComponent,
     SupplierComponent,
     EditarSupplierComponent,
-    NuevoSupplierComponent
+    NuevoSupplierComponent,
+    ComprasComponent,
+    RegistrarCompraComponent,
+    StockComponent
   ],
   imports: [
     BrowserModule,

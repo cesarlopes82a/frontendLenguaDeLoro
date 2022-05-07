@@ -63,9 +63,19 @@
                 <div class="card text-center">
                     <img src="images/gym.jpg" class="card-img-top">
                     <div class="card-body">
+                        <h5 class="card-title">Compras</h5>
+                        <p class="card-text">Lleva un control de los productos en stock</p>
+                        <a [routerLink]="['/sucursal/' + this.branchId + '/compras']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
                         <h5 class="card-title">Stock</h5>
                         <p class="card-text">Lleva un control de los productos en stock</p>
-                        <a href="#">CHECK GYM</a>
+                        <a [routerLink]="['/sucursal/' + this.branchId + '/stock']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                        
                     </div>
                 </div>
             </div>
@@ -75,7 +85,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Vender</h5>
                         <p class="card-text">Comenzar a vender productos.</p>
-                        <a href="#">CHECK GYM</a>
+
                     </div>
                 </div>
             </div>

@@ -34,7 +34,12 @@ import { NuevoUsuarioComponent } from './components/store/storeDashboard/storeUs
 import { EstadisticasGlobalComponent } from './components/statistics/estadisticas/estadisticas.component';
 
 import { SupplierComponent } from './components/supplier/supplier.component';
-import { NuevoSupplierComponent } from './components/supplier/nuevo-supplier/nuevo-supplier.component'
+import { NuevoSupplierComponent } from './components/supplier/nuevo-supplier/nuevo-supplier.component';
+
+import { ComprasComponent } from './components/store/storeDashboard/storeSucursales/compras/main/compras/compras.component';
+import { RegistrarCompraComponent } from './components/store/storeDashboard/storeSucursales/compras/new/registrar-compra/registrar-compra.component';
+
+import { StockComponent } from './components/store/storeDashboard/storeSucursales/stock/main/stock/stock.component'
 
 
 
@@ -62,6 +67,11 @@ const routes: Routes = [
   { path: 'sucursal/:id', component: StoreDashboardComponent },
   { path: 'sucursal/:id/usuarios', component: ListarVendedoresComponent },
   { path: 'sucursal/:id/usuarios/crearVendedor', component: NuevoVendedorComponent },
+  
+  { path: 'sucursal/:id/compras', component: ComprasComponent },
+  { path: 'sucursal/:id/compras/registrarCompra', component: RegistrarCompraComponent },
+
+  { path: 'sucursal/:id/stock', component: StockComponent },
   
   { path: 'estadisticas', component: EstadisticasGlobalComponent },
 
