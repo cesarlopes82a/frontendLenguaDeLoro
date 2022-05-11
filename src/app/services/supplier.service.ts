@@ -13,7 +13,7 @@ export class SupplierService {
     private _http:HttpClient,
   ) {
     this.url = global.url
-   }
+  }
 
   saveProveedor(proveedor: any): Observable<any>{
     let params = JSON.stringify(proveedor)
