@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ComprasService } from 'src/app/services/compras.service';
+
 import { global } from 'src/app/services/global';
 
 @Component({
@@ -11,11 +12,13 @@ import { global } from 'src/app/services/global';
 })
 export class ComprasComponent implements OnInit {
   public branchId!: string;
+  public storeId!: string;
   public title!: string;
   public url!: string;
   public comprasByBranch!: any
   public comprasByBranchAndPopulatedInfo!: any
   public quieroEliminarEsteRegistro!:string;
+
 
   constructor(
     private _route: ActivatedRoute,
@@ -24,6 +27,7 @@ export class ComprasComponent implements OnInit {
 
   
   ngOnInit(): void {
+    
     this._route.params.subscribe(
       params => {
         this.branchId = params['id']
@@ -73,6 +77,7 @@ export class ComprasComponent implements OnInit {
   deleteUsuario(idCompra:string){
     console.log("intento eliminar el usuario")
   }
+
   
 
 }

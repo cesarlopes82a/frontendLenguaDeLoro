@@ -1,0 +1,210 @@
+
+
+<h1>L  i  s  t a     D e    P  r  e  c  i  o  s</h1>
+
+  <div class="card ">
+    <div class="card-header">
+        Registro de listas de precios
+    </div>
+    <div class="card-body">
+
+      <form #ldpForm="ngForm" (ngSubmit)="onSubmit(ldpForm)">
+
+        
+        <div class="form-group row">
+            <div class="col">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control col-sm-12" id="nombre" name="nombre" placeholder="Ingrese un nombre para la nueva lista de precios" #nombre="ngModel" [(ngModel)]="ldpNombre" required >
+            </div>
+            <div class="col">
+                <label for="fecha">Fecha</label>
+                <input disabled type="date" class="form-control col-sm-4" name="fechaDeCreacion" [(ngModel)]="fechaDeCreacion" >
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="ldpDescripcion" class="col-sm-2 col-form-label">Descripcion</label>
+            <div class="form-group col-sm-12">
+                
+                <textarea type="text" class="form-control" id="ldpDescripcion"  placeholder="Ingrese descicion de uso para la nueva Lista" name="ldpDescripcion" #descripcion="ngModel" [(ngModel)]="ldpDescripcion" required></textarea>
+            </div>
+        </div>
+      
+        
+        <table id="dtBasicExample" class="table table-striped table-hover" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th class="th-sm">#
+                </th>
+                <th class="th-sm">Producto
+                </th>
+                <th class="th-sm">Rubro
+                </th>
+                <th class="th-sm">Codigo
+                </th>
+                <th class="th-sm">Stock
+                </th>
+                <th class="th-sm">Fecha Ultima Compra
+                </th>
+                <th class="th-sm">Costo
+                </th>
+                <th class="th-sm">Precio de venta
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let product of products; let i = index">
+              <tr>
+                <td class="align-middle">{{i}}</td>
+                <td class="align-middle" >{{product.productName}}</td>
+                <td class="align-middle">{{product.categoriaRubro.categoryName}}</td>
+                <td class="align-middle">{{product.codigo}}</td>
+                <td class="align-middle">{{product.stock}}</td>
+                
+                <ng-container *ngIf='product.ultimoRegCompra.fechaDeCompra === "-"; else fechaCompra'>
+                    <td class="align-middle">-</td>
+                </ng-container>
+                <ng-template #fechaCompra>
+                    <td class="align-middle">{{product.ultimoRegCompra.fechaDeCompra |  date:'MM/dd/yyyy h:mm:ss' }} </td>
+                </ng-template>
+                
+                <ng-container *ngIf='product.ultimoRegCompra.fechaDeCompra === "-"; else precioCompra'>
+                    <td class="align-middle">-</td>
+                </ng-container>
+                <ng-template #precioCompra>
+                    <td class="align-middle">{{product.ultimoRegCompra.precioCompraUnitario |  currency: '$'}}</td>
+                </ng-template>
+
+                <td class="align-middle">
+                    <div class="row">
+                        <div class="col">
+                            <input type="number" class="form-control col-md-12" id="precio" name="pre" >
+                        </div>
+                        <div class="col">
+                            <button mat-raised-button color="primary" (click)="openDialogPrecio()">Edit</button>
+                        </div>
+                    </div>
+                </td>
+              </tr>
+            
+            </tbody>
+            
+          </table>
+
+        
+
+        
+        <!--
+        <div class="form-group row">
+            <div class="form-group col-md-4">
+                <label for="productos" class="col-sm-2 col-form-label">Productos</label>
+                <select class="form-control" name="productos" id="productos" #productos="ngModel" [(ngModel)]="productos" (change)="onChangeProducto($event)" >
+                <option disabled selected [value]="null">Seleccione un producto</option>
+                <option *ngFor="let producto of productos" [value]="producto._id" >{{producto.productName}}</option>            
+                </select>
+            </div>
+                
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">Proveedor</div>
+            <div class="form-group col-md-4">
+                <select class="form-control" name="proveedor" id="proveedor" #proveedor="ngModel" [(ngModel)]="proveedorId" (change)="onChangeProveedor($event)" >
+                <option disabled selected [value]="null">Seleccione proveedor</option>
+                <option *ngFor="let proveedor of proveedores" [value]="proveedor._id">{{proveedor.proveedorName}}</option>            
+                </select>
+            </div>          
+        </div>        
+
+        <div class="form-group row">
+            <div class="col-md-2">Producto</div>
+            <div class="form-group col-md-4">
+                <select class="form-control" [disabled]="habilitoEscaneearCod" name="producto" id="producto" #producto="ngModel" [(ngModel)]="productoId" (change)="onChangeProducto($event)" >
+                <option disabled selected [value]="null">Seleccione el producto</option>
+                <option *ngFor="let producto of productos" [value]="producto._id" >{{producto.productName}}</option>            
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                
+                <input type="text" [disabled]="!habilitoEscaneearCod" class="form-control" id="prodCodigo" placeholder="Escanee el código" name="prodCodigo" #prodCodigo="ngModel" [(ngModel)]="productoCodigo" required>
+                <input type="checkbox" name="habilitoEscaneearCod" [(ngModel)]="habilitoEscaneearCod" />
+                <label for="checkbox">Habilitar</label>
+            </div>       
+        </div>
+
+        <div class="form-group row">
+          <label for="compraDate" class="col-sm-2 col-form-label">Fecha de compra</label>
+          <div class="col-sm-3">
+            <input name="fechaDeCompra" class="form-control"  [(ngModel)]="fechaDeCompra" type="date" required>
+          </div>
+          <label for="compraDate" class="col-sm-2 col-form-label">Fecha de Vencimiento</label>
+          <div class="col-sm-3">
+            <input [disabled]="!tieneVencimiento" class="form-control" name="date" [(ngModel)]="fechaDeVencimiento" type="date">
+            <input type="checkbox" name="tieneVencimiento" [(ngModel)]="tieneVencimiento" />
+            <label for="checkbox">Habilitar</label>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputPrecio" class="col-sm-2 col-form-label">Precio Unitario $</label>
+          <div class="col-sm-2">
+            <input type="number" class="form-control" id="inputPrecio" placeholder="Precio" name="inputPrecio" #inputPrecio="ngModel" [(ngModel)]="precioUnitario" required>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputCantidad" class="col-sm-2 col-form-label">Cantidad de Unidades/KG/Lts</label>
+          <div class="col-sm-2">
+            <input type="number" class="form-control" id="inputCantidad" placeholder="Cantidad" name="inputCantidad" #inputCantidad="ngModel" [(ngModel)]="cantidad" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputCantidad" class="col-sm-2 col-form-label">Informacion relevante a considerar</label>
+          <div class="col-sm-6">
+            <textarea class="form-control" id="textareaInfo" placeholder="Informacion que considere de utilidad" name="textareaInfo" #textareaInfo="ngModel" [(ngModel)]="comentario" >
+
+            </textarea>
+          
+          </div>
+        </div>
+     
+       
+        
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" [disabled]="!compraForm.form.valid  ">Confirmar</button>
+            
+          
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="!proveedorSeleccionado && proveedor.touched">
+                Seleccione un <strong>proveedor</strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="(!productoSeleccionado && producto.touched) || (prodCodigo.touched && !prodCodigo.valid)">
+              Seleccione un <strong>producto</strong> para poder confirmar!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+    -->
+
+     <!--       <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorNroCto.touched && !proveedorNroCto.valid">
+                Ingrese un <strong>numero de telefono valido </strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorEmailCto.touched && !proveedorEmailCto.valid">
+                Ingrese un <strong>Email valido </strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+         
+
+
+          </div>
+         
+        </div>
+-->
+      </form>
+

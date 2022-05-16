@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { global } from '../services/global';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComprasService {
   public url:string;
-
+  @Output() pasoStoreId: EventEmitter<any> = new EventEmitter();
   constructor(
     private _http:HttpClient,
   ) {

@@ -19,6 +19,7 @@ export class NuevoProductoComponent implements OnInit {
   public codigoProd:string="";
   public categoriasRubros: any;
   public storeId!:string;
+  public categoriaseleccionada: boolean = false
   
   
   
@@ -45,6 +46,8 @@ export class NuevoProductoComponent implements OnInit {
     console.log($event.target.value);
     this.producto.categoria=$event.target.value
     console.log("Categoria: " + this.producto.categoria)
+    this.categoriaseleccionada = true
+
    }
    onChangeUnidadMedida($event: any) {
     console.log($event.target.value);

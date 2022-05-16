@@ -31,14 +31,14 @@ export class StoreProductosComponent implements OnInit {
       params => {
         this.storeId = params['id']
       })
-    this.getProductos()
+    this.getProductosByStoreId()
     
     
   }
   
-  getProductos(){
+  getProductosByStoreId(){
     console.log("estoy dentro del getProductos()")
-    this._productService.getProductos()
+    this._productService.getProductosByStoreId(this.storeId)
     .subscribe({
       next: (response) => {
         console.log(response)

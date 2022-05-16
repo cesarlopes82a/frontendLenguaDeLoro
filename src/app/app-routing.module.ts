@@ -17,7 +17,6 @@ import { StoreDashboardComponent } from './components/store/storeDashboard/store
 import { StoreUsuariosComponent } from './components/store/storeDashboard/store-usuarios/store-usuarios.component';
 import { StoreProductosComponent } from './components/store/storeDashboard/store-productos/store-productos.component';
 import { NuevoProductoComponent } from './components/store/storeDashboard/storeProductos/nuevo-producto/nuevo-producto.component'
-import { StoreLdPComponent } from './components/store/storeDashboard/store-ld-p/store-ld-p.component';
 import { StoreSucursalesComponent } from './components/store/storeDashboard/store-sucursales/store-sucursales.component';
 
 import { ListarVendedoresComponent } from './components/store/storeDashboard/storeSucursales/listar-vendedores/listar-vendedores.component';
@@ -39,8 +38,14 @@ import { NuevoSupplierComponent } from './components/supplier/nuevo-supplier/nue
 import { ComprasComponent } from './components/store/storeDashboard/storeSucursales/compras/main/compras/compras.component';
 import { RegistrarCompraComponent } from './components/store/storeDashboard/storeSucursales/compras/new/registrar-compra/registrar-compra.component';
 
-import { StockComponent } from './components/store/storeDashboard/storeSucursales/stock/main/stock/stock.component'
+import { StockComponent } from './components/store/storeDashboard/storeSucursales/stock/main/stock/stock.component';
 
+import { VentasComponent } from './components/store/storeDashboard/storeSucursales/ventas/main/ventas/ventas.component';
+import { ListarventasComponent } from './components/store/storeDashboard/storeSucursales/ventas/listar/listarventas/listarventas.component';
+import { VenderComponent } from './components/store/storeDashboard/storeSucursales/ventas/new/vender/vender.component';
+
+import { LDPmainComponent } from './components/store/storeDashboard/storeLdP/main/ldpmain/ldpmain.component';
+import { NewldpComponent } from './components/store/storeDashboard/storeLdP/new/newldp/newldp.component';
 
 
 
@@ -60,7 +65,8 @@ const routes: Routes = [
   { path: 'tienda/:id/usuarios/crearUsuario', component: NuevoUsuarioComponent },
   { path: 'tienda/:id/productos', component: StoreProductosComponent },
   { path: 'tienda/:id/productos/nuevoProducto', component: NuevoProductoComponent },
-  { path: 'tienda/:id/listadp', component: StoreLdPComponent },
+  { path: 'tienda/:id/ldp', component: LDPmainComponent },
+  { path: 'tienda/:id/ldp/nuevaldp', component: NewldpComponent },
   { path: 'tienda/:id/sucursales', component: StoreSucursalesComponent },
   { path: 'tienda/:id/sucursales/crearSucursal', component: NuevaSucComponent },
   
@@ -70,6 +76,10 @@ const routes: Routes = [
   
   { path: 'sucursal/:id/compras', component: ComprasComponent },
   { path: 'sucursal/:id/compras/registrarCompra', component: RegistrarCompraComponent },
+
+  { path: 'sucursal/:id/ventas', component: VentasComponent },
+  { path: 'sucursal/:id/ventas/listar', component: ListarventasComponent },
+  { path: 'sucursal/:id/ventas/vender', component: VenderComponent },
 
   { path: 'sucursal/:id/stock', component: StockComponent },
   

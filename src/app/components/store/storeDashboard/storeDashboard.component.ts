@@ -5,6 +5,7 @@ import { Store } from 'src/app/models/store';
 import { global } from 'src/app/services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { ComprasService } from 'src/app/services/compras.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class StoreDashboardComponent implements OnInit {
     private _storeService: StoreService,
     private _branchService: BranchService,
     private _userService: UserService,
+    private _comprasService: ComprasService,
     private _router: Router,
     private _route: ActivatedRoute     
   ) {
@@ -148,4 +150,8 @@ export class StoreDashboardComponent implements OnInit {
     })
   }
 
+  envioStoreId(){
+    console.log("ENVIO EL STOREID")
+    this._comprasService.pasoStoreId.emit({storeId:this.storeId})
+  }
 }

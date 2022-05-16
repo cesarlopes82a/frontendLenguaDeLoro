@@ -25,12 +25,26 @@ export class ProductService {
     return this._http.post(this.url+'/products/createProducto',params,{headers});
   }
   getProductos():Observable<any>{
-    console.log("estoy dentro del getProductos desde el product.service.ts")
+    console.log("MENSAJE: getProductos() - estoy dentro del getProductos desde el product.service.ts")
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this._http.get(this.url+'/products',{headers:cabeceras})
   }
+  getProductosByStoreId(storeId: string):Observable<any>{
+    
+    console.log("MENSAJE: ProductService-getProductosByStoreId(" + storeId + ") - ")
 
+    let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.get(this.url+'/products/store/'+storeId,{headers:cabeceras})
+  }
+  
+  getProductosByStoreIdAndPopulate(storeId: string):Observable<any>{
+    
+    console.log("MENSAJE: ProductService-getProductosByStoreIdAndPopulateCompras(" + storeId + ") - ")
+
+    let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.get(this.url+'/products/storep/'+storeId,{headers:cabeceras})
+  }
   
 
 }

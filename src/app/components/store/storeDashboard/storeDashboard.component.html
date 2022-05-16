@@ -39,7 +39,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Listas de Precios</h5>
                         <p class="card-text">Desde aquí podrás definir diferentes listas de precios que luego aplicaras a una o mas sucursales.</p>
-                        <a [routerLink]="['/tienda', this.storeId,'listadp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        <a [routerLink]="['/tienda', this.storeId,'ldp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Compras</h5>
                         <p class="card-text">Lleva un control de los productos en stock</p>
-                        <a [routerLink]="['/sucursal/' + this.branchId + '/compras']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                        
+                        <a [routerLink]="['/sucursal/' + this.branchId + '/compras']" [routerLinkActive]="['actived']" (click)="envioStoreId()"><span>Click aquí</span></a>                        
                     </div>
                 </div>
             </div>
@@ -83,9 +83,9 @@
                 <div class="card text-center">
                     <img src="images/gym.jpg" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Vender</h5>
+                        <h5 class="card-title">Ventas</h5>
                         <p class="card-text">Comenzar a vender productos.</p>
-
+                        <a [routerLink]="['/sucursal/' + this.branchId + '/ventas']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                                                                     
                     </div>
                 </div>
             </div>

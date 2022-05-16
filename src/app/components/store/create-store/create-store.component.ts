@@ -20,6 +20,7 @@ export class CreateStoreComponent implements OnInit {
     ) {
       this.title = "Crear nueva tienda"
       this.store = new Store('','',[]);
+      
      }
   
     ngOnInit(): void {

@@ -5,6 +5,7 @@ import { Compra } from '../../../../../../../models/compra';
 import { ProductService } from '../../../../../../../services/product.service';
 import { SupplierService } from '../../../../../../../services/supplier.service';
 import { ComprasService } from '../../../../../../../services/compras.service';
+
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
@@ -16,6 +17,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class RegistrarCompraComponent implements OnInit {
   public branchId!: string;
+  public storeId!: string;
   public title!: string;
   public url!: string;
   public proveedores!: any;
@@ -45,16 +47,18 @@ export class RegistrarCompraComponent implements OnInit {
     this.url = global.url,
     this.title = "S U C U E S A L:   C O M P R A S"
     
-    this.getProductos();
+    
     this.getProveedores();
     this.compra = new Compra('','','','',0,0,'','','');
     this.compra.userId = String(localStorage.getItem("loggedUserID"))
   }
 
   ngOnInit(): void {
+
     this._route.params.subscribe(
       params => {
         this.branchId = params['id']
+        this.getProductosByStoreId(this.branchId);
       }
     )
 
@@ -106,8 +110,8 @@ export class RegistrarCompraComponent implements OnInit {
       complete: () => console.info('complete') 
     })
   };
-  getProductos(){
-    this._productService.getProductos()
+  getProductosByStoreId(branchId: string){
+    this._productService.getProductosByStoreId(branchId)
     .subscribe({
       next: (v) => {
         console.log("esto es lo que me mandan de this._productService.getProductos()")

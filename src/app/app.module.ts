@@ -6,7 +6,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,18 +28,13 @@ import { StoreDashboardComponent } from './components/store/storeDashboard/store
 import { HomeComponent } from './components/home/home.component';
 
 import { StoreProductosComponent } from './components/store/storeDashboard/store-productos/store-productos.component';
-import { ListarProductosComponent } from './components/store/storeDashboard/storeProductos/listar-productos/listar-productos.component';
-import { EditarProductoComponent } from './components/store/storeDashboard/storeProductos/editar-producto/editar-producto.component';
+//import { ListarProductosComponent } from './components/store/storeDashboard/storeProductos/listar-productos/listar-productos.component';
+//import { EditarProductoComponent } from './components/store/storeDashboard/storeProductos/editar-producto/editar-producto.component';
 import { NuevoProductoComponent } from './components/store/storeDashboard/storeProductos/nuevo-producto/nuevo-producto.component';
 
 import { ListarRubrosComponent } from './components/store/storeDashboard/storeProductos/listar-rubros/listar-rubros.component';
-import { EditarRubroComponent } from './components/store/storeDashboard/storeProductos/editar-rubro/editar-rubro.component';
+//import { EditarRubroComponent } from './components/store/storeDashboard/storeProductos/editar-rubro/editar-rubro.component';
 import { NuevoRubroComponent } from './components/store/storeDashboard/storeProductos/nuevo-rubro/nuevo-rubro.component';
-
-import { StoreLdPComponent } from './components/store/storeDashboard/store-ld-p/store-ld-p.component';
-import { ListarLdPComponent } from './components/store/storeDashboard/storeLdP/listar-ld-p/listar-ld-p.component';
-import { EditarLdPComponent } from './components/store/storeDashboard/storeLdP/editar-ld-p/editar-ld-p.component';
-import { NuevaLdPComponent } from './components/store/storeDashboard/storeLdP/nueva-ld-p/nueva-ld-p.component';
 
 import { StoreUsuariosComponent } from './components/store/storeDashboard/store-usuarios/store-usuarios.component';
 import { ListarUsuariosComponent } from './components/store/storeDashboard/storeUsuarios/listar-usuarios/listar-usuarios.component';
@@ -63,6 +61,14 @@ import { NuevoSupplierComponent } from './components/supplier/nuevo-supplier/nue
 import { ComprasComponent } from './components/store/storeDashboard/storeSucursales/compras/main/compras/compras.component';
 import { RegistrarCompraComponent } from './components/store/storeDashboard/storeSucursales/compras/new/registrar-compra/registrar-compra.component';
 import { StockComponent } from './components/store/storeDashboard/storeSucursales/stock/main/stock/stock.component';
+import { VentasComponent } from './components/store/storeDashboard/storeSucursales/ventas/main/ventas/ventas.component';
+import { VenderComponent } from './components/store/storeDashboard/storeSucursales/ventas/new/vender/vender.component';
+import { ListarventasComponent } from './components/store/storeDashboard/storeSucursales/ventas/listar/listarventas/listarventas.component';
+import { LDPmainComponent } from './components/store/storeDashboard/storeLdP/main/ldpmain/ldpmain.component';
+import { NewldpComponent } from './components/store/storeDashboard/storeLdP/new/newldp/newldp.component';
+import { TransformNullsPipe } from './transform-nulls.pipe';
+import { DialogprecioComponent } from './components/store/storeDashboard/storeLdP/dialogPrecio/dialogprecio/dialogprecio.component';
+
 
 
 
@@ -79,17 +85,13 @@ import { StockComponent } from './components/store/storeDashboard/storeSucursale
     CreateStoreComponent,
     StoreDashboardComponent,
     HomeComponent,
-    StoreLdPComponent,
-    ListarLdPComponent,
-    EditarLdPComponent,
-    NuevaLdPComponent,
     StoreUsuariosComponent,
     StoreProductosComponent,
-    ListarProductosComponent,
-    EditarProductoComponent,
+   // ListarProductosComponent,
+   // EditarProductoComponent,
     NuevoProductoComponent,
     ListarRubrosComponent,
-    EditarRubroComponent,
+   // EditarRubroComponent,
     NuevoRubroComponent,
     ListarUsuariosComponent,
     EditarUsuarioComponent,
@@ -110,7 +112,16 @@ import { StockComponent } from './components/store/storeDashboard/storeSucursale
     NuevoSupplierComponent,
     ComprasComponent,
     RegistrarCompraComponent,
-    StockComponent
+    StockComponent,
+    VentasComponent,
+    VenderComponent,
+    ListarventasComponent,
+    LDPmainComponent,
+    NewldpComponent,
+    TransformNullsPipe,
+    DialogprecioComponent,
+
+
   ],
   imports: [
     BrowserModule,
@@ -120,7 +131,12 @@ import { StockComponent } from './components/store/storeDashboard/storeSucursale
     FontAwesomeModule,
     BrowserAnimationsModule,
     MatSliderModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule
+
   ],
   providers: [
     AuthGuard,

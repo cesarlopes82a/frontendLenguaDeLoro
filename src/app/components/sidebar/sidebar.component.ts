@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { global } from 'src/app/services/global';
 import { MatSidenav } from '@angular/material/sidenav';
+import { ComprasService } from 'src/app/services/compras.service';
 
 
 
@@ -21,12 +22,14 @@ export class SidebarComponent implements OnInit {
   public stores:any;
   public users:any;
   public loggedUser:any = null;
-  public loggedUserRole!: String 
+  public loggedUserRole!: String;
+  public storeId!: string
   
 
   constructor(
     private _userService:UserService,
     private _authService:AuthService,
+    private _comprasService:ComprasService
   ) { 
     if (this._authService.loggedIn()){
       console.log("ESTOY LOGUEADOOOOOOOOO SIDEBARRRRRRRRR")
@@ -80,5 +83,6 @@ export class SidebarComponent implements OnInit {
       complete: () => console.info('este es el complete') 
     })
   }
+ 
 
 }
