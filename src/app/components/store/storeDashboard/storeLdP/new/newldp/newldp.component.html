@@ -25,70 +25,95 @@
             <label for="ldpDescripcion" class="col-sm-2 col-form-label">Descripcion</label>
             <div class="form-group col-sm-12">
                 
-                <textarea type="text" class="form-control" id="ldpDescripcion"  placeholder="Ingrese descicion de uso para la nueva Lista" name="ldpDescripcion" #descripcion="ngModel" [(ngModel)]="ldpDescripcion" required></textarea>
+                <textarea type="text" class="form-control" id="ldpDescripcion"  placeholder="Ingrese descicion de uso para la nueva Lista" name="descripcion" #descripcion="ngModel" [(ngModel)]="ldpDescripcion" required></textarea>
             </div>
         </div>
-      
-        
+
         <table id="dtBasicExample" class="table table-striped table-hover" cellspacing="0" width="100%">
-            <thead>
-              <tr>
-                <th class="th-sm">#
-                </th>
-                <th class="th-sm">Producto
-                </th>
-                <th class="th-sm">Rubro
-                </th>
-                <th class="th-sm">Codigo
-                </th>
-                <th class="th-sm">Stock
-                </th>
-                <th class="th-sm">Fecha Ultima Compra
-                </th>
-                <th class="th-sm">Costo
-                </th>
-                <th class="th-sm">Precio de venta
-                </th>
-              </tr>
-            </thead>
-            <tbody *ngFor="let product of products; let i = index">
-              <tr>
-                <td class="align-middle">{{i}}</td>
-                <td class="align-middle" >{{product.productName}}</td>
-                <td class="align-middle">{{product.categoriaRubro.categoryName}}</td>
-                <td class="align-middle">{{product.codigo}}</td>
-                <td class="align-middle">{{product.stock}}</td>
-                
-                <ng-container *ngIf='product.ultimoRegCompra.fechaDeCompra === "-"; else fechaCompra'>
-                    <td class="align-middle">-</td>
-                </ng-container>
-                <ng-template #fechaCompra>
-                    <td class="align-middle">{{product.ultimoRegCompra.fechaDeCompra |  date:'MM/dd/yyyy h:mm:ss' }} </td>
-                </ng-template>
-                
-                <ng-container *ngIf='product.ultimoRegCompra.fechaDeCompra === "-"; else precioCompra'>
-                    <td class="align-middle">-</td>
-                </ng-container>
-                <ng-template #precioCompra>
-                    <td class="align-middle">{{product.ultimoRegCompra.precioCompraUnitario |  currency: '$'}}</td>
-                </ng-template>
+          <thead>
+            <tr>
+              <th class="th-sm">#
+              </th>
+              <th class="th-sm">Producto
+              </th>
+              <th class="th-sm">Rubro
+              </th>
+              <th class="th-sm">Codigo
+              </th>
+              <th class="th-sm">Stock
+              </th>
+              <th class="th-sm">Fecha Ultima Compra
+              </th>
+              <th class="th-sm">Costo
+              </th>
+              <th class="th-sm">Precio de venta
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let product of _productsList; let i = index">
+            <tr>
+              <td class="align-middle">{{i}}</td>
+              <td class="align-middle" >{{_productsList[i].productName}}</td>
+              <td class="align-middle">{{_productsList[i].rubro}}</td>
+              <td class="align-middle">{{_productsList[i].codigo}}</td>
+              <td class="align-middle">{{_productsList[i].stock}}</td>
+              
+              <ng-container *ngIf='_productsList[i].fechaUltimaCompra === "-"; else fechaCompra'>
+                  <td class="align-middle">-</td>
+              </ng-container>
+              <ng-template #fechaCompra>
+                  <td class="align-middle">{{_productsList[i].fechaUltimaCompra |  date:'MM/dd/yyyy h:mm:ss' }} </td>
+              </ng-template>
+              
+              <ng-container *ngIf='_productsList[i].fechaUltimaCompra === "-"; else precioCompra'>
+                  <td class="align-middle">-</td>
+              </ng-container>
+              <ng-template #precioCompra>
+                  <td class="align-middle">{{_productsList[i].costoUnitario | currency: '$'}}</td>
+              </ng-template>
 
-                <td class="align-middle">
-                    <div class="row">
-                        <div class="col">
-                            <input type="number" class="form-control col-md-12" id="precio" name="pre" >
-                        </div>
-                        <div class="col">
-                            <button mat-raised-button color="primary" (click)="openDialogPrecio()">Edit</button>
-                        </div>
-                    </div>
-                </td>
-              </tr>
+              <td class="align-middle">
+                  <div class="row">
+                      <div class="col">
+                          <td class="align-middle">{{_productsList[i].precioVenta | currency: '$'}}</td>
+                      </div>
+                      <div class="col">
+                          <button mat-raised-button color="primary" (click)="openDialogPrecio(_productsList[i].costoUnitario, _productsList[i].productName, i)">Edit</button>
+                      </div>
+                  </div>
+              </td>
+            </tr>            
+          </tbody>
+        </table>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" [disabled]="!ldpForm.form.valid ">Crear</button>
             
-            </tbody>
-            
-          </table>
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="nombre.touched && !nombre.valid">
+                Ingrese un <strong>nombre </strong> para la nueva <strong>Lista de precios</strong> antes confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="descripcion.touched && !descripcion.valid">
+                Ingrese una <strong>descripción </strong> del uso que se le datá a la nueva Lista de Precios para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorEmailCto.touched && !proveedorEmailCto.valid">
+                Ingrese un <strong>Email valido </strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+          -->
 
+
+          </div>
+          
+        </div>
         
 
         

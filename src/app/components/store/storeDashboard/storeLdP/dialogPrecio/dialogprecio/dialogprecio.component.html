@@ -1,25 +1,70 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<h2 mat-dialog-title>Asignar precio de venta</h2>
 
-<div mat-dialog-content>
-    <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Amount</mat-label>
-        <input matInput type="number" class="example-right-align" placeholder="0">
-        <span matPrefix>$&nbsp;</span>
-        <span matSuffix>.00</span>
-      </mat-form-field>
+<h2 mat-dialog-title>Asignar precio de venta:   {{productName}}</h2>
 
-      <p>
-        <mat-form-field appearance="outline">
-          <mat-label>Outline form field</mat-label>
-          <input matInput placeholder="Placeholder">
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-          <mat-hint>Hint</mat-hint>
-        </mat-form-field>
-      </p>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">Precio Compra</span>
+    <span class="input-group-text">$</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" [(ngModel)]="data.precioCompra" disabled>
+  <p> </p>
+<p> </p>
+</div>
+
+<h3 mat-doalog-title>Metodo de determinacion de precio</h3>
+<hr style="width:80%;text-align:left;margin-left:0">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="montofijo" [(ngModel)]="metodoSeleccionado" (change)="calcularPrecio()">
+  <label class="form-check-label" for="exampleRadios1">
+    Monto Fijo
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="porcentaje" [(ngModel)]="metodoSeleccionado" (change)="calcularPrecio()" [disabled]="!precioPorPorcentajeHabilitado">
+  <label class="form-check-label" for="exampleRadios2">
+    Porcentaje
+  </label>
+</div>
+<p></p>
+<div class="form-row">
+  <div class="col">
+    <div class="input-group-prepend">
+      <span class="input-group-text">$</span>
+      <input type="number" class="form-control" placeholder="Monto Fijo" [disabled]='metodoSeleccionado=="porcentaje"' [(ngModel)]="montoFijo" (change)="calcularPrecio()">
+    </div>
+  </div>
+  <div class="col">
+    <div class="input-group-prepend">
+      <span class="input-group-text">%</span>
+      <input type="number" class="form-control" placeholder="Porcentaje" [disabled]='metodoSeleccionado=="montofijo"' [(ngModel)]="montoPorcentaje" (change)="calcularPrecio()">
+    </div>
+  </div>
+</div>
+<hr>
+
+<div class="form-row">
+  
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-default">Precio Venta</span>
+      <span class="input-group-text">$</span>
+    </div>
+    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" [(ngModel)]="precioVenta" disabled>
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-default">Diferencia</span>
+      <span class="input-group-text">$</span>
+    </div>
+    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" [(ngModel)]="diferenciaMontos" disabled>
+  </div>
 </div>
 
 
-<div mat-dialog-close="close">close</div>
+
+<button type="button" class="btn btn-success" mat-dialog-close={{precioVenta}} [disabled]="!precioVenta" >Enviar</button>
+<button type="button" class="btn btn-primary" mat-dialog-close="close" >Close</button>
+
+
 
 

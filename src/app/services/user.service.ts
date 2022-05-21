@@ -15,7 +15,7 @@ export class UserService {
   @HostBinding('class.sendUser')
 
   public testVAR:string = "paso esto";
-  public user:any;
+  public UserByIdAndPopulateStores:any;
 
   constructor(
     private _http:HttpClient
@@ -40,8 +40,9 @@ export class UserService {
   }
   getUserByIdAndPopulateStores(userId: string): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.user = this._http.get(this.url+'/users/userIdPopulateStores/'+userId,{headers});
-    return this.user
+    this.UserByIdAndPopulateStores = this._http.get(this.url+'/users/userIdPopulateStores/'+userId,{headers});
+
+    return this.UserByIdAndPopulateStores
   }
 
   sendUser(){
@@ -90,6 +91,7 @@ export class UserService {
     console.log("llamo a la ruta -------------------")
     return this._http.post(this.url + '/users/addStoreToUserFromRoute',params,{headers})   
   }
+
 
 }
 
