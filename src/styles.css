@@ -218,6 +218,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 	border-radius: 5px;
 	transition: .5s cubic-bazier(.685,.0473,.346,1);
 }
+
+.table td.fit, 
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
 /*********************************NUEVO***********************************
 
 .sidenav {

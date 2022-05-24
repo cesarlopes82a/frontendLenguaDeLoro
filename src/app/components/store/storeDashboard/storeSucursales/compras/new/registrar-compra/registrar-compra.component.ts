@@ -43,6 +43,7 @@ export class RegistrarCompraComponent implements OnInit {
     private _productService: ProductService,
     private _supplierService: SupplierService,
     private _comprasService: ComprasService
+    
   ) { 
     this.url = global.url,
     this.title = "S U C U E S A L:   C O M P R A S"

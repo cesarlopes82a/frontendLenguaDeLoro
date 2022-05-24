@@ -10,9 +10,12 @@ import { global } from '../services/global';
   providedIn: 'root'
 })
 export class ListadepreciosService {
+  @Output() enviarListId: EventEmitter<any> = new EventEmitter();
+
   _productsList: productOfLDP[] = []
   public url: string;
-
+  public listaOrigen!:string;
+  
 
   constructor(
     private _http:HttpClient,
@@ -40,7 +43,8 @@ export class ListadepreciosService {
 
     let listadeprecios = new Listadeprecios(
       ldpNombre,
-      ldpDescripcion,_productsList,
+      ldpDescripcion,
+      _productsList,
       String(localStorage.getItem("loggedUserID")),
       fechaDeCreacion,
       storeId)
@@ -50,7 +54,42 @@ export class ListadepreciosService {
     
     
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    console.log("la lista de precios q voy a pasar------------------------------------")
+    console.log(listadeprecios)
     
     return this._http.post(this.url+'/ldp/registrarLDP',params,{headers});
   }
+  getListasdpByStoreIdAndPopulateInfo(storeId:string){
+    
+    console.log("estoy dentro del getListasdpByStoreIdAndPopulateInfo desde el listadeprecios.service.ts")
+    let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
+    
+    return this._http.get(this.url+'/ldp/store/'+storeId,{headers:cabeceras})
+  }
+  getListaDpByIdAndPopulateProducts(listaId:string){    
+    console.log("MENSAJE: getListasdpByStoreIdAndPopulateInfo() desde el listadeprecios.service.ts ListaID: " +listaId)
+    let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
+    
+    return this._http.get(this.url+'/ldp/'+listaId,{headers:cabeceras})
+
+  }
+  async setListaId(listaId:string){
+    this.listaOrigen=listaId
+  }
+  async getListaId(){
+    return this.listaOrigen
+  }
+  clearListaId(){
+    this.listaOrigen=""
+  }
+  
+  /*
+  this._listadeprecioService.enviarListId.subscribe(async (data) => {
+    console.log("voy a en el suuuuuuussssssbbbbbiiiiiiiibeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+    console.log("MENSAJE: Recibo un listaId ", data.data)
+    this.listaOrigenId = data.data
+    return data.data      
+  })
+  */
+
 }

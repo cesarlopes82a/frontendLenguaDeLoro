@@ -68,7 +68,7 @@ export class NuevoProductoComponent implements OnInit {
         next: (v) => {
           console.log("despues del saveProducto")
           console.log(v)
-         // this._router.navigate(['/tienda', this.storeId,'productos']);     
+          this._router.navigate(['/tienda', this.storeId,'productos']);     
         },
         error: (e) => console.error(e),
         complete: () => console.info('complete') 

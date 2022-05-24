@@ -1,5 +1,62 @@
+
+
 <h1>L  I  S  T  A  S     -     D  E    -    P  R  E  C  I  O  S</h1>
 
 <div class="conteiner col-md-10 offset-md-1 center">
   <a [routerLink]="['/tienda/' + this.storeId + '/ldp/nuevaldp']" [routerLinkActive]="['actived']"><span>Nueva Lista de precios</span></a>
 </div>
+
+
+<table class="table table table-fit">
+  <div class="container">
+      <div class="col-md-12">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                L  I  S  T  A  S     -     D  E    -    P  R  E  C  I  O  S: 
+              </div>
+              <div class="panel-body">
+                  <table class="table  table-striped" >
+                      <thead>
+                          <tr>
+                              <th>#</th>
+                              <th>Nombre</th>
+                              <th>Creador</th>
+                              <th>Fecha de creacion</th>
+                              
+                          </tr>
+                      </thead>
+                      <!-- voy a recorrer todos los usuarios -->
+                      <tbody *ngFor="let lista of listasdeprecios; let i = index;">
+                        <tr data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                      
+                          <td>{{i}}</td>                
+                          <td>{{listasdeprecios[i].listaNombre}}</td>
+                          <td>{{listasdeprecios[i].creadapor.username}}</td>                                            
+                          <td>{{listasdeprecios[i].fechaDeCreacion | date:'MM/dd/yyyy h:mm:ss'}}</td>
+                    
+                          <td>
+
+                              <p *ngIf="consultoEstadoEliminar(listasdeprecios[i]._id)==false">
+                                  <a class="iconoenlinea" [routerLink]="['/productos/producto',listasdeprecios[i]._id]"><i class="fas fa-eye" style="margin-left: 5%;"></i></a>
+                                  <a class="iconoenlinea" [routerLink]="['/productos/editar/', listasdeprecios[i]._id]"><i class="fa-solid fa-pencil" style="margin-left: 5%;"></i></a>
+                                  <a (click)="pidoEliminar(listasdeprecios[i]._id)" class="iconoenlinea col-xs-2 margin-left"><i class="fas fa-trash-alt" style="margin-left: 5%;"></i></a>
+                                  <a (click)="pidoClonar(listasdeprecios[i]._id)" class="iconoenlinea" [routerLink]="['/tienda/' + this.storeId + '/ldp/nuevaldp']" [routerLinkActive]="['actived']"><i class="fa-regular fa-clone" style="margin-left: 5%;"></i></a>
+
+                              </p>
+                              <p *ngIf="consultoEstadoEliminar(listasdeprecios[i]._id)==true">
+                                  <a (click)="deleteLista(listasdeprecios[i]._id)"></a>
+                                  <a (click)="deleteLista(listasdeprecios[i]._id)"><i class="fas fa-check" style="color: rgb(24, 185, 24); "></i></a>
+                                  <a (click)="pidoCancelarEliminar()"><i class="fas fa-check" style="color: red; margin-left: 50%; "></i></a>
+                              </p>                                                            
+                          </td>
+                          <td *ngIf="defaultListaDP==listasdeprecios[i]._id"><i class="fa-solid fa-check" style="color: green;"></i></td>
+                      </tr>
+
+                          
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</table>

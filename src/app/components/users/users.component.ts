@@ -218,6 +218,7 @@ export class UsersComponent implements OnInit {
   deleteUsuario(idUsuario:string){
     console.log("intento eliminar el usuario")
   }
+  
 
   async getUsers(){
     this._userService.getUsers()

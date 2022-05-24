@@ -78,7 +78,7 @@
                           <td class="align-middle">{{_productsList[i].precioVenta | currency: '$'}}</td>
                       </div>
                       <div class="col">
-                          <button mat-raised-button color="primary" (click)="openDialogPrecio(_productsList[i].costoUnitario, _productsList[i].productName, i)">Edit</button>
+                          <button mat-raised-button color="primary" (click)="openDialogPrecio(_productsList[i].costoUnitario, _productsList[i].productName, _productsList[i].precioVenta, i)">Edit</button>
                       </div>
                   </div>
               </td>

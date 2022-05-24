@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { StoreService } from 'src/app/services/store.service';
-import { BranchService } from  'src/app/services/branch.service';
-import { Store } from 'src/app/models/store';
-import { global } from 'src/app/services/global';
+import { StoreService } from '../../../services/store.service';
+import { BranchService } from  '../../../services/branch.service';
+import { Store } from '../../../models/store';
+import { global } from '../../../services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
-import { ComprasService } from 'src/app/services/compras.service';
+import { UserService } from '../../../services/user.service';
+import { ComprasService } from '../../../services/compras.service';
 
 
 @Component({
