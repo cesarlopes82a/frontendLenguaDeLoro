@@ -58,9 +58,6 @@ export class NewldpComponent implements OnInit {
       }
     )
 
-    
-
-    
   }
   
   onSubmit(form: any){

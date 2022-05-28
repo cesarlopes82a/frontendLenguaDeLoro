@@ -6,10 +6,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import {MatTableModule} from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCardModule} from '@angular/material/card';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -68,6 +73,10 @@ import { LDPmainComponent } from './components/store/storeDashboard/storeLdP/mai
 import { NewldpComponent } from './components/store/storeDashboard/storeLdP/new/newldp/newldp.component';
 import { TransformNullsPipe } from './transform-nulls.pipe';
 import { DialogprecioComponent } from './components/store/storeDashboard/storeLdP/dialogPrecio/dialogprecio/dialogprecio.component';
+import { DialogventaComponent } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogventa/dialogventa.component';
+import { FiltroproductosPipe } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogventa/pipes/filtroproductos.pipe';
+
+
 
 
 
@@ -120,6 +129,10 @@ import { DialogprecioComponent } from './components/store/storeDashboard/storeLd
     NewldpComponent,
     TransformNullsPipe,
     DialogprecioComponent,
+    DialogventaComponent,
+    FiltroproductosPipe,
+    
+    
 
 
   ],
@@ -136,7 +149,12 @@ import { DialogprecioComponent } from './components/store/storeDashboard/storeLd
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatCardModule
 
   ],
   providers: [
@@ -146,6 +164,11 @@ import { DialogprecioComponent } from './components/store/storeDashboard/storeLd
       useClass: TokenInterceptorService,
       multi: true
     },
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+
     MatSidenav
   ],
   bootstrap: [AppComponent],

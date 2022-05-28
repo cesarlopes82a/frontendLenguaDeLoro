@@ -9,149 +9,63 @@
       <form #ventaForm="ngForm" (ngSubmit)="onSubmit(ventaForm)">
 
         <div class="form-row">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
               <label for="vendedorName">Vendedor</label>
               <input type="text" class="form-control" id="vendedorName" placeholder="Nombre" name="vendedorName" [ngModel]="vendedorName" disabled>
               
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
               <label for="vendedorRole">Rol Asignado</label>
               <input type="text" class="form-control" id="vendedorRole" placeholder="Role" name="vendedorRole" [ngModel]="vendedorRole" disabled>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
               <label for="fechaActual">Fecha</label>
               <input class="form-control" name="fechaActual" if="fechaActual" [ngModel]="fechaActual" type="date" disabled>
             </div>
-        </div>
-        <hr>
-        <div class="form-row">          
-          <div class="form-group col-md-4">
-            <label for="vendedorName">Lista de precios</label>
-              <select class="form-control" name="listadp" id="lista" #producto="ngModel" [(ngModel)]="listadpIdSeleccionada" (change)="onChangeLDP($event)" >
-              <option disabled selected [value]="null">Seleccione el producto</option>
-              <option *ngFor="let lista of listasdeprecios" [value]="lista._id" >{{lista.listaNombre}}</option>            
-              </select>
-          </div>
-        </div>
-        <hr>
-        
-        <!--
-        <div class="form-group row">
-          <div class="col-md-2">Producto</div>
-          <div class="form-group col-md-4">
-              <select class="form-control" [disabled]="habilitoEscaneearCod" name="producto" id="producto" #producto="ngModel" [(ngModel)]="productoId" (change)="onChangeProducto($event)" >
-              <option disabled selected [value]="null">Seleccione el producto</option>
-              <option *ngFor="let producto of productos" [value]="producto._id" >{{producto.productName}}</option>            
-              </select>
-          </div>
-        </div>
-        -->
-
-       
-<!--
-        <div class="form-group row">
-            <div class="col-md-2">Vendedor</div>
-            <div class="form-group col-md-4">
-                <select class="form-control" name="vendedor" id="vendero" #vendedor="ngModel" [(ngModel)]="vendedorName" >
-                <option disabled selected [value]="null">Seleccione proveedor</option>
-                <option *ngFor="let proveedor of proveedores" [value]="proveedor._id">{{proveedor.proveedorName}}</option>            
-                </select>
-            </div>          
-        </div>        
-
-        <div class="form-group row">
-            <div class="col-md-2">Producto</div>
-            <div class="form-group col-md-4">
-                <select class="form-control" [disabled]="habilitoEscaneearCod" name="producto" id="producto" #producto="ngModel" [(ngModel)]="productoId" (change)="onChangeProducto($event)" >
+            <div class="form-group col-md-3">
+              <label for="selectLista">Lista de precios</label>
+              <select class="form-control" name="listadp" #lista="ngModel" [(ngModel)]="listadpIdSeleccionada" (change)="onChangeLDP($event)" >
                 <option disabled selected [value]="null">Seleccione el producto</option>
-                <option *ngFor="let producto of productos" [value]="producto._id" >{{producto.productName}}</option>            
-                </select>
+                <option *ngFor="let lista of listasdeprecios" [value]="lista._id" >{{lista.listaNombre}}</option>            
+              </select>
             </div>
-            <div class="form-group col-md-4">
-                
-                <input type="text" [disabled]="!habilitoEscaneearCod" class="form-control" id="prodCodigo" placeholder="Escanee el código" name="prodCodigo" #prodCodigo="ngModel" [(ngModel)]="productoCodigo" required>
-                <input type="checkbox" name="habilitoEscaneearCod" [(ngModel)]="habilitoEscaneearCod" />
-                <label for="checkbox">Habilitar</label>
-            </div>       
-        </div>
-
-        <div class="form-group row">
-          <label for="compraDate" class="col-sm-2 col-form-label">Fecha de compra</label>
-          <div class="col-sm-3">
-            <input name="fechaDeCompra" class="form-control"  [(ngModel)]="fechaDeCompra" type="date" required>
-          </div>
-          <label for="compraDate" class="col-sm-2 col-form-label">Fecha de Vencimiento</label>
-          <div class="col-sm-3">
-            <input [disabled]="!tieneVencimiento" class="form-control" name="date" [(ngModel)]="fechaDeVencimiento" type="date">
-            <input type="checkbox" name="tieneVencimiento" [(ngModel)]="tieneVencimiento" />
-            <label for="checkbox">Habilitar</label>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="inputPrecio" class="col-sm-2 col-form-label">Precio Unitario $</label>
-          <div class="col-sm-2">
-            <input type="number" class="form-control" id="inputPrecio" placeholder="Precio" name="inputPrecio" #inputPrecio="ngModel" [(ngModel)]="precioUnitario" required>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="inputCantidad" class="col-sm-2 col-form-label">Cantidad de Unidades/KG/Lts</label>
-          <div class="col-sm-2">
-            <input type="number" class="form-control" id="inputCantidad" placeholder="Cantidad" name="inputCantidad" #inputCantidad="ngModel" [(ngModel)]="cantidad" required>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputCantidad" class="col-sm-2 col-form-label">Informacion relevante a considerar</label>
-          <div class="col-sm-6">
-            <textarea class="form-control" id="textareaInfo" placeholder="Informacion que considere de utilidad" name="textareaInfo" #textareaInfo="ngModel" [(ngModel)]="comentario" >
-
-            </textarea>
-          
-          </div>
-        </div>
-     
-       
-        
-        <div class="form-group row">
-          <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary" [disabled]="!compraForm.form.valid  ">Confirmar</button>
+            <div class="form-group col-md-2">
+              <label for="fechaActual">Fecha</label>
+              <button name="selectProd" mat-raised-button color="primary" (click)="openDialogVenta()">Seleccionar Productos</button>
+            </div>
             
-          
-            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="!proveedorSeleccionado && proveedor.touched">
-                Seleccione un <strong>proveedor</strong> para poder confirmar!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="(!productoSeleccionado && producto.touched) || (prodCodigo.touched && !prodCodigo.valid)">
-              Seleccione un <strong>producto</strong> para poder confirmar!
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-
-            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorNroCto.touched && !proveedorNroCto.valid">
-                Ingrese un <strong>numero de telefono valido </strong> para poder confirmar!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorEmailCto.touched && !proveedorEmailCto.valid">
-                Ingrese un <strong>Email valido </strong> para poder confirmar!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-         
-
-
-
-
-          </div>
-         
         </div>
-        -->
+       
+        <mat-card class="example-card">
+          <mat-card-subtitle>Descripcion</mat-card-subtitle>
+          <mat-card-content>          
+            <p>{{listadpDescripcion}}</p>
+          </mat-card-content>
+        </mat-card>
+        <hr>
+
+        <div class="example-container mat-elevation-z8">
+          <table mat-table [dataSource]="listaProdSeleccionados">
+            <!-- Item Column -->
+            <ng-container matColumnDef="item">
+              <th mat-header-cell *matHeaderCellDef> Item </th>
+              <td mat-cell *matCellDef="let transaction"> {{listaProdSeleccionados.item}} </td>
+              <td mat-footer-cell *matFooterCellDef> Total </td>
+            </ng-container>
+        
+            <!-- Cost Column -->
+            <ng-container matColumnDef="cost">
+              <th mat-header-cell *matHeaderCellDef> Cost </th>
+              <td mat-cell *matCellDef="let transaction"> {{listaProdSeleccionados.cost | currency}} </td>
+              <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+          </table>
+        </div>
+
 
       </form>
 

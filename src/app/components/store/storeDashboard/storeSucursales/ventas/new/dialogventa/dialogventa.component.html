@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>Seleccionar Productos: </h2>
+<hr>
+
+<div class="container ">
+    <h1></h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="text" class="form-control" name="filtroProd" placeholder="Buscar..." [(ngModel)]="filtroProd" (input)="onChangeInputBuscar($event)">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <input type="number" class="form-control" placeholder="Cant =1 " [(ngModel)]="cantProductos">
+        </div>
+
+    </div>
+    <div class="row">
+
+    </div>
+    <div class="row mat-elevation-z8">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>                        
+                        <th>Producto</th>
+                        <th>Codigo</th>
+                        <th>Rubro</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr (click)="clickFila(producto.product.codigo)" *ngFor="let producto of listasdeprecios.ldpProducts | filtroproductos: filtroProd" >                        
+                        <td>{{producto.product.productName}}</td>
+                        <td>{{producto.product.codigo}}</td>
+                        <td>{{producto.product.categoriaRubro}}</td>
+                        <td>{{producto.precioVenta | currency: '$'}}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-1">
+            <!--
+            <button type="button" class="btn btn-success" mat-dialog-close="agregar">Agregar</button>
+            -->
+        </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-primary" mat-dialog-close="close" >Cerrar</button>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+
+    
+    
+</div>
