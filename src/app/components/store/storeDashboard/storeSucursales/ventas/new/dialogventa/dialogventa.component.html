@@ -1,3 +1,4 @@
+
 <h2 mat-dialog-title>Seleccionar Productos: </h2>
 <hr>
 
@@ -6,11 +7,11 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <input type="text" class="form-control" name="filtroProd" placeholder="Buscar..." [(ngModel)]="filtroProd" (input)="onChangeInputBuscar($event)">
+                <input type="text" class="form-control" name="filtroProd" placeholder="Buscar..." [(ngModel)]="filtroProd">
             </div>
         </div>
         <div class="col-md-2">
-            <input type="number" class="form-control" placeholder="Cant =1 " [(ngModel)]="cantProductos">
+            <input type="number" class="form-control" placeholder="Cant =1 " [(ngModel)]="cantProductos" (change)="onChangeInputCantidad($event)">
         </div>
 
     </div>

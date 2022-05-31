@@ -14,7 +14,8 @@ import {MatTableModule} from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -75,6 +76,7 @@ import { TransformNullsPipe } from './transform-nulls.pipe';
 import { DialogprecioComponent } from './components/store/storeDashboard/storeLdP/dialogPrecio/dialogprecio/dialogprecio.component';
 import { DialogventaComponent } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogventa/dialogventa.component';
 import { FiltroproductosPipe } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogventa/pipes/filtroproductos.pipe';
+import { FiltrofechavtasPipe } from './components/store/storeDashboard/storeSucursales/ventas/listar/pipes/filtrofechavtas.pipe';
 
 
 
@@ -131,6 +133,7 @@ import { FiltroproductosPipe } from './components/store/storeDashboard/storeSucu
     DialogprecioComponent,
     DialogventaComponent,
     FiltroproductosPipe,
+    FiltrofechavtasPipe,
     
     
 
@@ -154,7 +157,9 @@ import { FiltroproductosPipe } from './components/store/storeDashboard/storeSucu
     MatInputModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ],
   providers: [

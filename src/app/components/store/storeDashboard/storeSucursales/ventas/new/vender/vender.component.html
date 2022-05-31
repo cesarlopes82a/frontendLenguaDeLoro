@@ -30,8 +30,8 @@
               </select>
             </div>
             <div class="form-group col-md-2">
-              <label for="fechaActual">Fecha</label>
-              <button name="selectProd" mat-raised-button color="primary" (click)="openDialogVenta()">Seleccionar Productos</button>
+              <label for="fechaActual">Productos</label>
+              <button name="selectProd" mat-raised-button class="text-secondary bg-warning" (click)="openDialogVenta()">Seleccionar Productos</button>
             </div>
             
         </div>
@@ -44,26 +44,129 @@
         </mat-card>
         <hr>
 
+
         <div class="example-container mat-elevation-z8">
-          <table mat-table [dataSource]="listaProdSeleccionados">
+          <table mat-table [dataSource]="dataSource">
             <!-- Item Column -->
-            <ng-container matColumnDef="item">
-              <th mat-header-cell *matHeaderCellDef> Item </th>
-              <td mat-cell *matCellDef="let transaction"> {{listaProdSeleccionados.item}} </td>
-              <td mat-footer-cell *matFooterCellDef> Total </td>
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef> Nombre </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.nombre}} </td>
+              <td mat-footer-cell *matFooterCellDef>  </td>
             </ng-container>
         
             <!-- Cost Column -->
-            <ng-container matColumnDef="cost">
-              <th mat-header-cell *matHeaderCellDef> Cost </th>
-              <td mat-cell *matCellDef="let transaction"> {{listaProdSeleccionados.cost | currency}} </td>
+            <ng-container matColumnDef="codigo">
+              <th mat-header-cell *matHeaderCellDef> Codigo </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.codigo}} </td>
+              <td mat-footer-cell *matFooterCellDef>  </td>
+            </ng-container>
+
+            <!-- Rubro Column -->
+            <ng-container matColumnDef="rubro">
+              <th mat-header-cell *matHeaderCellDef> Rubro </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.rubro}} </td>
+              <td mat-footer-cell *matFooterCellDef>  </td>
+            </ng-container>
+
+            <!-- Cantidad Column -->
+            <ng-container matColumnDef="cantidad">
+              <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.cantidad}} </td>
+              <td mat-footer-cell *matFooterCellDef>  </td>
+            </ng-container>
+
+            <!-- Precio Column -->
+            <ng-container matColumnDef="precio">
+              <th mat-header-cell *matHeaderCellDef> Precio </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.precio  | currency}} </td>
+              <td mat-footer-cell *matFooterCellDef> Total </td>
+            </ng-container>
+
+            <!-- Total Column -->
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef> Total </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.total  | currency}} </td>
               <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let transaction">
+                <button mat-raised-button color="warn" (click)="eliminarProducto(transaction)">Eliminar</button>
+              </td>
+              <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
         
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
           </table>
+        </div>
+
+        <hr>
+
+        <mat-card class="example-card">
+          <mat-card-subtitle>Forma de pago</mat-card-subtitle>
+          <mat-card-content>          
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <td><mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Efectivo</mat-label>
+                  <input matInput type="number" placeholder="Monto en efectivo" name="montoEfectivo" [(ngModel)]="montoEfectivo">
+                  <span matPrefix>$&nbsp;</span>
+                  <mat-hint align="start"><strong>Monto recibido en pesos</strong> </mat-hint>            
+                </mat-form-field></td>
+              </div>
+              <div class="form-group col-md-1">
+    
+              </div>
+              <div class="form-group col-md-2">
+                <td><mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Tarjeta</mat-label>
+                  <input matInput type="number" placeholder="Monto con tarjeta C/D" name="montoTarjeta" [(ngModel)]="montoTarjeta">
+                  <span matPrefix>$&nbsp;</span>
+                  <mat-hint align="start"><strong>Monto cobrado con tarjeta C/D</strong> </mat-hint>
+                </mat-form-field></td>
+              </div>
+              <div class="form-group col-md-1">
+    
+              </div>
+              <div class="form-group col-md-2">
+                <mat-form-field appearance="fill" floatLabel="always">
+                  <mat-label>Saldo</mat-label>
+                  <input matInput type="number" class="example-right-align" placeholder="0" name="saldoPendiente" [ngModel]="saldoPendiente">
+                  <span matPrefix>$&nbsp;</span>
+               
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-row"></div>
+            <form class="example-form">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Comentario</mat-label>
+                <input matInput #message maxlength="256" placeholder="Ej. se canselará el saldo a fin de mes..." name="comentarioVenta" [(ngModel)]="comentarioVenta">
+                <mat-hint align="start"><strong>Informacion adjunta a la venta.</strong> </mat-hint>
+                <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+              </mat-form-field>
+            </form>
+
+          </mat-card-content>
+
+        </mat-card>
+        
+
+
+       <hr>
+       
+
+        <div class="container-fluid h-100">
+          <div class="row w-100">
+            <div class="col">
+              <button class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 " (click)="solicitarRegistrarCompra()"> Finalizar compra </button>
+            </div>
+          </div>
+      
         </div>
 
 

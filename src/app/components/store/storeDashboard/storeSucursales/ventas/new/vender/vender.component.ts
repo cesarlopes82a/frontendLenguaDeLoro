@@ -1,9 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ListadepreciosService } from '../../../../../../../services/listadeprecios.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogventaComponent } from '../dialogventa/dialogventa.component';
 import { VentasService } from 'src/app/services/ventas.service';
+import {MatTableDataSource} from '@angular/material/table';
+
+export interface prodSeleccionadoVta {
+  nroOrden: number
+  nombre: string;
+  codigo: string;
+  rubro: string;
+  cantidad: number;
+  precio: number;
+  total: number;
+}
 
 @Component({
   selector: 'app-vender',
@@ -14,61 +25,67 @@ import { VentasService } from 'src/app/services/ventas.service';
 export class VenderComponent implements OnInit {
   public vendedorName!: string;
   public vendedorRole!: string;
+  public vendedorId!: string;
   public sucursalName!: string;
   public fechaActual!: string; 
   public horaActual!:string;
-  public storeId!:string;
-  public listasdeprecios!:any
+  public branchId!:string;
+  public listasdeprecios!:any         //esto es lo que me llega del backen
   public listadpIdSeleccionada!: string
   public listadpSeleccionadaFull!:any
   public listadpDescripcion!:string
-  public listaProdSeleccionados: any = [
-    {item: 'Beach ball', cost: 4},
-    {item: 'Towel', cost: 5},
-    {item: 'Frisbee', cost: 2},
-    {item: 'Sunscreen', cost: 4},
-    {item: 'Cooler', cost: 25},
-    {item: 'Swim suit', cost: 15},
-  ]
+  public listaProdSeleccionados: prodSeleccionadoVta[] = []
+  public cantProdSeleccionado:number = 1
+  public nroOrden:number = 0
+  public totalVenta:number = 0
+  public saldoPendiente:number = 0
+  public montoEfectivo!:number
+  public montoTarjeta!:number
+  public comentarioVenta!:string
+  public montoNada!:number
+  dataSource!: MatTableDataSource<any>;   // es el datasource de la tabla de prod seleccionados que se muestra en la interfaz
 
-  displayedColumns = ['item', 'cost'];
+  displayedColumns = ['nombre', 'codigo', 'rubro', 'cantidad','precio', 'total','action'];
     
-
   constructor(
     private _route: ActivatedRoute,
+    private _router: Router,
     private _listadpSevice: ListadepreciosService,
     public _ventasService:VentasService,
     private dialog: MatDialog,
-    
-
+    private cd:ChangeDetectorRef
   ) { 
     this.vendedorName = String(localStorage.getItem("loggedUserName"))
     this.vendedorRole = String(localStorage.getItem("loggedUserRole"))
-    this.fechaActual =  new Date().toISOString().split('T')[0];
-    this.horaActual = new Date().toLocaleTimeString()
-    //this.fechaActual = this.fechaActual+ " "+ this.horaActual
-    
+    this.vendedorId = String(localStorage.getItem("loggedUserID"))
 
+    this.fechaActual =  new Date().toISOString().split('T')[0];
+
+    this.horaActual = new Date().toLocaleTimeString()
+    console.log("la hoaaaaaaa: " + this.horaActual)
+    
+    //this.fechaActual = this.fechaActual+ " "+ this.horaActual
   }
 
   ngOnInit(): void {
-
-    
-
-  /** Gets the total cost of all transactions. */
- 
     this._ventasService.enviarProductoSeleccionado.subscribe( data => {
       console.log("VENDER<--COMPONENTE RECIBO EL PRODUCTO.................-------------")
       console.log(data.data)
       this.agregarProducto(data.data)
-    //  this.dialogRef.close("salgoooooooooo")     
     })
+    this._ventasService.enviarCantProductoSeleccionado.subscribe( data => {
+      console.log("enviarCantProductoSeleccionado<--COMPONENTE RECIBO cantidad.................-------------")
+      console.log(data.data)
+      this.cantProdSeleccionado=data.data
+      
+    })
+    
 
     this._route.params.subscribe(
       params => {
-        this.storeId = params['id']
-        console.log("esto es lo que me trajo el params: storeId:" + this.storeId)
-        this.getListasdpByStoreIdAndPopulateInfo(this.storeId)        
+        this.branchId = params['id']
+        console.log("esto es lo que me trajo el params: storeId:" + this.branchId)
+        this.getListasdpByStoreIdAndPopulateInfo(this.branchId)        
       }
     )
     
@@ -81,8 +98,8 @@ export class VenderComponent implements OnInit {
       }
     }
   }
-  getListasdpByStoreIdAndPopulateInfo(storeId: string){
-    this._listadpSevice.getListasdpByStoreIdAndPopulateInfo(storeId)
+  getListasdpByStoreIdAndPopulateInfo(branchId: string){
+    this._listadpSevice.getListasdpByStoreIdAndPopulateInfo(branchId)
     .subscribe({
       next: (v) => {
         console.log("estos son las listas de precios de la store ")
@@ -123,18 +140,87 @@ export class VenderComponent implements OnInit {
     });
   }
   agregarProducto(producto:any) {
-    console.log("agrego este producto")
-    console.log(producto)
+    
+    let newProducto: prodSeleccionadoVta
+    this.nroOrden = this.nroOrden + 1
+    newProducto = {
+      nroOrden: this.nroOrden,
+      nombre: producto.product.productName,
+      codigo: producto.product.codigo,
+      rubro: producto.product.categoriaRubro,
+      cantidad: this.cantProdSeleccionado,
+      precio: producto.precioVenta,
+      total: producto.precioVenta*this.cantProdSeleccionado
+    }
+    
+    
+    this.listaProdSeleccionados.push(newProducto)
+    this.cantProdSeleccionado = 1
+  
+    this.dataSource = new MatTableDataSource(this.listaProdSeleccionados);
+    this.cd.detectChanges()   //esto es importante para que salga el error "ng0100 expression has changed after it was checked"
   }
 
-  getTotalCost() {
-    return this.listaProdSeleccionados.map((t: { cost: any; }) => t.cost).reduce((acc: any, value: any) => acc + value, 0);
+  eliminarProducto(transaction:any){
+ 
+    this.listaProdSeleccionados = this.listaProdSeleccionados.filter((item) => item.nroOrden !== transaction.nroOrden);
+    console.log("cantidad: " + this.listaProdSeleccionados.length)
+
+    this.dataSource = new MatTableDataSource(this.listaProdSeleccionados);
+    this.cd.detectChanges()   //esto es importante para que salga el error "ng0100 expression has changed after it was checked"
+
   }
+  getTotalCost() {
+    this.totalVenta = this.listaProdSeleccionados.map((t: { total: any; }) => t.total).reduce((acc: any, value: any) => acc + value, 0);
+    this.calcularSaldoPendiente()
+  //this.saldoPendiente = this.totalVenta
+    return this.totalVenta
+  }
+
+  calcularSaldoPendiente(){
+    setTimeout(()=>{
+      this.saldoPendiente = this.totalVenta
+      let montoEfectivoAUX = 0
+      let montoTarjetaAUX = 0
+      if(this.montoEfectivo) montoEfectivoAUX=this.montoEfectivo
+      if(this.montoTarjeta) montoTarjetaAUX=this.montoTarjeta
+
+      this.saldoPendiente = this.totalVenta - montoEfectivoAUX - montoTarjetaAUX
+    },1)    
+  }
+ 
 
   onSubmit(form: any){
-    
+    console.log("los prodddddddddddddddddddddddd")
+    console.log(this.listaProdSeleccionados)
+    console.log(this.listaProdSeleccionados.length)
+    for (let [index, lista] of this.listaProdSeleccionados.entries()) {
+      console.log(lista)
+  
 
-    console.log("onsubmit")
+    console.log("onsubmitttttttttt")
+    }
+  }
+  solicitarRegistrarCompra(){
+    this._ventasService.registrarVenta(this.listaProdSeleccionados, this.totalVenta, this.montoEfectivo, this.montoTarjeta, this.comentarioVenta, this.branchId, this.vendedorId).subscribe({
+      next: (v) => {
+        console.log("MENSAJE: Respuesta exitosa desde el backend")
+        console.log(v)
+        
+        //limpio todo para dejar listo para la procima venta
+        this.listaProdSeleccionados.splice(0, this.listaProdSeleccionados.length);
+        this.dataSource = new MatTableDataSource(this.listaProdSeleccionados);
+        console.log(this.listaProdSeleccionados)
+        this.montoEfectivo = this.montoNada
+        this.montoTarjeta = this.montoNada
+        this.comentarioVenta=""
+        //--------------------------------------------
+        
+           
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('complete') 
+    })
   }
 
 }

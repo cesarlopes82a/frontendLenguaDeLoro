@@ -16,7 +16,6 @@ export class ComprasService {
     this.url = global.url
   }
 
-  
   registrarCompra(compra: any): Observable<any>{
 
     let params = JSON.stringify(compra)

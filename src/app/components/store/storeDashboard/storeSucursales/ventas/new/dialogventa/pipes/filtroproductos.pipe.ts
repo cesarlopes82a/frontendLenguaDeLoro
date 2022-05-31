@@ -24,7 +24,7 @@ export class FiltroproductosPipe implements PipeTransform {
         if(product.product.codigo == arg){
           this._ventasService.setEstadoCoinicidenciaFullCod(true)
           this._ventasService.enviarProductoSeleccionado.emit({
-            data: product.product
+            data: product
           })  
                        
         }

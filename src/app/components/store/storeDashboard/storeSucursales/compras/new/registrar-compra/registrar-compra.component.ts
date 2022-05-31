@@ -77,7 +77,6 @@ export class RegistrarCompraComponent implements OnInit {
     this.compra.precioCompraUnitario = this.precioUnitario
     this.compra.fechaCompra = this.fechaDeCompra
     if(this.tieneVencimiento == true){
-
       this.compra.fechaVencimiento = this.fechaDeVencimiento
     }else{
       this.compra.fechaVencimiento = "2999/01/01"
@@ -86,6 +85,7 @@ export class RegistrarCompraComponent implements OnInit {
     
     console.log(this.compra)
 
+    
     this._comprasService.registrarCompra(this.compra).subscribe({
       next: (v) => {
         console.log("despues del registrarCompra")

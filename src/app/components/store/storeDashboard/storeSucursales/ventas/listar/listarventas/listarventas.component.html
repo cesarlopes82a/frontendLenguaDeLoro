@@ -1,1 +1,142 @@
-<p>listarventas works!</p>
+
+
+<hr>
+
+<div class="card ">
+    <div class="card-header">
+        V E N T A S
+    </div>
+
+
+    
+
+    <div class="card-body">
+        <div class="example-container mat-elevation-z8">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="range" [rangePicker]="picker" >
+                  <input matStartDate formControlName="start" placeholder="Start date"  name="rangeStart" [(ngModel)]="startDate" >
+                  <input matEndDate formControlName="end" placeholder="End date" name="rangeEnd" [(ngModel)]="endDate">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker ></mat-date-range-picker>
+              <!--
+                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+              -->
+            </mat-form-field>
+
+            <button type="submit" class="btn btn-primary" (click)="cambioFechas()">Confirmar</button>
+  
+              <hr>
+
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+                
+
+                <ng-container *ngFor="let column of columnsToDisplay">
+                    <ng-container matColumnDef="{{column}}">
+                        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                        <ng-container *ngIf="column == 'fecha'">
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.fecha | date:'medium'}} </td> 
+                            <td mat-footer-cell *matFooterCellDef>  </td>                         
+                        </ng-container>
+                        <ng-container *ngIf="column == 'sucursal'">
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.sucursal.branchName}} </td>                        
+                            <td mat-footer-cell *matFooterCellDef>  </td>
+                        </ng-container>
+                        <ng-container *ngIf="column == 'vendedor'">
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.vendedor.username}} </td>
+                            <td mat-footer-cell *matFooterCellDef>  </td>
+                        </ng-container>
+                        <ng-container *ngIf="column == 'tarjeta'">
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.tarjeta | currency }} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{ getTotalTarjeta() | currency }} </td>
+                            <td mat-footer-cell *matFooterCellDef>  </td>
+                        </ng-container>
+                        <ng-container *ngIf="column == 'efectivo'">
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.efectivo | currency}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{ getTotalEfectivo() | currency }} </td>
+                            <td mat-footer-cell *matFooterCellDef>  </td>
+                        </ng-container>
+                        <ng-container *ngIf="column == 'saldo'">
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.saldo | currency}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{ getTotalSaldo() | currency }}  </td>
+                            <td mat-footer-cell *matFooterCellDef>  </td>
+                        </ng-container>
+                        <ng-container *ngIf="column == 'TOTAL'">
+                            <td mat-cell *matCellDef="let transaction"> {{transaction.TOTAL | currency}} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{ getTotalVentas() | currency }} </td>
+                        </ng-container>                       
+                    </ng-container>                                        
+                </ng-container>                              
+                <tr mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
+               
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">                    
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr style="color:rgb(231, 236, 231); background-color: rgb(192, 192, 191);">                        
+                                    <th>Producto</th>
+                                    <th>Codigo</th>
+                                    <th>Rubro</th>
+                                    <th>Precio</th>
+                                    <th>Cant</th>
+                                    <th>SubTotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr *ngFor="let producto of element.productosVendidos" style="color:green; background-color: rgb(248, 248, 247);">                        
+                                    <td>{{producto.nombre}}</td>
+                                    <td>{{producto.codigo}}</td>
+                                    <td>{{producto.rubro}}</td>                                    
+                                    <td>{{producto.precio | currency: '$'}}</td>
+                                    <td>{{producto.cantidad}}</td>
+                                    <td>{{producto.total | currency: '$'}}</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <!--
+                        <div class="example-element-diagram">
+                        <div class="example-element-position"> {{element.position}} </div>
+                        <div class="example-element-symbol"> {{element.symbol}} </div>
+                        <div class="example-element-name"> {{element.name}} </div>
+                        <div class="example-element-weight"> {{element.weight}} </div>
+                        </div>
+                        <div class="example-element-description">
+                        {{element.description}}
+                        <span class="example-element-description-attribution"> -- Wikipedia </span>
+                        </div>
+                        -->
+                    </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" 
+                    [class.example-expanded-row]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+        </div>    
+    </div>
+
+    <hr>

@@ -30,8 +30,8 @@ export class DialogventaComponent implements OnInit {
 
   ngOnInit(): void {
     this._ventasService.enviarProductoSeleccionado.subscribe( data => {
-      console.log("DIALOGCENTA.COMPONENTE RECIBO EL PRODUCTO.................-------------")
-      console.log(data.data)
+      console.log("DIALOGCENTAaaaa.COMPONENTE RECIBO EL PRODUCTO.................-------------")
+      console.log(data)
       Promise.resolve().then(() =>{
         this.limpiar()
       })
@@ -45,13 +45,16 @@ export class DialogventaComponent implements OnInit {
     console.log("click acaaaa")
     console.log(codigo)
   }
-  onChangeInputBuscar($event:any){    
-
-
+  onChangeInputCantidad($event:any){    
+    this._ventasService.enviarCantProductoSeleccionado.emit({
+      data: this.cantProductos
+    })  
   }
+  
   limpiar(){
     console.log("tengo que limpiar")
     this.filtroProd = ""
+    this.cantProductos = 1
   }
   
 

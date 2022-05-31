@@ -226,7 +226,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .example-container {
-    height: 270px;
+    height: 670px;
     overflow: auto;
   }
   
@@ -241,6 +241,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .mat-table-sticky {
     border-top: 1px solid #e0e0e0;
   }
+  .example-full-width {
+    width: 100%;
+  }
+  
 /*********************************NUEVO***********************************
 
 .sidenav {
