@@ -47,6 +47,7 @@ export class ListarventasComponent implements OnInit {
   public totalVtasTarjeta:number = 0
   public totalVtasEfectivo:number =0
   public totalVtasPendienteCobro:number =0
+  
   dataSource!: MatTableDataSource<any>;
   public startDate:string = new Date().toISOString().split('T')[0];
   public endDate:string = new Date().toISOString().split('T')[0];
@@ -116,6 +117,10 @@ export class ListarventasComponent implements OnInit {
     }
 
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.getTotalVentas()
+    this.getTotalEfectivo()
+    this.getTotalTarjeta()
+    this.getTotalSaldo()
     console.log(this.dataSource.filteredData)
     
   }
@@ -133,7 +138,8 @@ export class ListarventasComponent implements OnInit {
     return this.totalVtasTarjeta
   }
   getTotalSaldo() {
-    return (this.getTotalVentas()-this.getTotalEfectivo()-this.getTotalTarjeta())
+    this.totalVtasPendienteCobro = this.getTotalVentas()-this.getTotalEfectivo()-this.getTotalTarjeta()
+    return this.totalVtasPendienteCobro
   }
 
 
@@ -147,20 +153,10 @@ export class ListarventasComponent implements OnInit {
         respuesta = v
         this.ventasByBranchId = respuesta.slice()
 
-        console.log("elllll vvvvvvvvvvvvvvvvv")
-        console.log(v)
-        console.log("el arrrrrrrrrrrrrrrrrraaaaaaaaaaaaaaaaaa")
-        console.log(this.ventasByBranchId)
-
       },
       error: (e) => console.error(e),
       complete: () => {
         console.info('este es el complete') 
-        //no podia leer la listaFoun asi que hago esto y ahora anda
-      //  let listaVentasOriginal = JSON.stringify(this.ventasByBranchId)
-      //  this.ventasByBranchId = JSON.parse(listaVentasOriginal)
-
-        //---------------------------------------
 
         let ELEMENT_DATA: any[] = []
         for (let i=0; i<this.ventasByBranchId.length; i++) {
@@ -184,10 +180,10 @@ export class ListarventasComponent implements OnInit {
         }
 
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-        console.log(this.dataSource)
-
-
+        this.getTotalVentas()
+        this.getTotalEfectivo()
+        this.getTotalTarjeta()
+        this.getTotalSaldo()
 
       }
     })

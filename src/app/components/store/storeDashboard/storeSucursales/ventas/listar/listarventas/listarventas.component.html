@@ -46,22 +46,22 @@
                         </ng-container>
                         <ng-container *ngIf="column == 'tarjeta'">
                             <td mat-cell *matCellDef="let transaction"> {{transaction.tarjeta | currency }} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{ getTotalTarjeta() | currency }} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{ this.totalVtasTarjeta | currency }} </td>
                             <td mat-footer-cell *matFooterCellDef>  </td>
                         </ng-container>
                         <ng-container *ngIf="column == 'efectivo'">
                             <td mat-cell *matCellDef="let transaction"> {{transaction.efectivo | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{ getTotalEfectivo() | currency }} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{ this.totalVtasEfectivo | currency }} </td>
                             <td mat-footer-cell *matFooterCellDef>  </td>
                         </ng-container>
                         <ng-container *ngIf="column == 'saldo'">
                             <td mat-cell *matCellDef="let transaction"> {{transaction.saldo | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{ getTotalSaldo() | currency }}  </td>
+                            <td mat-footer-cell *matFooterCellDef> {{ this.totalVtasPendienteCobro | currency }}  </td>
                             <td mat-footer-cell *matFooterCellDef>  </td>
                         </ng-container>
                         <ng-container *ngIf="column == 'TOTAL'">
                             <td mat-cell *matCellDef="let transaction"> {{transaction.TOTAL | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{ getTotalVentas() | currency }} </td>
+                            <td mat-footer-cell *matFooterCellDef> {{ this.totalVentas | currency }} </td>
                         </ng-container>                       
                     </ng-container>                                        
                 </ng-container>                              
