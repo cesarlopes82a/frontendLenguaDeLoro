@@ -9,6 +9,7 @@ import { global } from '../services/global';
 export class VentasService {
   @Output() enviarProductoSeleccionado: EventEmitter<any> = new EventEmitter();
   @Output() enviarCantProductoSeleccionado: EventEmitter<any> = new EventEmitter();
+  
   public url:string;
 
   public coincidenciaCompletaCodigo!:boolean

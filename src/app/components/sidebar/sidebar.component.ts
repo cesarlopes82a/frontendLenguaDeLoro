@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { global } from 'src/app/services/global';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ComprasService } from 'src/app/services/compras.service';
+import { SidenavService } from 'src/app/services/sidebar.service';
 
 
 
@@ -13,7 +14,7 @@ import { ComprasService } from 'src/app/services/compras.service';
   templateUrl: './sidebar.component.html',
   styles: [
   ],
-  providers:[StoreService, UserService]
+  providers:[StoreService, UserService, SidenavService]
 })
 
 export class SidebarComponent implements OnInit {
@@ -29,7 +30,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private _userService:UserService,
     private _authService:AuthService,
-    private _comprasService:ComprasService
+    private _comprasService:ComprasService,
+    private _sidenavService:SidenavService
   ) { 
     if (this._authService.loggedIn()){
       console.log("ESTOY LOGUEADOOOOOOOOO SIDEBARRRRRRRRR")
@@ -50,6 +52,12 @@ export class SidebarComponent implements OnInit {
     }
     */
   }
+
+  emitirItemMenuSeleccionado(itemMenuSeleccionado: string){
+    
+    localStorage.setItem("itemMenuSeleccionado", itemMenuSeleccionado)
+
+  }
  
   getUserByIdAndPopulateStores = async (userId:string) => {
     console.log("le estoy pasando el if desde el sidebar a getUserByIdAndPopulateStores() " +userId )
@@ -63,14 +71,6 @@ export class SidebarComponent implements OnInit {
         
         global.loggedUser = this.loggedUser
         global.reloadNeeded = false
-       // console.log(this.loggedUser._id)
-        console.log("este es el objeto loggedUser desde el metodo")
-        console.log(this.loggedUser)
-        console.log("la db del usuario ->  " + v.adminMasterDBuser)
-        console.log("el id del usuario ->  " + v._id)
-        console.log("el role del usuario ->  " + v.roles[0].roleName)
-        console.log("el username ->  " + v.username)
-        console.log("el email ->  " + v.email)
         global.loggedUserDB = v.adminMasterDBuser 
         global.loggedUserID = v._id 
         global.loggedUserRole = v.roles[0].roleName

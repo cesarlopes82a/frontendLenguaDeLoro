@@ -10,9 +10,9 @@
 
                     <div *ngIf="loggedUser" class="sub-menu">
                         <div *ngFor="let tienda of loggedUser.tiendas " class="sub-menuTiendas">
-                            <a [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']" ><span>{{tienda.store.storeName}}</span></a>
+                            <a [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(tienda.store.storeName)"><span>{{tienda.store.storeName}}</span></a>
                             <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
-                                <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" ><i class="fa-solid fa-barcode"></i><span>{{branch.branchName}}</span></a>
+                                <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(branch.branchName)" ><i class="fa-solid fa-barcode"></i><span>{{branch.branchName}}</span></a>
                             </div>
                         </div>
                         <div>

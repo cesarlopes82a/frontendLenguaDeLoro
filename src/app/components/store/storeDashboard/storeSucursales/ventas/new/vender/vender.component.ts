@@ -23,6 +23,7 @@ export interface prodSeleccionadoVta {
   ]
 })
 export class VenderComponent implements OnInit {
+  public sucursalNombre = String(localStorage.getItem('itemMenuSeleccionado'))
   public vendedorName!: string;
   public vendedorRole!: string;
   public vendedorId!: string;
@@ -61,10 +62,6 @@ export class VenderComponent implements OnInit {
 
     this.fechaActual =  new Date().toISOString().split('T')[0];
 
-    this.horaActual = new Date().toLocaleTimeString()
-    console.log("la hoaaaaaaa: " + this.horaActual)
-    
-    //this.fechaActual = this.fechaActual+ " "+ this.horaActual
   }
 
   ngOnInit(): void {
@@ -76,8 +73,7 @@ export class VenderComponent implements OnInit {
     this._ventasService.enviarCantProductoSeleccionado.subscribe( data => {
       console.log("enviarCantProductoSeleccionado<--COMPONENTE RECIBO cantidad.................-------------")
       console.log(data.data)
-      this.cantProdSeleccionado=data.data
-      
+      this.cantProdSeleccionado=data.data      
     })
     
 

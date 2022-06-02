@@ -4,12 +4,8 @@
 
 <div class="card ">
     <div class="card-header">
-        V E N T A S
+        V E N T A S: <strong>{{sucursalNombre}}</strong>
     </div>
-
-
-    
-
     <div class="card-body">
         <div class="example-container mat-elevation-z8">
             <mat-form-field appearance="fill">
@@ -29,11 +25,10 @@
 
             <button type="submit" class="btn btn-primary" (click)="cambioFechas()">Confirmar</button>
   
-              <hr>
+            <hr>
 
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
                 
-
                 <ng-container *ngFor="let column of columnsToDisplay">
                     <ng-container matColumnDef="{{column}}">
                         <th mat-header-cell *matHeaderCellDef> {{column}} </th>
@@ -101,30 +96,6 @@
                             </tbody>
                         </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-                        <!--
-                        <div class="example-element-diagram">
-                        <div class="example-element-position"> {{element.position}} </div>
-                        <div class="example-element-symbol"> {{element.symbol}} </div>
-                        <div class="example-element-name"> {{element.name}} </div>
-                        <div class="example-element-weight"> {{element.weight}} </div>
-                        </div>
-                        <div class="example-element-description">
-                        {{element.description}}
-                        <span class="example-element-description-attribution"> -- Wikipedia </span>
-                        </div>
-                        -->
                     </div>
                     </td>
                 </ng-container>

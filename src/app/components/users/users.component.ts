@@ -3,6 +3,7 @@ import { global } from 'src/app/services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -31,21 +32,33 @@ export class UsersComponent implements OnInit {
 
   
   ngOnInit(){
-
-    console.log("-----------------voy a llamar al promise-------------------")
-    const allUsersAndPopilate = Promise.resolve(this.getUsersAndPopulate());
-    console.log("-----------------despues de llamarlo -------------------")
-    allUsersAndPopilate.then((response)=>{
-      console.log("lo que me devuelve el pomise..................")
-      console.log(this.usuarios)
-
+    // busco todos los usuarios para poder cargar la tabla de usuarios
+    this.getUsersAndPopulate()    
+  }
+  async getUsersAndPopulate(){
+    console.log("MENSAJE: Obteniendo lista de usuarios...")
+    await this._userService.getUsersAndPopulate()
+    .subscribe({
+      next: (v) => {
+        console.log("MENSAJE: Lista de usuarios obtenida con exito")
+        console.log(v)
+        this.usuarios =  v
+        this.usuarios.forEach((usuario: any) => {
+          console.log("el rol")
+          usuario.roles.forEach((role: any) => {
+            console.log(role.roleName)  
+          });
+        });
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('este es el complete') 
     })
-
-  //  this.getUsersAndPopulate()
-    console.log("######### Cargué los usuarios #########")
-    console.log(this.usuarios)
   }
 
+  deleteUsuario(idUsuario:string){
+    console.log("intento eliminar el usuario")
+  }
+  
   onChange(tiendaId:string, isChecked: boolean) {
     if(isChecked) {
       console.log("agrego la tienda " + tiendaId + " al array de tiendas seleccionadassss desde le onChange()" )
@@ -56,7 +69,7 @@ export class UsersComponent implements OnInit {
     }
 }
 
-  listarLasTiendas(usuarioId: any){
+  listarLasTiendas(usuarioId: any, accion:string){
 
     this.usrAlQLQuieroAddTienda = usuarioId
 
@@ -160,7 +173,7 @@ export class UsersComponent implements OnInit {
       console.log("esta es una tienda seleccionada")
       console.log(tiendasSeleccionada)
     })
-
+    
   }
 
   addStoreToUserFromRoute(userId:string, storeId:string){
@@ -170,6 +183,7 @@ export class UsersComponent implements OnInit {
         console.log("this._userService.addStoreToUserFromRoute(userId, storeId)")
         console.log("this._userService.addStoreToUserFromRoute("+userId+", "+storeId+")")
         console.log(v)   
+        this.getUsersAndPopulate() 
         this._router.navigate(['/usuarios']); 
 
       },
@@ -195,30 +209,7 @@ export class UsersComponent implements OnInit {
     this.quieroEliminarEsteUsuario="";
   }
 
-  async getUsersAndPopulate(){
-    console.log("estoy en el getUsersAndPopulate(). voy a llamar a _userService.getUsersAndPopulate() ")
-    this._userService.getUsersAndPopulate()
-    .subscribe({
-      next: (v) => {
-        console.log("el next del _userService.getUsersAndPopulate()")
-        console.log("muestro el V")
-        console.log(v)
-        this.usuarios =  v
-        this.usuarios.forEach((usuario: any) => {
-          console.log("el rol")
-          usuario.roles.forEach((role: any) => {
-            console.log(role.roleName)  
-          });
-        });
-      },
-      error: (e) => console.error(e),
-      complete: () => console.info('este es el complete') 
-    })
-  }
-  deleteUsuario(idUsuario:string){
-    console.log("intento eliminar el usuario")
-  }
-  
+
 
   async getUsers(){
     this._userService.getUsers()

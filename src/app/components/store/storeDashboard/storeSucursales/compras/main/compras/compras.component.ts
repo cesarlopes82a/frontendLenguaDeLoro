@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { ComprasService } from 'src/app/services/compras.service';
-
+import { SidenavService } from 'src/app/services/sidebar.service';
 import { global } from 'src/app/services/global';
+
+
+export interface UserData {
+  id: string;
+  name: string;
+  progress: string;
+  fruit: string;
+}
 
 @Component({
   selector: 'app-compras',
   templateUrl: './compras.component.html',
   styles: [
-  ]
+  ],
+  providers:[SidenavService]
 })
+
 export class ComprasComponent implements OnInit {
   public branchId!: string;
   public storeId!: string;
@@ -18,16 +31,28 @@ export class ComprasComponent implements OnInit {
   public comprasByBranch!: any
   public comprasByBranchAndPopulatedInfo!: any
   public quieroEliminarEsteRegistro!:string;
-
+  public sucursalNombre!: string
 
   constructor(
     private _route: ActivatedRoute,
-    private _comprasService:ComprasService,
-  ) { }
+    private _comprasService: ComprasService,
+    private _sidenavService: SidenavService
+  ) {
 
+  }
+
+  ngAfterViewInit() {
+
+  }
+
+
+
+  
   
   ngOnInit(): void {
     
+    this.sucursalNombre = String(localStorage.getItem('itemMenuSeleccionado'))
+        
     this._route.params.subscribe(
       params => {
         this.branchId = params['id']
@@ -57,6 +82,7 @@ export class ComprasComponent implements OnInit {
         console.log("estas son las compras de la sucursal populated")
         console.log(v)
         this.comprasByBranchAndPopulatedInfo =  v
+        if(this.comprasByBranchAndPopulatedInfo.lenght>0) this.sucursalNombre = this.comprasByBranchAndPopulatedInfo[0].branchId.branchName
 
       },
       error: (e) => console.error(e),
@@ -78,6 +104,7 @@ export class ComprasComponent implements OnInit {
     console.log("intento eliminar el usuario")
   }
 
+  
   
 
 }

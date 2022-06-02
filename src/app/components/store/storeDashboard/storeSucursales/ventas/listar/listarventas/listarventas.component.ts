@@ -7,10 +7,10 @@ import {FormGroup, FormControl} from '@angular/forms';
 
 
 export class TableExpandableRowsExample {
-  expandedElement!: PeriodicElement | null;
+  expandedElement!: VentaElement | null;
 }
 
-export interface PeriodicElement {
+export interface VentaElement {
   fecha: string;
   sucursal: string;
   vendedor: string;
@@ -39,7 +39,8 @@ export interface PeriodicElement {
 
 
 export class ListarventasComponent implements OnInit {
- // dataSource!: MatTableDataSource<any>;   // es el datasource de la tabla de prod seleccionados que se muestra en la interfaz
+ 
+  public sucursalNombre = String(localStorage.getItem('itemMenuSeleccionado'))
   public branchId!:string;
   public ventasByBranchId: any[] = []
   public totalVentas:number = 0
@@ -57,7 +58,7 @@ export class ListarventasComponent implements OnInit {
 
   //dataSource = ELEMENT_DATA;
   columnsToDisplay = ['fecha', 'sucursal', 'vendedor', 'tarjeta', 'efectivo', 'saldo', 'TOTAL'];
-  expandedElement!: PeriodicElement | null;
+  expandedElement!: VentaElement | null;
 
   constructor(
     private _route: ActivatedRoute,
@@ -96,7 +97,7 @@ export class ListarventasComponent implements OnInit {
       let fechaVta:string = new Date(this.ventasByBranchId[i].fechaDeVta).toISOString().split('T')[0];
 
       if(fechaVta >= startDate && fechaVta <= endDate){
-        let VentaELEMENT_DATA: PeriodicElement
+        let VentaELEMENT_DATA: VentaElement
         VentaELEMENT_DATA = {
           fecha: this.ventasByBranchId[i].fechaDeVta,
           sucursal: this.ventasByBranchId[i].branchId,
@@ -165,7 +166,7 @@ export class ListarventasComponent implements OnInit {
         for (let i=0; i<this.ventasByBranchId.length; i++) {
           console.log(this.ventasByBranchId[i])
           console.log("fechaaaaaaa: " + this.ventasByBranchId[i].fechaDeVta)
-          let VentaELEMENT_DATA: PeriodicElement
+          let VentaELEMENT_DATA: VentaElement
           
           VentaELEMENT_DATA = {
             fecha: this.ventasByBranchId[i].fechaDeVta,

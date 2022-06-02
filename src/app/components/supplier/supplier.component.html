@@ -1,49 +1,57 @@
-<h1>P R O V E E D O R E S</h1>
-
-<div class="conteiner col-md-10 offset-md-1 center">
-  <a [routerLink]="['/proveedores/crearProveedor']" [routerLinkActive]="['actived']"><span>Nuevo Proveedor</span></a>
-</div>
-
-<div class="row">
-  <div class="col">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Proveedor</th>
-          <th>Contacto</th>
-          <th>email</th>
-          <th>Categoria/Rubro</th>
-
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let proveedor of proveedores"><!--| filtroProductos:filterProductos"> -->
-            <td>{{proveedor.proveedorName}}</td>
-            <td>{{proveedor.nroContacto}}</td>
-            <td>{{proveedor.emailContacto}}</td>
-            <td>{{proveedor.categoriaRubro}}</td>
-           
-
-            <td>
-              <p *ngIf="consultoEstadoEliminar(proveedor._id)==false">
-                <a class="iconoenlinea" [routerLink]="['/proveedores/proveedor',proveedor._id]"><i class="fas fa-eye" style="margin-left: 5%;"></i></a>
-                <a class="iconoenlinea" [routerLink]="['/proveedores/proveedor/editar/', proveedor._id]"><i class="fa-solid fa-pencil" style="margin-left: 5%;"></i></a>
-                <a (click)="pidoEliminar(proveedor._id)" class="iconoenlinea"><i class="fas fa-trash-alt" style="margin-left: 5%;"></i></a>
-              </p>
-              <p *ngIf="consultoEstadoEliminar(proveedor._id)==true">
-                <a (click)="deleteProveedor(proveedor._id)">
-                  <div class="botonEnLinea">
-                    
-                    <img (click)="deleteProveedor(proveedor._id)" src="../../../../assets/img/iconitos/trash-can_115312.png">
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <img (click)="pidoCancelarEliminar()" src="../../../../assets/img/iconitos/cancel_77947.png">
-                  </div>
-                  
-                </a>
-            </p>
-            </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="card ">
+  <div class="card-header">
+      P  R  O  V  E  D  O  R  E  S
   </div>
-</div>
+
+  <button type="submit" class="btn btn-primary" [routerLink]="['/proveedores/crearProveedor']" [routerLinkActive]="['actived']" >Registrar Nuevo Proveedor</button>
+
+  <div class="card-body">
+      <div class="example-container mat-elevation-z8">
+
+
+        <div class="row">
+          <div class="col">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Proveedor</th>
+                  <th>Contacto</th>
+                  <th>email</th>
+                  <th>Categoria/Rubro</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let proveedor of proveedores"><!--| filtroProductos:filterProductos"> -->
+                    <td>{{proveedor.proveedorName}}</td>
+                    <td>{{proveedor.nroContacto}}</td>
+                    <td>{{proveedor.emailContacto}}</td>
+                    <td>{{proveedor.categoriaRubro.categoryName}}</td>
+                  
+
+                    <td>
+                      <p *ngIf="consultoEstadoEliminar(proveedor._id)==false">
+                        <a class="iconoenlinea" [routerLink]="['/proveedores/proveedor',proveedor._id]"><i class="fas fa-eye" style="margin-left: 5%;"></i></a>
+                        <a class="iconoenlinea" [routerLink]="['/proveedores/proveedor/editar/', proveedor._id]"><i class="fa-solid fa-pencil" style="margin-left: 5%;"></i></a>
+                        <a (click)="pidoEliminar(proveedor._id)" class="iconoenlinea"><i class="fas fa-trash-alt" style="margin-left: 5%;"></i></a>
+                      </p>
+                      <p *ngIf="consultoEstadoEliminar(proveedor._id)==true">
+                        <a (click)="deleteProveedor(proveedor._id)">
+                          <div class="botonEnLinea">
+                            
+                            <img (click)="deleteProveedor(proveedor._id)" src="../../../../assets/img/iconitos/trash-can_115312.png">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <img (click)="pidoCancelarEliminar()" src="../../../../assets/img/iconitos/cancel_77947.png">
+                          </div>
+                          
+                        </a>
+                    </p>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

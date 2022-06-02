@@ -244,6 +244,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .example-full-width {
     width: 100%;
   }
+
+     .table-fit {
+        width: 100%;
+        white-space: nowrap;
+    }
   
 /*********************************NUEVO***********************************
 

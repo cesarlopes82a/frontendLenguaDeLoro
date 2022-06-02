@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class VentasComponent implements OnInit {
   public branchId!: string;
+  public sucursalNombre = String(localStorage.getItem('itemMenuSeleccionado'))
   public title:string;
   constructor(
     private _route: ActivatedRoute,
