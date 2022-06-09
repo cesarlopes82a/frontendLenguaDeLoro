@@ -26,20 +26,19 @@ export class NavbarComponent implements OnInit {
     ) { }
 
    ngOnInit(): void {
-
+    console.log("MENSAJE: NavbarComponent - OnInit navbar.")
     this.loggedUserName = String(localStorage.getItem("loggedUserName"))
     this.loggedUserEmail = String(localStorage.getItem("loggedUserEmail"))
     this.loggedUserRole = String(localStorage.getItem("loggedUserRole"))
-      
 
-    
-    console.log("me traigo el token en el navbar")
-    let tocken = this._authService.getToken()
-    if(tocken){
-      let tockenDecoded = this._authService.getDecodedAccessToken(tocken)
+    let token = this._authService.getToken()
+    if(token){
+      console.log("MENSAJE: Token existente... decodingAccessToken()")
+      let tockenDecoded = this._authService.getDecodedAccessToken(token)
       console.log(tockenDecoded)
     }
-    if (this._authService.loggedIn()){
+    if(this._authService.loggedIn()){
+      console.log("MENSAJE: Token no encontrado.")
       const userId = this._authService.getDecodedAccessToken(String(this._authService.getToken())).id
       this.getUserByIdAndPopulateStores(userId)
       this.inputSideNav.open()
@@ -53,7 +52,6 @@ export class NavbarComponent implements OnInit {
       console.log("tiro el opeeeennnnn")
       
     }
-    console.log("235i843905824395'84395043859403583049584350943854903")
   }
  
    getUserByIdAndPopulateStores = async (userId:string) => {

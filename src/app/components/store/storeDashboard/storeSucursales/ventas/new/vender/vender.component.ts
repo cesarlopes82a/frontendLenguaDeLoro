@@ -44,8 +44,8 @@ export class VenderComponent implements OnInit {
   public montoTarjeta!:number
   public comentarioVenta!:string
   public montoNada!:number
+  
   dataSource!: MatTableDataSource<any>;   // es el datasource de la tabla de prod seleccionados que se muestra en la interfaz
-
   displayedColumns = ['nombre', 'codigo', 'rubro', 'cantidad','precio', 'total','action'];
     
   constructor(

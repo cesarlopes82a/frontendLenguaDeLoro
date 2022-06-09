@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { global } from 'src/app/services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { DialogquitartiendaComponent } from './dialogs/dialogquitartienda/dialogquitartienda.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -17,6 +19,7 @@ export class UsersComponent implements OnInit {
   public quieroEliminarEsteUsuario!:string;
   public url!:string;
   public adminMasterTiendas!:any;
+  public usrSelecionado!:any
   public tiendasSeleccionadas: Array<any> = [];
   public estadoDeTiendas: Array<any>=[];   // es un array de todas las stores que tiene el adminMaster + un booleano asignada:true/false que me dice si el usuario ya la tiene asignada o no
   public usrAlQLQuieroAddTienda!:string
@@ -25,6 +28,7 @@ export class UsersComponent implements OnInit {
   constructor(
     private _userService:UserService,
     private _router: Router,
+    private dialog: MatDialog,
   ) {
     this.url = global.url,
     this.title = "U S U A R I O S"
@@ -32,6 +36,20 @@ export class UsersComponent implements OnInit {
 
   
   ngOnInit(){
+    this._userService.enviarTiendasSeleccionadasAsignacion.subscribe( data => {
+      console.log("MENSAJE: enviarTiendasSeleccionadasAsignacion - reciendo la lista de tiendas seleccionadas para asignacion de tiendas.")
+      for (const branch in data.data) {
+        console.log(`${branch}: ${data.data[branch]}`);
+        if(`${data.data[branch]}` == "true"){
+            console.log("Tengo que asignar esta tienda: " + `${branch}`)
+        }else{
+          console.log("esta tienda NO: " + `${branch}`)
+        }
+      }
+      this.reasignarTiendas(data.data, this.usrSelecionado._id)
+
+      
+    })
     // busco todos los usuarios para poder cargar la tabla de usuarios
     this.getUsersAndPopulate()    
   }
@@ -67,7 +85,64 @@ export class UsersComponent implements OnInit {
       let index = this.tiendasSeleccionadas.indexOf(tiendaId);
       this.tiendasSeleccionadas.splice(index,1);
     }
-}
+  }
+  openDialogAsignacionDeTiendas(usuarioId:string){
+    // al dialog le tengo que pasar lo diguiente:
+    //  - las tiendas del adminMaster. Lo voy a usar como referencia de todas las tiendas y sus branches que hay actualemtente
+    //  - el user a que quiero agregarle/quitarle una tienda o una branch
+    
+    //Localizo al admin Master
+    this.usuarios.every((usuario: any) =>{
+      if(usuario.roles[0].roleName === 'adminMaster'){
+        this.adminMasterTiendas = usuario.tiendas
+        return false
+      }
+      return true
+    });
+    ////////////////////////////////////
+
+    //Localizo el usuario que quiero modificar
+    this.usuarios.every((usuario: any) =>{
+      if(usuario._id === usuarioId){
+        this.usrSelecionado = usuario
+        return false
+      }
+      return true
+    });
+    ////////////////////////////////////
+
+   // this.listarLasTiendas(usuarioId,"quitar")
+    const dialogRef = this.dialog.open(DialogquitartiendaComponent,{
+      width:'50%',
+      height:'50%',
+      data:{
+        'usrSelecionado':this.usrSelecionado,
+        'adminMasterTiendas':this.adminMasterTiendas,
+        
+      }  
+    }); 
+   
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);      
+    });
+  }
+
+  reasignarTiendas(listaTiendasSeleccionadas: any, userId:string){    
+    this._userService.reasignarTiendas(listaTiendasSeleccionadas, userId)
+    .subscribe({
+      next: (v) => {
+     
+        console.log(v)   
+        this.getUsersAndPopulate() 
+        this._router.navigate(['/usuarios']); 
+
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('este es el complete del addStoreToUserFromRoute()') 
+    })
+
+  }
+  
 
   listarLasTiendas(usuarioId: any, accion:string){
 
@@ -102,7 +177,6 @@ export class UsersComponent implements OnInit {
               'asignada': false
             }
             contador=contador+1
-            console.log("adminMasterTienda numero: " + contador + " - " +adminMasterTienda.store._id)
             objTienda.store=adminMasterTienda.store
             objTienda.asignada = false
             
@@ -110,7 +184,6 @@ export class UsersComponent implements OnInit {
             var contadorUsuario = 0
             usuario.tiendas.every((usuarioTienda:any)=>{
               contadorUsuario = contadorUsuario+1
-              console.log("--- contadorUsuario: " + contadorUsuario)
               if(adminMasterTienda.store._id == usuarioTienda.store._id){
                 //agrego la tienda al array de tiendas seleccionadas
                 this.tiendasSeleccionadas.push(adminMasterTienda.store._id)
@@ -119,9 +192,7 @@ export class UsersComponent implements OnInit {
               }
               return true
             })
-            console.log("push")
             this.estadoDeTiendas.push(objTienda)
-            
           })
         }else{
           //meto todas las tiendas con el parametro asignadas=false
@@ -167,6 +238,7 @@ export class UsersComponent implements OnInit {
   }
   guardarSeleccion(){
     console.log("GUARDO!")
+    console.log(this.tiendasSeleccionadas)
     this.tiendasSeleccionadas.forEach((tiendasSeleccionada:any)=>{
       console.log("intentando asignar la tienda " + tiendasSeleccionada + " al user " + this.usrAlQLQuieroAddTienda )
       this.addStoreToUserFromRoute(this.usrAlQLQuieroAddTienda,tiendasSeleccionada)
@@ -224,6 +296,7 @@ export class UsersComponent implements OnInit {
     })
   }
 
+  
 
 
 }

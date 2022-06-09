@@ -110,16 +110,7 @@ export class StoreDashboardComponent implements OnInit {
               }              
             }
           )
-        
-        
-        
       }
-  
-    console.log("veo si puedo leer el user")
-
-    //this.user = this.userService.sendUser()
-    //console.log(this.user)
-    
   }
   
   getStoreById(storeId:string){

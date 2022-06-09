@@ -16,6 +16,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -78,6 +80,7 @@ import { DialogprecioComponent } from './components/store/storeDashboard/storeLd
 import { DialogventaComponent } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogventa/dialogventa.component';
 import { FiltroproductosPipe } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogventa/pipes/filtroproductos.pipe';
 import { FiltrofechavtasPipe } from './components/store/storeDashboard/storeSucursales/ventas/listar/pipes/filtrofechavtas.pipe';
+import { DialogquitartiendaComponent } from './components/users/dialogs/dialogquitartienda/dialogquitartienda.component';
 
 
 
@@ -135,6 +138,7 @@ import { FiltrofechavtasPipe } from './components/store/storeDashboard/storeSucu
     DialogventaComponent,
     FiltroproductosPipe,
     FiltrofechavtasPipe,
+    DialogquitartiendaComponent,
     
     
 
@@ -160,7 +164,9 @@ import { FiltrofechavtasPipe } from './components/store/storeDashboard/storeSucu
     MatDialogModule,
     MatCardModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule,
+    MatCheckboxModule
 
   ],
   providers: [

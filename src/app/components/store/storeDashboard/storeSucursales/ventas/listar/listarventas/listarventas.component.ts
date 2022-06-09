@@ -40,6 +40,9 @@ export interface VentaElement {
 
 export class ListarventasComponent implements OnInit {
  
+  public usrsFoundEnVentas: any[]=[];
+  public usuarioId!: string;
+  public selectedUser: string = String(localStorage.getItem("loggedUserID"))
   public sucursalNombre = String(localStorage.getItem('itemMenuSeleccionado'))
   public branchId!:string;
   public ventasByBranchId: any[] = []
@@ -85,10 +88,6 @@ export class ListarventasComponent implements OnInit {
   }
 
   cambioFechas(){
-    
-    console.log("cambiaron las")
-    console.log(this.startDate)
-    console.log(this.endDate)
     let startDate:string = new Date(this.startDate).toISOString().split('T')[0];
     let endDate:string = new Date(this.endDate).toISOString().split('T')[0];
     console.log(startDate)
@@ -96,6 +95,9 @@ export class ListarventasComponent implements OnInit {
     let ELEMENT_DATA: any[] = []
     for (let i=0; i<this.ventasByBranchId.length; i++) {
       let fechaVta:string = new Date(this.ventasByBranchId[i].fechaDeVta).toISOString().split('T')[0];
+
+      
+      //var results = this.usrsFoundEnVentas.filter(function (nickname: { _id: string; }) { return nickname._id == this.ventasByBranchId[i].userId._id; });
 
       if(fechaVta >= startDate && fechaVta <= endDate){
         let VentaELEMENT_DATA: VentaElement
@@ -112,8 +114,6 @@ export class ListarventasComponent implements OnInit {
         console.log("pusssssshhhh")
         ELEMENT_DATA.push(VentaELEMENT_DATA) 
       }
-             
-    
     }
 
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -122,9 +122,18 @@ export class ListarventasComponent implements OnInit {
     this.getTotalTarjeta()
     this.getTotalSaldo()
     console.log(this.dataSource.filteredData)
+    console.log("Los usuariossssssssssss - vendedores" )
+    console.log(this.usrsFoundEnVentas)
     
   }
 
+  onChangeUsuario($event: any) {
+    
+    console.log($event.target.value);
+
+    console.log(this.usuarioId)
+    
+  }
   getTotalVentas() {
     this.totalVentas = this.dataSource.filteredData.map((t: { TOTAL: any; }) => t.TOTAL).reduce((acc: any, value: any) => acc + value, 0);  
     return this.totalVentas
@@ -142,6 +151,7 @@ export class ListarventasComponent implements OnInit {
     return this.totalVtasPendienteCobro
   }
 
+  
 
   getVentasByBranchIdAndPopulateInfo(branchId:string){
     this._ventasService.getVentasByBranchIdAndPopulateInfo(branchId)
@@ -152,7 +162,7 @@ export class ListarventasComponent implements OnInit {
         let respuesta: any
         respuesta = v
         this.ventasByBranchId = respuesta.slice()
-
+     
       },
       error: (e) => console.error(e),
       complete: () => {
@@ -160,10 +170,14 @@ export class ListarventasComponent implements OnInit {
 
         let ELEMENT_DATA: any[] = []
         for (let i=0; i<this.ventasByBranchId.length; i++) {
-          console.log(this.ventasByBranchId[i])
-          console.log("fechaaaaaaa: " + this.ventasByBranchId[i].fechaDeVta)
-          let VentaELEMENT_DATA: VentaElement
-          
+          //esto es para llenar el array usuariosEncontradosEnVentas 
+          var results = this.usrsFoundEnVentas.filter( (nickname: { _id: string; }) => { return nickname._id == this.ventasByBranchId[i].userId._id; });
+          if(results.length <1){
+            this.usrsFoundEnVentas.push(this.ventasByBranchId[i].userId)
+          }
+          /////////////////////////////////////////////////////////
+
+          let VentaELEMENT_DATA: VentaElement          
           VentaELEMENT_DATA = {
             fecha: this.ventasByBranchId[i].fechaDeVta,
             sucursal: this.ventasByBranchId[i].branchId,

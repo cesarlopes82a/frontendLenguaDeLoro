@@ -1,4 +1,4 @@
-import { Injectable, HostBinding } from '@angular/core';
+import { EventEmitter, Injectable, Output, HostBinding } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ export class UserService {
 
   public url:string;
   @HostBinding('class.sendUser')
+  @Output() enviarTiendasSeleccionadasAsignacion: EventEmitter<any> = new EventEmitter();
 
   public testVAR:string = "paso esto";
   public UserByIdAndPopulateStores:any;
@@ -88,10 +89,23 @@ export class UserService {
       storeId:storeId
     }
     let params = JSON.stringify(datos)
-    console.log("llamo a la ruta -------------------")
+    
     return this._http.post(this.url + '/users/addStoreToUserFromRoute',params,{headers})   
   }
 
+  reasignarTiendas(listaTiendasSeleccionadas:any, userId:string){
+    //recibo el id del usuario al que tengo que asignarle las tiendas seleccionadas y una lista de branches de este tipo
+    //{6295dcb00ae7edf5992e2b31: true, 6295dcba0ae7edf5992e2b4f: false, 6295dccd0ae7edf5992e2b6d: true}
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let datos={
+      userId:userId,
+      listaTiendasSeleccionadas:listaTiendasSeleccionadas
+    }
+    let params = JSON.stringify(datos)
+    
+    return this._http.post(this.url + '/users/reasignarTiendas',params,{headers}) 
+
+  }
 
 }
 

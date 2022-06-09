@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Asignacion de tiendas: </h2>
+<hr>
+
+<div class="card ">
+
+    <div class="card-body">
+
+<div class="container ">
+    <!--
+    <select class="form-control" name="listadp" #lista="ngModel" [(ngModel)]="listadpIdSeleccionada" (change)="onChangeLDP($event)" >
+        <option disabled selected [value]="null">Seleccione el producto</option>
+        <option *ngFor="let lista of listasdeprecios" [value]="lista._id" >{{lista.listaNombre}}</option>            
+      </select>
+    -->
+    <section class="example-section" name="fieldName" [formGroup]="checkStatus">
+        <ng-container *ngFor="let tienda of data.adminMasterTiendas; let t = index" >
+            <p><strong>{{tienda.store.storeName}}</strong></p>
+            
+            <ng-container *ngFor="let branch of tienda.branches; let b = index" >
+                <p><mat-checkbox class="example-margin" formControlName={{branch._id}} (click)="checkTiendaStatus(t, branch._id)">{{branch.branchName}}</mat-checkbox></p>
+            </ng-container>
+            
+        </ng-container>
+    </section>
+   
+
+
+</div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-success" mat-dialog-close="asignar" (click)="enviarSeleccion()">Confirmar</button>
+    </div>
+    <div class="col-md-8"></div>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-danger" mat-dialog-close="close" >Cerrar</button>
+    </div>
+    <div class="col-md-1"></div>
+</div>

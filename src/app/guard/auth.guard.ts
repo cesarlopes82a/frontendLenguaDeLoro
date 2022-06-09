@@ -14,9 +14,12 @@ export class AuthGuard implements CanActivate {
 
   }
   canActivate(): boolean{
+    console.log("MENSAJE: BIENVENIDO A LENGUA DE LORO.")
     if(this.authService.loggedIn()){
+      console.log("MENSAJE: Usuario Logueado.")
       return true
     }
+    console.log("MENSAJE: Usuario aun no ha realizado login. redirigiendo a signin...")
     this.router.navigate(['/signin'])
     return false
   }

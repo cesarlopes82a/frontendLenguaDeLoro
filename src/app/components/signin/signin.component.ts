@@ -29,6 +29,7 @@ export class SigninComponent implements OnInit {
   }
 
   signIn(){
+    console.log("MENSAJE: SigninComponent - logueando usuario... " + this.user.email + ":"+this.user.userName)
     this._authService.signIn(this.user)
 
     .subscribe({
@@ -54,17 +55,7 @@ export class SigninComponent implements OnInit {
       error: (e) => console.error(e),
       complete: () => console.info('(903458)complete desde signIn signIn.component') 
      })
-    /*
-    .subscribe(
-      res => {
-        console.log(res)
-        
-        localStorage.setItem('token', res.token)
-        this.router.navigate(['/private'])
-      },
-      err => console.log(err)
-    )
-    */
+
   }
   
 

@@ -32,6 +32,7 @@ export class AuthService {
     console.log("el token desde el auth service " + localStorage.getItem('token'))
     return localStorage.getItem('token')
   }
+  
 
   logout(){
     localStorage.removeItem('token');

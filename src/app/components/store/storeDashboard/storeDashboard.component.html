@@ -85,7 +85,11 @@
                     <div class="card-body">
                         <h5 class="card-title">Ventas</h5>
                         <p class="card-text">Comenzar a vender productos.</p>
-                        <a [routerLink]="['/sucursal/' + this.branchId + '/ventas']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                                                                     
+                        <!--
+                        <a [routerLink]="['/sucursal/' + this.branchId + '/ventas']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        -->
+                        <a [routerLink]="['/sucursal/' + this.branchId + '/ventas/listar']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        
                     </div>
                 </div>
             </div>
