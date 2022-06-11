@@ -19,9 +19,10 @@ export interface CompraElement {
   proveedorName: string;
   branchName: string;
   cantidad: number
-  precioCompraUnitario: number,
+  precioCompraUnitario: number
   comentario: string
   total:number
+  menu:any
 }
 
 @Component({
@@ -41,7 +42,9 @@ export interface CompraElement {
 })
 
 export class ComprasComponent implements OnInit {
-  columnsToDisplay: string[] = ['CompraId',	'Usuario',	'Proveedor',	'Fecha',	'Producto',	'Cantidad',	'$ Unitario',	'Total'];
+  public proveedorSelected: string = "Todos"
+  public proveedoresFoundEnCompras: any[]=[];
+  columnsToDisplay: string[] = ['CompraId',	'Usuario',	'Proveedor',	'Fecha',	'Producto',	'Cantidad',	'$ Unitario',	'Total','menu'];
   dataSource!: MatTableDataSource<any>;
   expandedElement!: CompraElement | null;
   
@@ -97,13 +100,19 @@ export class ComprasComponent implements OnInit {
         console.info('este es el complete') 
         let ELEMENT_DATA: any[] = []
         for (let i=0; i<this.comprasByBranchAndPopulatedInfo.length; i++) {
-          console.log(this.comprasByBranchAndPopulatedInfo[i])
-          console.log(this.comprasByBranchAndPopulatedInfo[i].userId.username)
+
+          //esto es para llenar el array proveedoresFoundEnCompras 
+          var results = this.proveedoresFoundEnCompras.filter( (nickname: { _id: string; }) => { return nickname._id == this.comprasByBranchAndPopulatedInfo[i].proveedorId._id; });
+          if(results.length <1){
+            this.proveedoresFoundEnCompras.push(this.comprasByBranchAndPopulatedInfo[i].proveedorId)
+          }
+          /////////////////////////////////////////////////////////
+
 
           let CompraELEMENT_DATA: CompraElement
           
           CompraELEMENT_DATA = {
-            _id: this.comprasByBranchAndPopulatedInfo[i].branchId._id,
+            _id: this.comprasByBranchAndPopulatedInfo[i]._id,
             fechaDeCompra: this.comprasByBranchAndPopulatedInfo[i].fechaDeCompra,
             fechaDeVencimiento: this.comprasByBranchAndPopulatedInfo[i].fechaDeVencimiento,
             productName: this.comprasByBranchAndPopulatedInfo[i].productId.productName,
@@ -113,9 +122,10 @@ export class ComprasComponent implements OnInit {
             cantidad: this.comprasByBranchAndPopulatedInfo[i].cantidad,
             precioCompraUnitario: this.comprasByBranchAndPopulatedInfo[i].precioCompraUnitario,
             comentario: this.comprasByBranchAndPopulatedInfo[i].comentario,
-            total: this.comprasByBranchAndPopulatedInfo[i].precioCompraUnitario * this.comprasByBranchAndPopulatedInfo[i].cantidad
+            total: this.comprasByBranchAndPopulatedInfo[i].precioCompraUnitario * this.comprasByBranchAndPopulatedInfo[i].cantidad,
+            menu:""
           }
-          console.log("pusssssshhhh")
+
           ELEMENT_DATA.push(CompraELEMENT_DATA)        
         
         }
@@ -144,25 +154,20 @@ export class ComprasComponent implements OnInit {
     this.totalCompras = this.dataSource.filteredData.map((t: { total: any; }) => t.total).reduce((acc: any, value: any) => acc + value, 0);  
     return this.totalCompras
   }
-  cambioFechas(){
-    
-    console.log("cambiaron las")
-    console.log(this.startDate)
-    console.log(this.endDate)
+  aplicarFiltro(){
+
     let startDate:string = new Date(this.startDate).toISOString().split('T')[0];
     let endDate:string = new Date(this.endDate).toISOString().split('T')[0];
-    console.log(startDate)
 
     let ELEMENT_DATA: any[] = []
     for (let i=0; i<this.comprasByBranchAndPopulatedInfo.length; i++) {
-      console.log("lafeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeecha")
       let fechaVta:string = new Date(this.comprasByBranchAndPopulatedInfo[i].fechaDeCompra).toISOString().split('T')[0];
-      console.log(fechaVta)
 
-      if(fechaVta >= startDate && fechaVta <= endDate){
+      if((fechaVta >= startDate && fechaVta <= endDate) && (this.proveedorSelected=="Todos" || this.proveedorSelected == this.comprasByBranchAndPopulatedInfo[i].proveedorId._id)){
+
         let CompraELEMENT_DATA: CompraElement
         CompraELEMENT_DATA = {
-          _id: this.comprasByBranchAndPopulatedInfo[i].branchId._id,
+          _id: this.comprasByBranchAndPopulatedInfo[i]._id,
           fechaDeCompra: this.comprasByBranchAndPopulatedInfo[i].fechaDeCompra,
           fechaDeVencimiento: this.comprasByBranchAndPopulatedInfo[i].fechaDeVencimiento,
           productName: this.comprasByBranchAndPopulatedInfo[i].productId.productName,
@@ -172,9 +177,9 @@ export class ComprasComponent implements OnInit {
           cantidad: this.comprasByBranchAndPopulatedInfo[i].cantidad,
           precioCompraUnitario: this.comprasByBranchAndPopulatedInfo[i].precioCompraUnitario,
           comentario: this.comprasByBranchAndPopulatedInfo[i].comentario,
-          total: this.comprasByBranchAndPopulatedInfo[i].precioCompraUnitario * this.comprasByBranchAndPopulatedInfo[i].cantidad
+          total: this.comprasByBranchAndPopulatedInfo[i].precioCompraUnitario * this.comprasByBranchAndPopulatedInfo[i].cantidad,
+          menu:""
         }
-        console.log("pusssssshhhh")
         ELEMENT_DATA.push(CompraELEMENT_DATA) 
       }             
     }
@@ -185,6 +190,14 @@ export class ComprasComponent implements OnInit {
     
   }
  
+  eliminarItem(transactionId:string){
+    console.log("quiero eliminar este item: " + transactionId)
+    
+  }
+  editarItem(transactionId:string){
+    console.log("quiero editar este item: " + transactionId)
+    
+  }
   
   
 

@@ -11,6 +11,7 @@
 
     <div class="card-body">
         <div class="example-container mat-elevation-z8">
+            <hr>
             <div class="row">
                 <div class="col-md">
                     <mat-form-field appearance="fill">
@@ -26,14 +27,15 @@
 
                 </div>
                 <div class="col-md">
-                    <button type="submit" class="btn btn-primary" (click)="cambioFechas()">Confirmar</button>
+                    <button type="submit" class="btn btn-primary" (click)="aplicarFiltro()">Filtrar</button>
                 </div>
                 <div class="col-md">
                     <mat-form-field appearance="fill">
                         <mat-label>Vendedor</mat-label>
-                        <mat-select [(value)]="selectedUser">
-                          <mat-option></mat-option>
+                        <mat-select [(value)]="selectedUser" >
+                          <mat-option [value]="'Todos'" *ngIf="loggedUserRole!='vendedor'">Todos</mat-option>
                           <mat-option [value]="option._id" *ngFor="let option of usrsFoundEnVentas">{{ option.username}}</mat-option>
+                          
                         </mat-select>
                       </mat-form-field>
                 </div>

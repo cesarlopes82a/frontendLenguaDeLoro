@@ -43,6 +43,7 @@ export class ListarventasComponent implements OnInit {
   public usrsFoundEnVentas: any[]=[];
   public usuarioId!: string;
   public selectedUser: string = String(localStorage.getItem("loggedUserID"))
+  public loggedUserRole: string = String(localStorage.getItem("loggedUserRole"))  
   public sucursalNombre = String(localStorage.getItem('itemMenuSeleccionado'))
   public branchId!:string;
   public ventasByBranchId: any[] = []
@@ -87,19 +88,17 @@ export class ListarventasComponent implements OnInit {
 
   }
 
-  cambioFechas(){
+  aplicarFiltro(){
     let startDate:string = new Date(this.startDate).toISOString().split('T')[0];
     let endDate:string = new Date(this.endDate).toISOString().split('T')[0];
-    console.log(startDate)
 
     let ELEMENT_DATA: any[] = []
     for (let i=0; i<this.ventasByBranchId.length; i++) {
+      console.log(this.ventasByBranchId[i])
       let fechaVta:string = new Date(this.ventasByBranchId[i].fechaDeVta).toISOString().split('T')[0];
 
-      
-      //var results = this.usrsFoundEnVentas.filter(function (nickname: { _id: string; }) { return nickname._id == this.ventasByBranchId[i].userId._id; });
 
-      if(fechaVta >= startDate && fechaVta <= endDate){
+      if((fechaVta >= startDate && fechaVta <= endDate) && (this.selectedUser=="Todos" || this.selectedUser == this.ventasByBranchId[i].userId._id)){
         let VentaELEMENT_DATA: VentaElement
         VentaELEMENT_DATA = {
           fecha: this.ventasByBranchId[i].fechaDeVta,
