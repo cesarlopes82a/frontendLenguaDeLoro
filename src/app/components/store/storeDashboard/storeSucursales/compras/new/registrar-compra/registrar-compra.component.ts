@@ -88,7 +88,7 @@ export class RegistrarCompraComponent implements OnInit {
     
     this._comprasService.registrarCompra(this.compra).subscribe({
       next: (v) => {
-        console.log("despues del registrarCompra")
+        console.log("MENSAJE: registrarCompra() - finalizado exitosamente!")
         console.log(v)
         this._router.navigate(['/sucursal', this.branchId,'compras']);     
       },
@@ -103,7 +103,7 @@ export class RegistrarCompraComponent implements OnInit {
     this._supplierService.getProveedores()
     .subscribe({
       next: (v) => {
-        console.log("esto es lo que me mandan de this._supplierService.getProveedores()")
+        console.log("MENSAJE: getProveedores() - finalizado exitosamente!")
         console.log(v)
         this.proveedores = v;
       },
@@ -143,12 +143,7 @@ export class RegistrarCompraComponent implements OnInit {
       if(`${product._id}` == String($event.target.value)){
         this.productoCodigo = `${product.codigo}`
       }
-    });
-
-  
-    
-    //console.log("Categoria: " + this.proveedor.categoriaRubro)
-    
+    });    
   }
 
 }

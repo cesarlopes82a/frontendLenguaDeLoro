@@ -19,12 +19,15 @@ export class ComprasService {
   registrarCompra(compra: any): Observable<any>{
 
     let params = JSON.stringify(compra)
-    console.log("los paramas antes de enviarlos")
-    console.log(params)
-    
+        
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this._http.post(this.url+'/compras/registrarCompra',params,{headers});
   }
+  eliminarRegistroCompra(compraId:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.delete(this.url+'/compras/eliminarRegistroCompra/'+compraId,{headers});
+  }
+  
   getCompras():Observable<any>{
     console.log("estoy dentro del getCompras desde el compras.service.ts")
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');

@@ -76,6 +76,7 @@ const routes: Routes = [
   
   { path: 'sucursal/:id/compras', component: ComprasComponent },
   { path: 'sucursal/:id/compras/registrarCompra', component: RegistrarCompraComponent },
+  
 
   { path: 'sucursal/:id/ventas', component: VentasComponent },
   { path: 'sucursal/:id/ventas/listar', component: ListarventasComponent },

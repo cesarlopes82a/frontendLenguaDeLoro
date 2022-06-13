@@ -6,6 +6,7 @@ import { SidenavService } from 'src/app/services/sidebar.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {FormGroup, FormControl} from '@angular/forms';
 import { global } from 'src/app/services/global';
+import Swal from 'sweetalert2'
 
 export class TableExpandableRowsExample {
   expandedElement!: CompraElement | null;
@@ -192,13 +193,95 @@ export class ComprasComponent implements OnInit {
  
   eliminarItem(transactionId:string){
     console.log("quiero eliminar este item: " + transactionId)
+    Swal.fire({
+      title: 'Está seguro?',
+      text: "Esta accion no puede revertirse!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!'
+    }).then(async (result) => {
+      const registroEliminado = await this.eliminarRegistroCompra(transactionId)
+      if(registroEliminado){
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Eliminado!',
+            'Registro de compra eliminado exitosamente.',
+            'success'
+          )
+        }
+      }
+
+      
+    })
     
   }
   editarItem(transactionId:string){
     console.log("quiero editar este item: " + transactionId)
     
   }
+  async eliminarRegistroCompra(compraId:string){
+    return new Promise((resolve, reject) => {
+      this._comprasService.eliminarRegistroCompra(compraId)
+      .subscribe({
+        next: (v) => {
+          console.log("MENSAJE: eliminarRegistroCompra() - Finalizado Exitosamente!")
+          console.log(v)
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Registro de compra eliminado exitosamente!!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        },
+        error: (e) => {
+          console.error(e)
+          if(e.status == 424){
+            Swal.fire({
+              icon: 'error',
+              title: 'No es posible eliminar...',
+              text: 'Existen registros de compras posteriores para este producto!',
+              //footer: '<a href="">Why do I have this issue?</a>'
+            })
+            reject(new Error("Error al intentar eliminar el registro de compra"))
+          }
+          if(e.status == 500){
+            Swal.fire({
+              icon: 'error',
+              title: 'No es posible eliminar...',
+              text: 'Algo salió mal al intentar eliminar el registro de compra de la DB!',
+              //footer: '<a href="">Why do I have this issue?</a>'
+            })
+            reject(new Error("Error al intentar eliminar el registro de compra"))
+          }
+          
+        },
+        complete: () => {
   
+          //Actualizo el dataSouce quem muestra todos los registros de compras
+          const index = this.dataSource.data.findIndex(object => {
+            return object._id == compraId;
+          });
+          this.dataSource.data.splice(index, 1);
+          this.dataSource._updateChangeSubscription(); // <-- Refresh the datasource
+          
+        }
+      })
+      
+
+      setTimeout(function(){
+      //  resolve(true)
+        //reject(new Error("Error al intentar ASOSCIAr el nuevo registro de compra a la sucursal"))
+      },3000);
+      
+      //resolve(response)
+      
+  })
+  .catch( error => console.log("MENSAJE: No se puede eliminar un registro de compra cuando existen registro de compras posteriores para el mismo producto!") )
+    
+  }
   
 
 }
