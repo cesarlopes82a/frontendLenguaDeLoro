@@ -9,6 +9,7 @@ import { RangeValueAccessor, ReactiveFormsModule } from '@angular/forms';
 import { productOfLDP } from '../../../../../../models/productOfLDP';
 import { global } from '../../../../../../services/global';
 import { UserService } from '../../../../../../services/user.service';
+import { BranchService } from 'src/app/services/branch.service';
 
 @Component({
   selector: 'app-newldp',
@@ -29,9 +30,12 @@ export class NewldpComponent implements OnInit {
   public userDataFromUserService!: any
   public listaOrigenIdparaClonar:string = ""  //Es el id de la lista que quiero clonar.
   public listadpOriginal!:any                 // es la lista de precios original traida desde el backend
+  public referenciaCostosStock:string = ""
+  public branchesByStore!: any
 
   constructor(
     private _productService: ProductService,
+    private _branchService: BranchService,
     private _listadeprecioService: ListadepreciosService,
     private _userService: UserService,
     private _route: ActivatedRoute,
@@ -54,6 +58,7 @@ export class NewldpComponent implements OnInit {
       params => {
         this.storeId = params['id']
         //una vez que tengo el storeId puedo traerme la lista de productos de esta storeId
+        this.getBranchesByStoreId(this.storeId)      
         this.getProductosByStoreIdAndPopulate(this.storeId);        
       }
     )
@@ -61,7 +66,11 @@ export class NewldpComponent implements OnInit {
   }
   
   onSubmit(form: any){
-    console.log("soy el onsubmit--------------------------")
+    
+  }
+
+  registrarListaDePrecios(){
+    
     this._listadeprecioService.registrarNuevaLDP(this._productsList,this.ldpNombre,this.ldpDescripcion,this.fechaDeCreacion,this.storeId)
     .subscribe({
       next: (v) => {
@@ -75,18 +84,37 @@ export class NewldpComponent implements OnInit {
       },
       complete: () => console.info('complete') 
     })
+
   }
- 
+
+  getBranchesByStoreId(storeId:string){
+    this._branchService.getBranchesByStoreId(storeId)
+    .subscribe({
+      next: (branches) => {        
+        console.log("estas son las branches que encontré")
+        console.log(branches)
+        this.branchesByStore = branches.slice()
+
+           
+      },
+      error: (e) => console.error(e),
+      complete: async () => {}
+        
+    })  
+    
+  }
   getProductosByStoreIdAndPopulate(storeId:string){
      this._productService.getProductosByStoreIdAndPopulate(storeId)
     .subscribe({
       next: (productos) => {        
-        let arrayProductos = []
+        let arrayProductos = []  // es una variable auxiliar. contiene lo mismo que el array de productos pero con los datos bien formateados. una vez formateado correctamete se pisa el array de productos.
 
         //tengo que agarrar la lista de productos que recibí del backend y formatearla para poder usarla aca
         // voy a reemplazar por un (-) lo valores que pueden ser null
         //paso todos los productos a un nuevo array arrayProductos con los datos bien formateados(sin null)
         for (let producto of productos) {
+          //no tengo mas la clave ultimoRegCompra. hago esto para que siga funcionando. ningun producto va a tener un ultimo reg de compra de esta lista
+          /*
           if(producto.ultimoRegCompra === null){
             let regCompra = {
               fechaDeCompra:"-",
@@ -94,6 +122,10 @@ export class NewldpComponent implements OnInit {
             }
             producto.ultimoRegCompra = regCompra          
           }
+          */
+          //producto.ultimoRegCompra.fechaDeCompra="-";             ///agrego esto para salvar
+          //producto.ultimoRegCompra.precioCompraUnitario = "-"     ///agrego esto para salvar
+
           producto.precioVenta = null
           arrayProductos.push(producto)
 
@@ -105,8 +137,8 @@ export class NewldpComponent implements OnInit {
             producto.categoriaRubro.categoryName,
             producto.codigo,
             producto.stock,
-            producto.ultimoRegCompra.fechaDeCompra,
-            producto.ultimoRegCompra.precioCompraUnitario,
+            "-",   //producto.ultimoRegCompra.fechaDeCompra,
+            0,  //producto.ultimoRegCompra.precioCompraUnitario,
             producto.precioVenta
           )
           //guardo todos estos elementos en un array (_productList)
@@ -191,6 +223,76 @@ export class NewldpComponent implements OnInit {
        }
     })   
     
+  }
+
+  actualizarRefCostosStock(event: { isUserInput: any; source: { value: any; selected: any; }; }){
+    if(event.isUserInput) {
+      console.log(event.source.value, event.source.selected);
+      let _newProductList:productOfLDP[] = []
+      const index = this.branchesByStore.findIndex((object: { _id: any; }) => {
+        return object._id == event.source.value;
+      });
+      console.log("el index: " +index)
+      console.log(this.branchesByStore[index])
+      
+        
+      for (let [i, producto] of this._productsList.entries()) {
+        console.log(producto)
+        const indexProd = this.branchesByStore[index].stock.findIndex((object: { product: string; }) => {
+          return object.product == producto._id;
+        });
+        this._productsList[i].fechaUltimaCompra = this.branchesByStore[index].stock[indexProd].fechaUltimaCompra
+        this._productsList[i].costoUnitario = this.branchesByStore[index].stock[indexProd].precioUnitUltCompra
+        this._productsList[i].stock = this.branchesByStore[index].stock[indexProd].cantidad
+
+        console.log("el indice del producto es: " + indexProd)
+        console.log(this.branchesByStore[index].stock[indexProd].product)
+        console.log(this.branchesByStore[index].stock[indexProd].cantidad)
+      }
+
+/*
+        let productOfLDPupdated = new productOfLDP(
+          producto._id,
+          producto.productName,
+          producto.rubro,
+          producto.codigo,
+          producto.stock,
+          producto.fechaUltimaCompra,
+          producto.costoUnitario,
+          producto.precioVenta,
+        )
+    */    
+
+        /*
+_id: "62a1309c3acdbc2ca475a385",
+          productName: "ProdNuevoT1",
+          rubro: "Alimentos secos",
+          codigo: "2345345456456",
+          stock: 122,
+          fechaUltimaCompra: "-",
+          costoUnitario: 0,
+          precioVenta: null,
+        */
+        
+        /*
+        let productOfLDPnew = new productOfLDP(
+          producto._id,
+          producto.productName,
+          producto.categoriaRubro.categoryName,
+          producto.codigo,
+          producto.stock,
+          "-",   //producto.ultimoRegCompra.fechaDeCompra,
+          0,  //producto.ultimoRegCompra.precioCompraUnitario,
+          producto.precioVenta
+        )
+        //guardo todos estos elementos en un array (_productList)
+        this._productsList.push(productOfLDPnew)
+        */
+      
+         
+         // this._productsList.push(productOfLDPnew)
+       
+    }
   }
 
   openDialogPrecio(precioCompra:number, productName:string, precioVenta:number, index:number){

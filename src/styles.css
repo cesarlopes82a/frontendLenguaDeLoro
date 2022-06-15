@@ -90,6 +90,7 @@
 }
 
 
+
 /*********** cards ************/
 .card-body {
     box-shadow: 0 0 20px 7px rgba(0,0,0,0.1);
@@ -224,7 +225,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .example-container {
-    height: 670px;
+    height: 80%;
     overflow: auto;
   }
   

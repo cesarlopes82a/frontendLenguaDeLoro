@@ -5,8 +5,8 @@ import { Compra } from '../../../../../../../models/compra';
 import { ProductService } from '../../../../../../../services/product.service';
 import { SupplierService } from '../../../../../../../services/supplier.service';
 import { ComprasService } from '../../../../../../../services/compras.service';
+import Swal from 'sweetalert2'
 
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -66,6 +66,7 @@ export class RegistrarCompraComponent implements OnInit {
     this.fechaDeCompra = new Date().toISOString().split('T')[0];
     this.fechaDeVencimiento = new Date().toISOString().split('T')[0];
     
+    
   }
   
   onSubmit(form: any){
@@ -90,7 +91,23 @@ export class RegistrarCompraComponent implements OnInit {
       next: (v) => {
         console.log("MENSAJE: registrarCompra() - finalizado exitosamente!")
         console.log(v)
-        this._router.navigate(['/sucursal', this.branchId,'compras']);     
+        
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Compra registrada con exito!!!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        
+        this.compra = new Compra('','','','',0,0,'','','');
+        this.compra.userId = String(localStorage.getItem("loggedUserID"))
+        let number!:number
+        this.productoId = ""
+        this.productoCodigo = ""
+        this.precioUnitario = number
+        this.cantidad = number
+       // this._router.navigate(['/sucursal', this.branchId,'compras']);     
       },
       error: (e) => console.error(e),
       complete: () => console.info('complete') 

@@ -82,6 +82,8 @@ import { DialogventaComponent } from './components/store/storeDashboard/storeSuc
 import { FiltroproductosPipe } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogventa/pipes/filtroproductos.pipe';
 import { FiltrofechavtasPipe } from './components/store/storeDashboard/storeSucursales/ventas/listar/pipes/filtrofechavtas.pipe';
 import { DialogquitartiendaComponent } from './components/users/dialogs/dialogquitartienda/dialogquitartienda.component';
+import { BranchLDPmainComponent } from './components/store/storeDashboard/storeSucursales/branchLdP/main/branch-ldpmain/branch-ldpmain.component';
+import { NewBranchLDPComponent } from './components/store/storeDashboard/storeSucursales/branchLdP/new/new-branch-ldp/new-branch-ldp.component';
 
 
 
@@ -140,6 +142,8 @@ import { DialogquitartiendaComponent } from './components/users/dialogs/dialogqu
     FiltroproductosPipe,
     FiltrofechavtasPipe,
     DialogquitartiendaComponent,
+    BranchLDPmainComponent,
+    NewBranchLDPComponent,
     
     
 

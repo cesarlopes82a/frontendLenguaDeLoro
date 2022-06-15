@@ -31,11 +31,13 @@
                 </thead>
                 <tbody>
                     
-                    <tr (click)="clickFila(producto.product.codigo)" *ngFor="let producto of listasdeprecios.ldpProducts | filtroproductos: filtroProd" >                        
-                        <td>{{producto.product.productName}}</td>
-                        <td>{{producto.product.codigo}}</td>
-                        <td>{{producto.product.categoriaRubro}}</td>
-                        <td>{{producto.precioVenta | currency: '$'}}</td>
+                    <tr (click)="clickFila(producto.product.codigo)" *ngFor="let producto of listasdeprecios.ldpProducts | filtroproductos: filtroProd">
+                        <ng-container *ngIf="producto.precioVenta > 0">
+                            <td>{{producto.product.productName}}</td>
+                            <td>{{producto.product.codigo}}</td>
+                            <td>{{producto.product.categoriaRubro}}</td>
+                            <td>{{producto.precioVenta | currency: '$'}}</td>
+                        </ng-container>
                     </tr>
                     
                 </tbody>

@@ -43,6 +43,7 @@
         </mat-card>
         <hr>
 
+        
 
         <div class="example-container mat-elevation-z8">
           <table mat-table [dataSource]="dataSource">
@@ -163,6 +164,9 @@
           <div class="row w-100">
             <div class="col">
               <button class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 " (click)="solicitarRegistrarCompra()"> Finalizar compra </button>
+            </div>
+            <div class="col">
+              <button [routerLink]="['/sucursal/' + this.branchId + '/ventas/listar']" [routerLinkActive]="['actived']" class="btn btn-danger center-block" > Ventas </button>
             </div>
           </div>
       

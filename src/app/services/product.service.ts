@@ -39,7 +39,6 @@ export class ProductService {
   }
   
   getProductosByStoreIdAndPopulate(storeId: string):Observable<any>{
-    
     console.log("MENSAJE: ProductService-getProductosByStoreIdAndPopulateCompras(" + storeId + ") - ")
 
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');

@@ -5,9 +5,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogventaComponent } from '../dialogventa/dialogventa.component';
 import { VentasService } from 'src/app/services/ventas.service';
 import {MatTableDataSource} from '@angular/material/table';
+import Swal from 'sweetalert2'
+
 
 export interface prodSeleccionadoVta {
-  nroOrden: number
+  nroOrden: number;
+  productId:string;
   nombre: string;
   codigo: string;
   rubro: string;
@@ -141,6 +144,7 @@ export class VenderComponent implements OnInit {
     this.nroOrden = this.nroOrden + 1
     newProducto = {
       nroOrden: this.nroOrden,
+      productId: producto.product._id,
       nombre: producto.product.productName,
       codigo: producto.product.codigo,
       rubro: producto.product.categoriaRubro,
@@ -202,7 +206,15 @@ export class VenderComponent implements OnInit {
       next: (v) => {
         console.log("MENSAJE: Respuesta exitosa desde el backend")
         console.log(v)
-        
+        /*
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'success',
+          title: 'Your work has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        */
         //limpio todo para dejar listo para la procima venta
         this.listaProdSeleccionados.splice(0, this.listaProdSeleccionados.length);
         this.dataSource = new MatTableDataSource(this.listaProdSeleccionados);
@@ -210,9 +222,10 @@ export class VenderComponent implements OnInit {
         this.montoEfectivo = this.montoNada
         this.montoTarjeta = this.montoNada
         this.comentarioVenta=""
+
         //--------------------------------------------
         
-           
+                 
       },
       error: (e) => console.error(e),
       complete: () => console.info('complete') 

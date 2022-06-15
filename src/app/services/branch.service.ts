@@ -30,5 +30,9 @@ export class BranchService {
 
     return this._http.post(this.url+'/branches/createBranch/',params,{headers});
   }
+  getBranchesByStoreId(storeId:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.get(this.url+'/branches/bystoreid/'+storeId,{headers});
+  }
 
 }

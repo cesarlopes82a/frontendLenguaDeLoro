@@ -212,8 +212,6 @@ export class ComprasComponent implements OnInit {
           )
         }
       }
-
-      
     })
     
   }
@@ -252,6 +250,15 @@ export class ComprasComponent implements OnInit {
               icon: 'error',
               title: 'No es posible eliminar...',
               text: 'Algo salió mal al intentar eliminar el registro de compra de la DB!',
+              //footer: '<a href="">Why do I have this issue?</a>'
+            })
+            reject(new Error("Error al intentar eliminar el registro de compra"))
+          }
+          if(e.status == 403){
+            Swal.fire({
+              icon: 'error',
+              title: 'No es posible eliminar...',
+              text: e.error,
               //footer: '<a href="">Why do I have this issue?</a>'
             })
             reject(new Error("Error al intentar eliminar el registro de compra"))

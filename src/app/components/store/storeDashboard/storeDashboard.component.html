@@ -97,6 +97,16 @@
                 <div class="card text-center">
                     <img src="images/gym.jpg" class="card-img-top">
                     <div class="card-body">
+                        <h5 class="card-title">Listas de Precios</h5>
+                        <p class="card-text">Desde aquí podrás definir diferentes listas de precios para esta sucursal.</p>
+                        <a [routerLink]="['/sucursal', this.branchId,'ldp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="this.loggedUserRole == 'adminMaster' || 'adminGlobal' || 'adminTienda'" class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
                         <h5 class="card-title">Vendedores</h5>
                         <p class="card-text">Aqui podras Crear y Administrar los vendedores para esta sucursal.</p>
                         <a [routerLink]="['/sucursal', this.branchId,'usuarios']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                                                                     

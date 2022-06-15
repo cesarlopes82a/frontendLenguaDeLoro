@@ -46,9 +46,10 @@ export class VentasService {
       vendedorId: vendedorId,
       comentarioVenta: comentarioVenta
     }
-    let params = JSON.stringify(parametros)
     console.log("los paramas antes de enviarlossssssssssssssssssssssssssssssssssssssss")
-    console.log(params)
+    console.log(parametros)
+    let params = JSON.stringify(parametros)
+    
     
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this._http.post(this.url+'/ventas/registrarVenta',params,{headers});

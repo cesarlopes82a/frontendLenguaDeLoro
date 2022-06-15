@@ -1,4 +1,5 @@
 export class productOfLDP{
+        
     constructor(
         public _id: string,
         public productName: string,
@@ -11,4 +12,5 @@ export class productOfLDP{
         
     ){}
 }
+
 
