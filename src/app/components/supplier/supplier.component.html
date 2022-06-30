@@ -8,10 +8,7 @@
   <div class="card-body">
       <div class="example-container mat-elevation-z8">
 
-
-        <div class="row">
-          <div class="col">
-            <table class="table table-striped">
+            <table class="table table-striped ">
               <thead>
                 <tr>
                   <th>Proveedor</th>
@@ -30,6 +27,20 @@
                   
 
                     <td>
+                      <button  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">                                    
+                      <button mat-menu-item (click)="editarItem()">
+                          <mat-icon >edit</mat-icon>
+                          <span>editar</span>
+                      </button>
+                      <button mat-menu-item (click)="eliminarItem()">
+                          <mat-icon>delete_outline</mat-icon>
+                          <span>eliminar</span>
+                      </button>
+                      </mat-menu>
+                      <!--
                       <p *ngIf="consultoEstadoEliminar(proveedor._id)==false">
                         <a class="iconoenlinea" [routerLink]="['/proveedores/proveedor',proveedor._id]"><i class="fas fa-eye" style="margin-left: 5%;"></i></a>
                         <a class="iconoenlinea" [routerLink]="['/proveedores/proveedor/editar/', proveedor._id]"><i class="fa-solid fa-pencil" style="margin-left: 5%;"></i></a>
@@ -45,13 +56,14 @@
                           </div>
                           
                         </a>
-                    </p>
+                      </p>
+                      -->
+                  
                     </td>
                 </tr>
               </tbody>
             </table>
-          </div>
-        </div>
       </div>
+ 
     </div>
   </div>

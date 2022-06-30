@@ -25,6 +25,7 @@ export class SidebarComponent implements OnInit {
   public loggedUser:any = null;
   public loggedUserRole!: String;
   public storeId!: string
+  public itemMenuSeleccionadoId!:string
   
 
   constructor(
@@ -43,20 +44,47 @@ export class SidebarComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.loggedUserRole = String(localStorage.getItem("loggedUserRole"))
-    /*
-    if (this._authService.loggedIn()){
-      const userId = this._authService.getDecodedAccessToken(String(this._authService.getToken())).id
-      console.log("cargo el sidebar")
-      await this.getUserByIdAndPopulateStores(userId)
-    }
-    */
+    this.loggedUserRole = String(localStorage.getItem("loggedUserRole"))    
   }
 
-  emitirItemMenuSeleccionado(itemMenuSeleccionado: string){
+  emitirItemMenuSeleccionado(itemMenuSeleccionado: string, itemMenuSeleccionadoId:string, defaultListaDP:any){
+    console.log("esta es la lista defaultttttt------------")
+    console.log(defaultListaDP)
+    this.itemMenuSeleccionadoId = itemMenuSeleccionadoId
     
-    localStorage.setItem("itemMenuSeleccionado", itemMenuSeleccionado)
+    localStorage.setItem("defaultListaDP", defaultListaDP)
 
+    ///Esto es para actualiar la ldp del datasouce si mofifique alguna ldp default
+    let ldpUpdated = localStorage.getItem("ldpUpdated")
+    
+    console.log(ldpUpdated)
+    if( ldpUpdated == "true"){
+      console.log("hay que actualizaaaarrr!!!!!!!!!!!!!!!!!!!!!!!!!! ")
+      let ldpUpdatedTarget = String(String(localStorage.getItem("ldpUpdatedTarget")))     //Esta es la tienda o la sucursal seleccionada a la que se le modifico la Default ldp 
+      let newLdpDefaultForTarget = String(localStorage.getItem("newLdpDefaultForTarget")) //Esto me dice cual es la ldp default que tengo que asignarle al ldpUpdatedTarget
+      //recorro las tiendas y las branch para encontrar la ldp default que modifique/actualicé/asigné antes
+      for (let i=0; i<this.loggedUser.tiendas.length; i++) {        
+        console.log("-target: " + ldpUpdatedTarget)
+        console.log("t: " + this.loggedUser.tiendas[i]._id)
+        if(String(this.loggedUser.tiendas[i]._id) == ldpUpdatedTarget){
+          console.log("igualessssss-----------")
+          this.loggedUser.tiendas[i].defaultListaDP = newLdpDefaultForTarget
+          localStorage.setItem("ldpUpdated", "false")
+          break
+        }else{
+          for (let x=0; x < this.loggedUser.tiendas[i].branches.length; x++) {
+            console.log("B: " + this.loggedUser.tiendas[i].branches[x]._id)
+            if(String(this.loggedUser.tiendas[i].branches[x]._id) == ldpUpdatedTarget){
+              console.log("igualessssss-----------")
+              this.loggedUser.tiendas[i].branches[x].defaultListaDP = newLdpDefaultForTarget
+              localStorage.setItem("ldpUpdated", "false")
+            }
+          }
+        }
+      }
+    }
+    localStorage.setItem("itemMenuSeleccionado", itemMenuSeleccionado)
+    localStorage.setItem("itemMenuSeleccionadoId", itemMenuSeleccionadoId)
   }
  
   getUserByIdAndPopulateStores = async (userId:string) => {

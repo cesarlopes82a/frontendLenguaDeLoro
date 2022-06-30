@@ -83,13 +83,19 @@ export class ListadepreciosService {
     this.listaOrigen=""
   }
   
-  /*
-  this._listadeprecioService.enviarListId.subscribe(async (data) => {
-    console.log("voy a en el suuuuuuussssssbbbbbiiiiiiiibeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-    console.log("MENSAJE: Recibo un listaId ", data.data)
-    this.listaOrigenId = data.data
-    return data.data      
-  })
-  */
+
+  setDefaultStoreLDP(itemMenuSeleccionadoId:string, listaId:string): Observable<any>{
+    
+    console.log("MENSAJE: .................")
+    console.log(itemMenuSeleccionadoId)
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let datos={
+      listaId:listaId
+    }
+    let params = JSON.stringify(datos)
+    
+
+    return this._http.post(this.url+'/ldp/setDefaultStoreLDP/'+itemMenuSeleccionadoId,params,{headers});
+  }
 
 }

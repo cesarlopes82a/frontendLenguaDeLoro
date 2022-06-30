@@ -61,10 +61,10 @@
               <td class="align-middle">{{_productsList[i].codigo}}</td>
               <td class="align-middle">{{_productsList[i].stock}}</td>
               
-              <ng-container *ngIf='_productsList[i].fechaUltimaCompra === "-"; else fechaCompra'>
+              <ng-container *ngIf='_productsList[i].fechaUltimaCompra && _productsList[i].fechaUltimaCompra === "-"; else fechaCompra'>
                   <td class="align-middle">-</td>
               </ng-container>
-              <ng-template #fechaCompra>
+              <ng-template #fechaCompra >
                   <td class="align-middle">{{_productsList[i].fechaUltimaCompra |  date:'MM/dd/yyyy h:mm:ss' }} </td>
               </ng-template>
               
@@ -124,6 +124,9 @@
           -->
 
 
+          </div>
+          <div class="coll-ms-2">
+            <button type="submit" class="btn btn-outline-danger" [routerLink]="['/tienda/' + this.storeId + '/ldp/']" [routerLinkActive]="['actived']" [routerLinkActive]="['actived']" >Volver</button>
           </div>
           
         </div>

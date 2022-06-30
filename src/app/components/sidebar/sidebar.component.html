@@ -3,16 +3,19 @@
         <div class="row menuSidebar">
             <div class="barra-lateral col-12 col-sm-auto">
                 <nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
+                    
                     <a [routerLink]="['/estadisticas']" ><i class="far fa-chart-bar" style="margin-right: 5%;"></i><span>Estadisticas</span></a>
                     <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/usuarios']" ><i class="fas fa-user" style="margin-right: 5%;"></i><span> Usuarios</span></a>
                     <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/proveedores']" ><i class="fas fa-address-book" style="margin-right: 5%;"></i><span> Proveedores</span></a>
-                    <a class="activado"><i class="fas fa-home" style="margin-right: 5%;"></i><span>Tiendas</span><i class="icono derecha fas fa-angle-down"></i></a>
+                    <a ><i class="fas fa-home" style="margin-right: 5%;"></i><span>Tiendas</span><i class="icono derecha fas fa-angle-down"></i></a>
 
-                    <div *ngIf="loggedUser" class="sub-menu">
-                        <div *ngFor="let tienda of loggedUser.tiendas " class="sub-menuTiendas">
-                            <a [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(tienda.store.storeName)"><span>{{tienda.store.storeName}}</span></a>
+                    <div *ngIf="loggedUser" class="sub-menu">                        
+                        <div *ngFor="let tienda of loggedUser.tiendas " class="sub-menuTiendas ">
+                            <div *ngIf="itemMenuSeleccionadoId==tienda.store._id" class="test"></div>
+                            <a  [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(tienda.store.storeName, tienda.store._id, tienda.store.defaultListaDP)"><span>{{tienda.store.storeName}}</span></a>
                             <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
-                                <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(branch.branchName)" ><i class="fa-solid fa-barcode"></i><span>{{branch.branchName}}</span></a>
+                                <div *ngIf="itemMenuSeleccionadoId==branch._id" class="test"></div>
+                                <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(branch.branchName, branch._id, branch.defaultListaDP)" ><i class="fa-solid fa-barcode"></i><span>{{branch.branchName}}</span></a>
                             </div>
                         </div>
                         <div>
@@ -20,7 +23,7 @@
                         </div>
                         
                     </div>
-                    <a href="#"><i class="fas fa-home" style="margin-right: 5%;"></i><span>Inicio</span></a>
+                    
                 </nav>
             </div>
             
@@ -29,33 +32,4 @@
 </div>
 
 
-<!---
-<div class="sidenav">
-    <div class ="logo">
-        <a href="/" class="simple-text logo-mini">
-            <div class="logo-img">
-                <img src="../../../assets/images/logo2.png"/>
-            </div>
-        </a>
-        <a href="/" class="simple-text logo-normal">
-            MiEmpresa
-        </a>
-    </div>
-    <ul class="nav">
-        <li><a [routerLink]="['/estadisticas']" class="activado"><i class="far fa-chart-bar"></i><span>Estadisticas</span></a></li>
-        <li><a [routerLink]="['/usuarios']" class="activado"><i class="fas fa-user"></i><span> Usuarios</span></a></li>
-        <li><a class="activado"><i class="fas fa-home"></i><span>Tiendas     </span><i class="icono derecha fas fa-angle-down"></i></a></li>
-        <div *ngIf="user" class="sub-menu">
-            <div *ngFor="let tienda of user.tiendas" class="sub-menuTiendas">
-                <li><a [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']"><span>{{tienda.store.storeName}}</span></a></li>
-                <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
-                    <li><a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" ><i class="fas fa-store"></i><span>{{branch.branchName}}</span></a></li>
-                </div>
-            </div>
-            <a href="#"><span>Crear Tienda</span></a>
-        </div>
-    </ul>
-</div>
-
--->
 

@@ -35,7 +35,7 @@
                         <ng-container *ngIf="producto.precioVenta > 0">
                             <td>{{producto.product.productName}}</td>
                             <td>{{producto.product.codigo}}</td>
-                            <td>{{producto.product.categoriaRubro}}</td>
+                            <td>{{producto.product.categoriaRubro.categoryName}}</td>
                             <td>{{producto.precioVenta | currency: '$'}}</td>
                         </ng-container>
                     </tr>

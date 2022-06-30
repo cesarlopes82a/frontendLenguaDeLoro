@@ -1,62 +1,128 @@
+<div class="card ">
+    <div class="card-header">
+        L  I  S  T  A  S        D  E       P  R  E  C  I  O  S      Sucursal:   <strong>{{tiendaNombre}}</strong>
+        
+        
+    </div>
 
+    <button type="submit" class="btn btn-primary" [routerLink]="['/tienda/' + this.storeId + '/ldp/nuevaldp']" [routerLinkActive]="['actived']" [routerLinkActive]="['actived']" >Registrar NUEVA Lista De Precios</button>
 
-<h1>L  I  S  T  A  S     -     D  E    -    P  R  E  C  I  O  S</h1>
-
-<div class="conteiner col-md-10 offset-md-1 center">
-  <a [routerLink]="['/tienda/' + this.storeId + '/ldp/nuevaldp']" [routerLinkActive]="['actived']"><span>Nueva Lista de precios</span></a>
+    <div class="card-body">
+        <table class="table table table-fit">
+        <div class="container">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        L  I  S  T  A  S     -     D  E    -    P  R  E  C  I  O  S: 
+                    </div>
+                    <div class="panel-body">
+                       
+                   
+                    </div>
+                </div>
+            </div>
+        </div>
+        </table>
+    </div>
 </div>
 
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">                
+    <ng-container *ngFor="let column of columnsToDisplay" >
+        <ng-container matColumnDef="{{column}}">
+            <th mat-header-cell *matHeaderCellDef > {{column}} </th>
+            <ng-container *ngIf="column == 'Def'">
+                <ng-container mat-cell *matCellDef="let transaction">
+                    <ng-container *ngIf="defaultLdp == transaction._id">
+                        <td align="center" style="vertical-align:center;">*</td>         
+                    </ng-container>
+                    <ng-container *ngIf="defaultLdp != transaction._id">
+                        <td></td>         
+                    </ng-container>
+                </ng-container>
+                <td mat-footer-cell *matFooterCellDef>  </td>                           
+            </ng-container>
+            <ng-container *ngIf="column == 'Nombre'">                
+                <td mat-cell *matCellDef="let transaction"> {{transaction.listaNombre}} </td> 
+                <td mat-footer-cell *matFooterCellDef>  </td>                         
+            </ng-container>
+            <ng-container *ngIf="column == 'Creada por...'">
+                <td mat-cell *matCellDef="let transaction"> {{transaction.creador}} </td>                        
+                <td mat-footer-cell *matFooterCellDef>  </td>
+            </ng-container>
+            <ng-container *ngIf="column == 'Fecha Creacion'">
+                <td mat-cell *matCellDef="let transaction"> {{transaction.createdAt | date:'medium'}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+            </ng-container>
+           
+            <ng-container *ngIf="column == 'menu'">
+                <td mat-cell *matCellDef="let transaction"> 
+                    <button  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">                                    
+                        <button mat-menu-item (click)="editarItem()">
+                          <mat-icon >edit</mat-icon>
+                          <span>editar</span>
+                        </button>
+                        <button mat-menu-item (click)="eliminarItem()">
+                          <mat-icon>delete_outline</mat-icon>
+                          <span>eliminar</span>
+                        </button>
+                        <button mat-menu-item (click)="pidoClonar(transaction._id)" [routerLink]="['/tienda/' + this.storeId + '/ldp/nuevaldp']">
+                            <mat-icon>filter_none</mat-icon>
+                            <span>clonar</span>
+                        </button>
+                        <button mat-menu-item (click)="setDefaultStoreLDP(transaction._id, transaction.listaNombre)" >
+                            <mat-icon>filter_none</mat-icon>
+                            <span>Set Default</span>
+                        </button>
+                       
+                      </mat-menu>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>   
+            </ng-container>                     
+        </ng-container>                                        
+    </ng-container>                              
+    <tr mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
+   
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">                    
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
-<table class="table table table-fit">
-  <div class="container">
-      <div class="col-md-12">
-          <div class="panel panel-default">
-              <div class="panel-heading">
-                L  I  S  T  A  S     -     D  E    -    P  R  E  C  I  O  S: 
-              </div>
-              <div class="panel-body">
-                  <table class="table  table-striped" >
-                      <thead>
-                          <tr>
-                              <th>#</th>
-                              <th>Nombre</th>
-                              <th>Creador</th>
-                              <th>Fecha de creacion</th>
-                              
-                          </tr>
-                      </thead>
-                      <!-- voy a recorrer todos los usuarios -->
-                      <tbody *ngFor="let lista of listasdeprecios; let i = index;">
-                        <tr data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                      
-                          <td>{{i}}</td>                
-                          <td>{{listasdeprecios[i].listaNombre}}</td>
-                          <td>{{listasdeprecios[i].creadapor.username}}</td>                                            
-                          <td>{{listasdeprecios[i].fechaDeCreacion | date:'MM/dd/yyyy h:mm:ss'}}</td>
-                    
-                          <td>
+            <div class="card w-75">
+           
+                <table class="styled-table table-sm ">
+                    <thead>
+                    <tr class=" ">
+                        <th scope="col">#</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Unidades</th>
+                        <th scope="col">Precio Venta</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let product of element.ldpProducts; let i = index;">
+                        <td>{{i}}</td>                
+                        <td>{{product.product.productName}}</td>
+                        <td>{{product.product.codigo}}</td>                                            
+                        <td>{{product.product.categoriaRubro.categoryName}}</td>
+                        <td>{{product.product.unidadMedida}}</td>
+                        <td>{{product.precioVenta | currency}}</td>
+                    </tbody>
+                </table>
+      
+            </div>
 
-                              <p *ngIf="consultoEstadoEliminar(listasdeprecios[i]._id)==false">
-                                  <a class="iconoenlinea" [routerLink]="['/productos/producto',listasdeprecios[i]._id]"><i class="fas fa-eye" style="margin-left: 5%;"></i></a>
-                                  <a class="iconoenlinea" [routerLink]="['/productos/editar/', listasdeprecios[i]._id]"><i class="fa-solid fa-pencil" style="margin-left: 5%;"></i></a>
-                                  <a (click)="pidoEliminar(listasdeprecios[i]._id)" class="iconoenlinea col-xs-2 margin-left"><i class="fas fa-trash-alt" style="margin-left: 5%;"></i></a>
-                                  <a (click)="pidoClonar(listasdeprecios[i]._id)" class="iconoenlinea" [routerLink]="['/tienda/' + this.storeId + '/ldp/nuevaldp']" [routerLinkActive]="['actived']"><i class="fa-regular fa-clone" style="margin-left: 5%;"></i></a>
+        </div>
+        </td>
+    </ng-container>
 
-                              </p>
-                              <p *ngIf="consultoEstadoEliminar(listasdeprecios[i]._id)==true">
-                                  <a (click)="deleteLista(listasdeprecios[i]._id)"></a>
-                                  <a (click)="deleteLista(listasdeprecios[i]._id)"><i class="fas fa-check" style="color: rgb(24, 185, 24); "></i></a>
-                                  <a (click)="pidoCancelarEliminar()"><i class="fas fa-check" style="color: red; margin-left: 50%; "></i></a>
-                              </p>                                                            
-                          </td>
-                          <td *ngIf="defaultListaDP==listasdeprecios[i]._id"><i class="fa-solid fa-check" style="color: green;"></i></td>
-                      </tr>
-
-                          
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      </div>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" 
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>

@@ -93,16 +93,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="this.loggedUserRole == 'adminMaster' || 'adminGlobal' || 'adminTienda'" class="col-md-4">
-                <div class="card text-center">
-                    <img src="images/gym.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Listas de Precios</h5>
-                        <p class="card-text">Desde aquí podrás definir diferentes listas de precios para esta sucursal.</p>
-                        <a [routerLink]="['/sucursal', this.branchId,'ldp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
-                    </div>
-                </div>
-            </div>
+            
             <div *ngIf="this.loggedUserRole == 'adminMaster' || 'adminGlobal' || 'adminTienda'" class="col-md-4">
                 <div class="card text-center">
                     <img src="images/gym.jpg" class="card-img-top">
@@ -114,8 +105,20 @@
 
                 </div>
             </div>
+            <div *ngIf="this.loggedUserRole == 'adminMaster' || 'adminGlobal' || 'adminTienda'" class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Lista de precios</h5>
+                        <p class="card-text">Aqui podrás asignar la lista de precios por defecto para esta sucursal.</p>
+                        <a [routerLink]="['/tienda', this.branchId,'ldp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
+
 
 
     </div>

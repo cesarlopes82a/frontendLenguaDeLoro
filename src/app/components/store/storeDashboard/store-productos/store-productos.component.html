@@ -22,7 +22,7 @@
             <td>{{producto.codigo}} </td>
             <td>{{producto.productName}}</td>
             <td>{{producto.unidadMedida}}</td>
-            <td>{{producto.categoriaRubro}}</td>
+            <td>{{producto.categoriaRubro.categoryName}}</td>
            
             <td>
               <p *ngIf="consultoEstadoEliminar(producto._id)==false">

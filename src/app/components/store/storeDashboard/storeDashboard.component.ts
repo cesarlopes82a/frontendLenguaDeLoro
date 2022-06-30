@@ -120,6 +120,7 @@ export class StoreDashboardComponent implements OnInit {
       next: (v) => {
         console.log("viene el next")
         console.log(v)
+        
         return v
       },
       error: (e) => console.error(e),

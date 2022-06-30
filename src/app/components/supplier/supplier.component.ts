@@ -68,5 +68,11 @@ export class SupplierComponent implements OnInit {
     location.reload(true);
     */
   }
+  editarItem(){
+
+  }
+  eliminarItem(){
+    
+  }
 
 }

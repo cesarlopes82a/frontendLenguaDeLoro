@@ -162,11 +162,11 @@
 
         <div class="container-fluid h-100">
           <div class="row w-100">
-            <div class="col">
-              <button class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 " (click)="solicitarRegistrarCompra()"> Finalizar compra </button>
+            <div class="col-md-10">
+              <button class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 " (click)="solicitarRegistrarCompra()"> Finalizar venta </button>
             </div>
             <div class="col">
-              <button [routerLink]="['/sucursal/' + this.branchId + '/ventas/listar']" [routerLinkActive]="['actived']" class="btn btn-danger center-block" > Ventas </button>
+              <button [routerLink]="['/sucursal/' + this.branchId + '/ventas/listar']" [routerLinkActive]="['actived']" class="btn btn-outline-danger" > Volver </button>
             </div>
           </div>
       

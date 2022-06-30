@@ -229,68 +229,34 @@ export class NewldpComponent implements OnInit {
     if(event.isUserInput) {
       console.log(event.source.value, event.source.selected);
       let _newProductList:productOfLDP[] = []
-      const index = this.branchesByStore.findIndex((object: { _id: any; }) => {
-        return object._id == event.source.value;
-      });
-      console.log("el index: " +index)
-      console.log(this.branchesByStore[index])
-      
-        
-      for (let [i, producto] of this._productsList.entries()) {
-        console.log(producto)
-        const indexProd = this.branchesByStore[index].stock.findIndex((object: { product: string; }) => {
-          return object.product == producto._id;
+      if(event.source.value==""){
+        for (let [i, producto] of this._productsList.entries()) {
+          this._productsList[i].fechaUltimaCompra = "-"
+          this._productsList[i].costoUnitario = 0
+          this._productsList[i].stock = "-"
+        }
+      }else{
+        const index = this.branchesByStore.findIndex((object: { _id: any; }) => {
+          return object._id == event.source.value;
         });
-        this._productsList[i].fechaUltimaCompra = this.branchesByStore[index].stock[indexProd].fechaUltimaCompra
-        this._productsList[i].costoUnitario = this.branchesByStore[index].stock[indexProd].precioUnitUltCompra
-        this._productsList[i].stock = this.branchesByStore[index].stock[indexProd].cantidad
-
-        console.log("el indice del producto es: " + indexProd)
-        console.log(this.branchesByStore[index].stock[indexProd].product)
-        console.log(this.branchesByStore[index].stock[indexProd].cantidad)
-      }
-
-/*
-        let productOfLDPupdated = new productOfLDP(
-          producto._id,
-          producto.productName,
-          producto.rubro,
-          producto.codigo,
-          producto.stock,
-          producto.fechaUltimaCompra,
-          producto.costoUnitario,
-          producto.precioVenta,
-        )
-    */    
-
-        /*
-_id: "62a1309c3acdbc2ca475a385",
-          productName: "ProdNuevoT1",
-          rubro: "Alimentos secos",
-          codigo: "2345345456456",
-          stock: 122,
-          fechaUltimaCompra: "-",
-          costoUnitario: 0,
-          precioVenta: null,
-        */
+        if(index >=0){
+          for (let [i, producto] of this._productsList.entries()) {
         
-        /*
-        let productOfLDPnew = new productOfLDP(
-          producto._id,
-          producto.productName,
-          producto.categoriaRubro.categoryName,
-          producto.codigo,
-          producto.stock,
-          "-",   //producto.ultimoRegCompra.fechaDeCompra,
-          0,  //producto.ultimoRegCompra.precioCompraUnitario,
-          producto.precioVenta
-        )
-        //guardo todos estos elementos en un array (_productList)
-        this._productsList.push(productOfLDPnew)
-        */
+            const indexProd = this.branchesByStore[index].stock.findIndex((object: { product: string; }) => {
+              return object.product == producto._id;
+            });
+            if(indexProd>=0){
+              this._productsList[i].fechaUltimaCompra = this.branchesByStore[index].stock[indexProd].fechaUltimaCompra
+              this._productsList[i].costoUnitario = this.branchesByStore[index].stock[indexProd].precioUnitUltCompra
+              this._productsList[i].stock = this.branchesByStore[index].stock[indexProd].cantidad
+            }
+    
+          }
+        }
+      }   
+        
       
-         
-         // this._productsList.push(productOfLDPnew)
+
        
     }
   }
