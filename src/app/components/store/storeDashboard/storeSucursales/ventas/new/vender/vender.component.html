@@ -23,9 +23,11 @@
             </div>
             <div class="form-group col-md-3">
               <label for="selectLista">Lista de precios</label>
-              <select class="form-control" name="listadp" #lista="ngModel" [(ngModel)]="listadpIdSeleccionada" (change)="onChangeLDP($event)" >
-                <option disabled selected [value]="null">Seleccione el producto</option>
-                <option *ngFor="let lista of listasdeprecios" [value]="lista._id" >{{lista.listaNombre}}</option>            
+              <select [disabled]="vendedorRole=='vendedor'" class="form-control" name="listadp" #lista="ngModel" [(ngModel)]="listadpIdSeleccionada" (change)="onChangeLDP($event)" >                
+                <option disabled [value]="null">Seleccione una lista</option>
+                <option *ngFor="let lista of listasdeprecios" [value]="lista._id">
+                  {{lista.listaNombre}}
+                </option>                  
               </select>
             </div>
             <div class="form-group col-md-2">

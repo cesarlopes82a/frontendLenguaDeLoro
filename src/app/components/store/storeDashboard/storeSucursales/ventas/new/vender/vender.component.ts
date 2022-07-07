@@ -30,12 +30,13 @@ export class VenderComponent implements OnInit {
   public vendedorName!: string;
   public vendedorRole!: string;
   public vendedorId!: string;
+  public defaultListaDP!: string;
   public sucursalName!: string;
   public fechaActual!: string; 
   public horaActual!:string;
   public branchId!:string;
   public listasdeprecios!:any         //esto es lo que me llega del backen
-  public listadpIdSeleccionada!: string
+  public listadpIdSeleccionada: string = String(localStorage.getItem("defaultListaDP"))
   public listadpSeleccionadaFull!:any
   public listadpDescripcion!:string
   public listaProdSeleccionados: prodSeleccionadoVta[] = []
@@ -62,6 +63,7 @@ export class VenderComponent implements OnInit {
     this.vendedorName = String(localStorage.getItem("loggedUserName"))
     this.vendedorRole = String(localStorage.getItem("loggedUserRole"))
     this.vendedorId = String(localStorage.getItem("loggedUserID"))
+    this.defaultListaDP = String(localStorage.getItem("defaultListaDP"))
 
     this.fechaActual =  new Date().toISOString().split('T')[0];
 
@@ -84,7 +86,8 @@ export class VenderComponent implements OnInit {
       params => {
         this.branchId = params['id']
         console.log("esto es lo que me trajo el params: storeId:" + this.branchId)
-        this.getListasdpByStoreIdAndPopulateInfo(this.branchId)        
+        this.getListasdpByStoreIdAndPopulateInfo(this.branchId) 
+        //this.selectDefaultLDP()       
       }
     )
     
@@ -96,6 +99,12 @@ export class VenderComponent implements OnInit {
         this.listadpDescripcion=lista.descripcion
       }
     }
+  }
+  selectDefaultLDP(){
+    console.log("seteeeeeeoooooo")
+    console.log("this.defaultListaDP: " + this.defaultListaDP)
+    this.listadpIdSeleccionada = this.defaultListaDP
+
   }
   getListasdpByStoreIdAndPopulateInfo(branchId: string){
     this._listadpSevice.getListasdpByStoreIdAndPopulateInfo(branchId)
