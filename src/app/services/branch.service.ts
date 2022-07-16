@@ -40,6 +40,7 @@ export class BranchService {
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
     return this._http.get(this.url+'/branches/stock/'+branchId,{headers:cabeceras})
   }
+<<<<<<< HEAD
   ajustarStock(branchId:string, productId:string, cantidad:number, nuevaCantidad:number, descripcionAjuste:string):Observable<any>{
     console.log("MENSAJE: branchService - ajustarStock producId: " + productId + " - branchId: " +  branchId )
 
@@ -55,5 +56,7 @@ export class BranchService {
     console.log(params)
     return this._http.post(this.url + '/branches/ajustarStock/'+branchId,params,{headers}) 
   }
+=======
+>>>>>>> 33593fe30a0c2ad67a23feca788f6b8a399d821f
 
 }

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BranchService } from 'src/app/services/branch.service';
 import { ProductService } from 'src/app/services/product.service';
 import { MatTableDataSource } from '@angular/material/table';
+<<<<<<< HEAD
 import { MatDialog } from '@angular/material/dialog';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { DialogajusteComponent } from '../dialogajuste/dialogajuste.component';
@@ -11,6 +12,12 @@ import Swal from 'sweetalert2'
 
 export interface StockElement {
   prodId:string;
+=======
+import {FormGroup, FormControl} from '@angular/forms';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+
+export interface StockElement {
+>>>>>>> 33593fe30a0c2ad67a23feca788f6b8a399d821f
   codigo: string;
   productName: string;
   categoryName: string;
@@ -18,9 +25,16 @@ export interface StockElement {
   precioUnitUltCompra: string;
   cantidad: string;
   menu:any
+<<<<<<< HEAD
   ajustes: any
 }
 
+=======
+}
+export class TableExpandableRowsExample {
+  expandedElement!: StockElement | null;
+}
+>>>>>>> 33593fe30a0c2ad67a23feca788f6b8a399d821f
 
 @Component({
   selector: 'app-stock',
@@ -46,8 +60,12 @@ export class StockComponent implements OnInit {
 
   constructor(
     private _branchService: BranchService,
+<<<<<<< HEAD
     private _route: ActivatedRoute,
     private dialog: MatDialog,
+=======
+    private _route: ActivatedRoute 
+>>>>>>> 33593fe30a0c2ad67a23feca788f6b8a399d821f
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +76,7 @@ export class StockComponent implements OnInit {
         this.getStockByBranchId()        
       }
     )
+<<<<<<< HEAD
   }
   getStockByBranchId(){
     console.log("estoy dentro del getStockByBranchId()")
@@ -99,8 +118,20 @@ export class StockComponent implements OnInit {
 
       }
       })
+=======
+>>>>>>> 33593fe30a0c2ad67a23feca788f6b8a399d821f
   }
+  getStockByBranchId(){
+    console.log("estoy dentro del getStockByBranchId()")
+    this._branchService.getStockByBranchId(this.branchId)
+    .subscribe({
+      next: (response) => {
+        console.log("MENSAJE: getStockByBranchId() Successfully completed")
+        this.branchFullInfo = response;
+        console.log("despues de la asgnacion this.products")
+        console.log(this.branchFullInfo)
 
+<<<<<<< HEAD
   ajustarStock(transaction:any){
     console.log("quiero editar este item: ")
     console.log(transaction)
@@ -157,6 +188,44 @@ export class StockComponent implements OnInit {
         
       });
     
+=======
+       // window.location.reload();
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        let ELEMENT_DATA: any[] = []
+        for (let i=0; i<this.branchFullInfo.stock.length; i++) {
+          console.log("--------------------------------------------")
+        /*
+        ajustes:[{
+          fechaAjuste: String,
+          justificacion: String,
+          accion: String,
+          cantidad: Number
+        }]
+        */
+            let StockELEMENT_DATA: StockElement          
+            StockELEMENT_DATA = {
+              codigo: this.branchFullInfo.stock[i].product.codigo,
+              fechaUltimaCompra: this.branchFullInfo.stock[i].fechaUltimaCompra,
+              precioUnitUltCompra: this.branchFullInfo.stock[i].precioUnitUltCompra,
+              categoryName: this.branchFullInfo.stock[i].product.categoriaRubro.categoryName,
+              productName: this.branchFullInfo.stock[i].product.productName,
+              cantidad: this.branchFullInfo.stock[i].cantidad,
+              menu: ""
+            }
+            ELEMENT_DATA.push(StockELEMENT_DATA)
+          }
+          console.log(ELEMENT_DATA)
+          
+          this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+          console.log(this.dataSource)
+      }
+      })
+  }
+  ajustarStock(transactionId:string){
+    console.log("quiero editar este item: " + transactionId)
+>>>>>>> 33593fe30a0c2ad67a23feca788f6b8a399d821f
     
   }
 }
