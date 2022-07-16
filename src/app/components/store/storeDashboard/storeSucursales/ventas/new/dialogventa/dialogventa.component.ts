@@ -57,6 +57,11 @@ export class DialogventaComponent implements OnInit {
     this.cantProductos = 1
   }
   
+  addProduct(codigo: string){
+    console.log("---------")
+    console.log(codigo)
+    this.filtroProd = codigo
+  }
 
  
 

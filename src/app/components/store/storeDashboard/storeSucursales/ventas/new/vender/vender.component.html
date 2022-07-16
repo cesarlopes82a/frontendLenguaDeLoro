@@ -23,9 +23,11 @@
             </div>
             <div class="form-group col-md-3">
               <label for="selectLista">Lista de precios</label>
-              <select class="form-control" name="listadp" #lista="ngModel" [(ngModel)]="listadpIdSeleccionada" (change)="onChangeLDP($event)" >
-                <option disabled selected [value]="null">Seleccione el producto</option>
-                <option *ngFor="let lista of listasdeprecios" [value]="lista._id" >{{lista.listaNombre}}</option>            
+              <select [disabled]="vendedorRole=='vendedor'" class="form-control" name="listadp" #lista="ngModel" [(ngModel)]="listadpIdSeleccionada" (change)="onChangeLDP($event)" >                
+                <option disabled [value]="null">Seleccione una lista</option>
+                <option *ngFor="let lista of listasdeprecios" [value]="lista._id">
+                  {{lista.listaNombre}}
+                </option>                  
               </select>
             </div>
             <div class="form-group col-md-2">
@@ -64,7 +66,7 @@
             <!-- Rubro Column -->
             <ng-container matColumnDef="rubro">
               <th mat-header-cell *matHeaderCellDef> Rubro </th>
-              <td mat-cell *matCellDef="let transaction"> {{transaction.rubro}} </td>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.rubro.categoryName}} </td>
               <td mat-footer-cell *matFooterCellDef>  </td>
             </ng-container>
 
@@ -86,7 +88,7 @@
             <ng-container matColumnDef="total">
               <th mat-header-cell *matHeaderCellDef> Total </th>
               <td mat-cell *matCellDef="let transaction"> {{transaction.total  | currency}} </td>
-              <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+              <td mat-footer-cell *matFooterCellDef> {{totalVenta | currency}} </td>
             </ng-container>
 
             <!-- Action Column -->
@@ -113,7 +115,7 @@
               <div class="form-group col-md-2">
                 <td><mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>Efectivo</mat-label>
-                  <input matInput type="number" placeholder="Monto en efectivo" name="montoEfectivo" [(ngModel)]="montoEfectivo">
+                  <input matInput type="number" placeholder="Monto en efectivo" name="montoEfectivo" (input)="calcularSaldoPendiente()" [(ngModel)]="montoEfectivo">
                   <span matPrefix>$&nbsp;</span>
                   <mat-hint align="start"><strong>Monto recibido en pesos</strong> </mat-hint>            
                 </mat-form-field></td>
@@ -124,7 +126,7 @@
               <div class="form-group col-md-2">
                 <td><mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>Tarjeta</mat-label>
-                  <input matInput type="number" placeholder="Monto con tarjeta C/D" name="montoTarjeta" [(ngModel)]="montoTarjeta">
+                  <input matInput type="number" placeholder="Monto con tarjeta C/D" name="montoTarjeta" (input)="calcularSaldoPendiente()" [(ngModel)]="montoTarjeta">
                   <span matPrefix>$&nbsp;</span>
                   <mat-hint align="start"><strong>Monto cobrado con tarjeta C/D</strong> </mat-hint>
                 </mat-form-field></td>

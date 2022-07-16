@@ -19,6 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatListModule} from '@angular/material/list';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -84,6 +85,8 @@ import { FiltrofechavtasPipe } from './components/store/storeDashboard/storeSucu
 import { DialogquitartiendaComponent } from './components/users/dialogs/dialogquitartienda/dialogquitartienda.component';
 import { BranchLDPmainComponent } from './components/store/storeDashboard/storeSucursales/branchLdP/main/branch-ldpmain/branch-ldpmain.component';
 import { NewBranchLDPComponent } from './components/store/storeDashboard/storeSucursales/branchLdP/new/new-branch-ldp/new-branch-ldp.component';
+import { DialogajusteComponent } from './components/store/storeDashboard/storeSucursales/stock/main/dialogajuste/dialogajuste.component';
+import { DialogpagosComponent } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogpagos/dialogpagos.component';
 
 
 
@@ -144,6 +147,8 @@ import { NewBranchLDPComponent } from './components/store/storeDashboard/storeSu
     DialogquitartiendaComponent,
     BranchLDPmainComponent,
     NewBranchLDPComponent,
+    DialogajusteComponent,
+    DialogpagosComponent,
     
     
 
@@ -172,7 +177,8 @@ import { NewBranchLDPComponent } from './components/store/storeDashboard/storeSu
     MatNativeDateModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatMenuModule
+    MatMenuModule,
+    MatListModule
   ],
   providers: [
     AuthGuard,

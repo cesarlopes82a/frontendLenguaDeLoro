@@ -68,8 +68,11 @@ export class SidebarComponent implements OnInit {
         console.log("t: " + this.loggedUser.tiendas[i]._id)
         if(String(this.loggedUser.tiendas[i]._id) == ldpUpdatedTarget){
           console.log("igualessssss-----------")
-          this.loggedUser.tiendas[i].defaultListaDP = newLdpDefaultForTarget
+          this.loggedUser.tiendas[i].defaultListaDP = newLdpDefaultForTarget          
           localStorage.setItem("ldpUpdated", "false")
+          if(itemMenuSeleccionadoId==this.loggedUser.tiendas[i]._id){
+            localStorage.setItem("defaultListaDP", newLdpDefaultForTarget)
+          }
           break
         }else{
           for (let x=0; x < this.loggedUser.tiendas[i].branches.length; x++) {
@@ -78,11 +81,15 @@ export class SidebarComponent implements OnInit {
               console.log("igualessssss-----------")
               this.loggedUser.tiendas[i].branches[x].defaultListaDP = newLdpDefaultForTarget
               localStorage.setItem("ldpUpdated", "false")
+              if(itemMenuSeleccionadoId==this.loggedUser.tiendas[i].branches[x]._id){
+                localStorage.setItem("defaultListaDP", newLdpDefaultForTarget)
+              }
             }
           }
         }
       }
     }
+    
     localStorage.setItem("itemMenuSeleccionado", itemMenuSeleccionado)
     localStorage.setItem("itemMenuSeleccionadoId", itemMenuSeleccionadoId)
   }

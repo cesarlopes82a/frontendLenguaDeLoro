@@ -27,6 +27,7 @@
                         <th>Codigo</th>
                         <th>Rubro</th>
                         <th>Precio</th>
+                        <th>Agregar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,9 @@
                             <td>{{producto.product.codigo}}</td>
                             <td>{{producto.product.categoriaRubro.categoryName}}</td>
                             <td>{{producto.precioVenta | currency: '$'}}</td>
+                            <td><mat-icon style="color: green;" (click)="addProduct(producto.product.codigo)">add_shopping_cart</mat-icon></td>
+
+                                <!--<button mat-raised-button color="warn" (click)="addProduct(producto.product.codigo)">add</button>-->
                         </ng-container>
                     </tr>
                     

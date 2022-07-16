@@ -171,11 +171,9 @@ export class LDPmainComponent implements OnInit {
             localStorage.setItem("ldpUpdatedTarget", itemMenuSeleccionadoId)  //Esta es la tienda o la sucursal seleccionada a la que se le modifico la Default ldp 
             localStorage.setItem("newLdpDefaultForTarget", this.defaultLdp)   //Esto me dice cual es la ldp default que tengo que asignarle al ldpUpdatedTarget
             localStorage.setItem("defaultListaDP", this.defaultLdp) //esta es la lista de precios por default seleccionada para la tienda seleccionada
+            console.log("seeeeetttt defaultListaDP!!!----------")
+            console.log(this.defaultLdp)
             localStorage.setItem("ldpUpdated", this.ldpUpdated)   //esto es un indicador de que la ldp por defecto fue modificada. lo necesito para actualizar el datasource en el sidebar
-            
-            
-            
-           
 
             Swal.fire(
               'Confirmado!',

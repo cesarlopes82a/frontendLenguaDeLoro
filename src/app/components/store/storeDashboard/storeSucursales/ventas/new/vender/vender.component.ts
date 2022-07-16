@@ -6,6 +6,7 @@ import { DialogventaComponent } from '../dialogventa/dialogventa.component';
 import { VentasService } from 'src/app/services/ventas.service';
 import {MatTableDataSource} from '@angular/material/table';
 import Swal from 'sweetalert2'
+import { faGrinTongue } from '@fortawesome/free-regular-svg-icons';
 
 
 export interface prodSeleccionadoVta {
@@ -30,12 +31,13 @@ export class VenderComponent implements OnInit {
   public vendedorName!: string;
   public vendedorRole!: string;
   public vendedorId!: string;
+  public defaultListaDP!: string;
   public sucursalName!: string;
   public fechaActual!: string; 
   public horaActual!:string;
   public branchId!:string;
   public listasdeprecios!:any         //esto es lo que me llega del backen
-  public listadpIdSeleccionada!: string
+  public listadpIdSeleccionada: string = String(localStorage.getItem("defaultListaDP"))
   public listadpSeleccionadaFull!:any
   public listadpDescripcion!:string
   public listaProdSeleccionados: prodSeleccionadoVta[] = []
@@ -45,6 +47,7 @@ export class VenderComponent implements OnInit {
   public saldoPendiente:number = 0
   public montoEfectivo!:number
   public montoTarjeta!:number
+  public vuelto!:number
   public comentarioVenta!:string
   public montoNada!:number
   
@@ -62,6 +65,7 @@ export class VenderComponent implements OnInit {
     this.vendedorName = String(localStorage.getItem("loggedUserName"))
     this.vendedorRole = String(localStorage.getItem("loggedUserRole"))
     this.vendedorId = String(localStorage.getItem("loggedUserID"))
+    this.defaultListaDP = String(localStorage.getItem("defaultListaDP"))
 
     this.fechaActual =  new Date().toISOString().split('T')[0];
 
@@ -84,7 +88,8 @@ export class VenderComponent implements OnInit {
       params => {
         this.branchId = params['id']
         console.log("esto es lo que me trajo el params: storeId:" + this.branchId)
-        this.getListasdpByStoreIdAndPopulateInfo(this.branchId)        
+        this.getListasdpByStoreIdAndPopulateInfo(this.branchId) 
+        //this.selectDefaultLDP()       
       }
     )
     
@@ -97,6 +102,13 @@ export class VenderComponent implements OnInit {
       }
     }
   }
+  actualizarDescripcionLDP(){
+    for (let lista of this.listasdeprecios) {
+      if(lista._id == this.listadpIdSeleccionada){
+        this.listadpDescripcion=lista.descripcion
+      }
+    }   
+  }
   getListasdpByStoreIdAndPopulateInfo(branchId: string){
     this._listadpSevice.getListasdpByStoreIdAndPopulateInfo(branchId)
     .subscribe({
@@ -107,10 +119,13 @@ export class VenderComponent implements OnInit {
 
       },
       error: (e) => console.error(e),
-      complete: () => console.info('este es el complete') 
+      complete: () => {
+        this.actualizarDescripcionLDP()
+      }
     })
   }
 
+  
   openDialogVenta(){
     if(this.listadpIdSeleccionada && this.listasdeprecios){
       for (let [index, lista] of this.listasdeprecios.entries()) {
@@ -158,6 +173,8 @@ export class VenderComponent implements OnInit {
     this.cantProdSeleccionado = 1
   
     this.dataSource = new MatTableDataSource(this.listaProdSeleccionados);
+    this.totalVenta = this.listaProdSeleccionados.map((t: { total: any; }) => t.total).reduce((acc: any, value: any) => acc + value, 0);
+    this.montoEfectivo = this.totalVenta
     this.cd.detectChanges()   //esto es importante para que salga el error "ng0100 expression has changed after it was checked"
   }
 
@@ -167,6 +184,8 @@ export class VenderComponent implements OnInit {
     console.log("cantidad: " + this.listaProdSeleccionados.length)
 
     this.dataSource = new MatTableDataSource(this.listaProdSeleccionados);
+    this.totalVenta = this.listaProdSeleccionados.map((t: { total: any; }) => t.total).reduce((acc: any, value: any) => acc + value, 0);
+    this.montoEfectivo = this.totalVenta
     this.cd.detectChanges()   //esto es importante para que salga el error "ng0100 expression has changed after it was checked"
 
   }
@@ -178,17 +197,23 @@ export class VenderComponent implements OnInit {
   }
 
   calcularSaldoPendiente(){
+    console.log("-----------******-------------")
+    
     setTimeout(()=>{
       this.saldoPendiente = this.totalVenta
       let montoEfectivoAUX = 0
       let montoTarjetaAUX = 0
       if(this.montoEfectivo) montoEfectivoAUX=this.montoEfectivo
       if(this.montoTarjeta) montoTarjetaAUX=this.montoTarjeta
+      if(this.totalVenta - montoEfectivoAUX - montoTarjetaAUX>=0){
+        this.saldoPendiente = this.totalVenta - montoEfectivoAUX - montoTarjetaAUX
+      }else{
+        this.saldoPendiente=0
+      }
 
-      this.saldoPendiente = this.totalVenta - montoEfectivoAUX - montoTarjetaAUX
     },1)    
   }
- 
+
 
   onSubmit(form: any){
     console.log("los prodddddddddddddddddddddddd")
@@ -202,34 +227,70 @@ export class VenderComponent implements OnInit {
     }
   }
   solicitarRegistrarCompra(){
-    this._ventasService.registrarVenta(this.listaProdSeleccionados, this.totalVenta, this.montoEfectivo, this.montoTarjeta, this.comentarioVenta, this.branchId, this.vendedorId).subscribe({
-      next: (v) => {
-        console.log("MENSAJE: Respuesta exitosa desde el backend")
-        console.log(v)
-        /*
-        Swal.fire({
-          position: 'bottom-end',
-          icon: 'success',
-          title: 'Your work has been saved',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        */
-        //limpio todo para dejar listo para la procima venta
-        this.listaProdSeleccionados.splice(0, this.listaProdSeleccionados.length);
-        this.dataSource = new MatTableDataSource(this.listaProdSeleccionados);
-        console.log(this.listaProdSeleccionados)
-        this.montoEfectivo = this.montoNada
-        this.montoTarjeta = this.montoNada
-        this.comentarioVenta=""
 
-        //--------------------------------------------
+    if(!this.montoTarjeta) this.montoTarjeta = 0
+    if(!this.vuelto) this.vuelto = 0
+
+    if(this.totalVenta<=(this.montoEfectivo + this.montoTarjeta)){
+      this.vuelto = (this.montoEfectivo+ this.montoTarjeta)-this.totalVenta
+      
+    }
+
+    if(this.montoTarjeta>this.totalVenta){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: '<a href="">Why do I have this issue?</a>'
+      })
+    }else{
+      Swal.fire({
+        icon: 'warning',
+        title: 'Registrar Venta',
+        html: '<p style="background-color: #B9B9B9 !important;"> Total venta: ' + this.totalVenta + '</p>'+
+        '<br />  Efectivo: ' + this.montoEfectivo + 
+        '<br />  Tarjeta: ' + this.montoTarjeta + 
+        '<br /><strong style="color:red;">  VUELTO:  </strong>' + this.vuelto,
         
-                 
-      },
-      error: (e) => console.error(e),
-      complete: () => console.info('complete') 
-    })
+        
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        denyButtonText: `Cancelar`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this.montoEfectivo = this.totalVenta - this.montoTarjeta
+          this._ventasService.registrarVenta(this.listaProdSeleccionados, this.totalVenta, this.montoEfectivo, this.montoTarjeta, this.comentarioVenta, this.branchId, this.vendedorId).subscribe({
+            next: (v) => {
+              console.log("MENSAJE: Respuesta exitosa desde el backend")
+              console.log(v)
+
+              Swal.fire('Saved!', '', 'success')
+
+              //limpio todo para dejar listo para la procima venta
+              this.listaProdSeleccionados.splice(0, this.listaProdSeleccionados.length);
+              this.dataSource = new MatTableDataSource(this.listaProdSeleccionados);
+              console.log(this.listaProdSeleccionados)
+              this.montoEfectivo = this.montoNada
+              this.montoTarjeta = this.montoNada
+              this.totalVenta = this.montoNada
+              this.comentarioVenta=""
+      
+              //--------------------------------------------
+              
+                      
+            },
+            error: (e) => console.error(e),
+            complete: () => console.info('complete') 
+          })
+          
+        } else if (result.isDenied) {
+          Swal.fire('Venta no registrada!', '', 'info')
+        }
+      })
+      
+    }
   }
 
 }

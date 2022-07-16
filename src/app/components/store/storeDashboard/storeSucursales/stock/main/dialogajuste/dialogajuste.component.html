@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Ajuste de STOCK producto: <strong>{{productName}}</strong>  </h2>
+<hr>
+
+<div class="container ">
+
+    <div class="row ">
+        <div class="col-md-6">
+            <p>
+                <mat-form-field appearance="legacy"  color=accent>
+                  <mat-label>Stock Actual</mat-label>
+                  <input matInput readonly value={{cantidad}}>
+                  <mat-hint>Unidades</mat-hint>
+                </mat-form-field>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <p>
+                <mat-form-field appearance="legacy"  color="warn">
+                  <mat-label>Nuevo Valor STOCK</mat-label>
+                  <input [(ngModel)]="nuevaCantidad" type="number" matInput placeholder="Establecer cantidad" value={{nuevaCantidad}}>
+                  <mat-hint>Unidades</mat-hint>
+                </mat-form-field>
+            </p>
+        </div>
+    </div>
+</div>  
+<div class="row">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Justificación de ajuste de stock</mat-label>
+        <input [(ngModel)]="descripcionAjuste" matInput #message maxlength="256" placeholder="Justificación de ajuste de stock" name="comentarioAjuste" >
+        <mat-hint align="start"><strong>Informacion adjunta registro de ajuste de Stock.</strong> </mat-hint>
+        <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+      </mat-form-field>
+</div>
+<hr>
+<div class="container-fluid ">
+    <div class="row w-100">
+        <div class="col-md-9">
+            <button class="btn btn-danger center-block" (click)="actualizarStock()" [disabled]="(nuevaCantidad < 0) || nuevaCantidad==null || message.value.length <3 "> Confirmar </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" mat-dialog-close="close" >Cerrar</button>
+        </div>
+    </div>
+</div>

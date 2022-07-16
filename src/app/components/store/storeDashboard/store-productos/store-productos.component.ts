@@ -23,8 +23,6 @@ export class StoreProductosComponent implements OnInit {
     private _route: ActivatedRoute 
   ) {
     this.title = "P   R   O   D   U   C   T   O   S"
-
-
    }
   ngOnInit(): void {
     this._route.params.subscribe(
