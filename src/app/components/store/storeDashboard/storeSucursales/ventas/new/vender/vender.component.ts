@@ -102,20 +102,12 @@ export class VenderComponent implements OnInit {
       }
     }
   }
-<<<<<<< HEAD
   actualizarDescripcionLDP(){
     for (let lista of this.listasdeprecios) {
       if(lista._id == this.listadpIdSeleccionada){
         this.listadpDescripcion=lista.descripcion
       }
     }   
-=======
-  selectDefaultLDP(){
-    console.log("seteeeeeeoooooo")
-    console.log("this.defaultListaDP: " + this.defaultListaDP)
-    this.listadpIdSeleccionada = this.defaultListaDP
-
->>>>>>> 33593fe30a0c2ad67a23feca788f6b8a399d821f
   }
   getListasdpByStoreIdAndPopulateInfo(branchId: string){
     this._listadpSevice.getListasdpByStoreIdAndPopulateInfo(branchId)
