@@ -78,7 +78,8 @@
 
 .barra-lateral .menu .sub-menu a.actived  {
     font-size: 15px;
-    color:#ffffff
+    color:#ffffff;
+    border-left:   5px solid  #ffffff
     /*
     text-shadow: -1px 0 rgb(146, 140, 140), 1px 0 rgb(146, 140, 140), 0 1px rgb(146, 140, 140), 0 -1px rgb(146, 140, 140);
    color: #fff;

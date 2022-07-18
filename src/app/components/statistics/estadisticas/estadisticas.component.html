@@ -2,3 +2,17 @@
 <div class="cuerpoContenido conteiner col-md-8 offset-md-3 mt-5">
     <p>estadisticas works!</p>
 </div>
+<ngx-charts-bar-vertical
+  [view]="view"
+
+  [results]="single"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  (select)="onSelect($event)">
+</ngx-charts-bar-vertical>

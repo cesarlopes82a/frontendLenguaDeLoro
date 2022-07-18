@@ -4,7 +4,9 @@
             <div class="barra-lateral col-12 col-sm-auto">
                 <nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
                     
+                    
                     <a [routerLink]="['/estadisticas']" ><i class="far fa-chart-bar" style="margin-right: 5%;"></i><span>Estadisticas</span></a>
+                    
                     <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/usuarios']" ><i class="fas fa-user" style="margin-right: 5%;"></i><span> Usuarios</span></a>
                     <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/proveedores']" ><i class="fas fa-address-book" style="margin-right: 5%;"></i><span> Proveedores</span></a>
                     <a ><i class="fas fa-home" style="margin-right: 5%;"></i><span>Tiendas</span><i class="icono derecha fas fa-angle-down"></i></a>
@@ -14,7 +16,7 @@
                             <div *ngIf="itemMenuSeleccionadoId==tienda.store._id" class="test"></div>
                             <a  [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(tienda.store.storeName, tienda.store._id, tienda.store.defaultListaDP)"><span>{{tienda.store.storeName}}</span></a>
                             <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
-                                <div *ngIf="itemMenuSeleccionadoId==branch._id" class="test"></div>
+                                <!--<div *ngIf="itemMenuSeleccionadoId==branch._id" class="test"></div>-->
                                 <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(branch.branchName, branch._id, branch.defaultListaDP)" ><i class="fa-solid fa-barcode"></i><span>{{branch.branchName}}</span></a>
                             </div>
                         </div>

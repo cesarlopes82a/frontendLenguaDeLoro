@@ -88,7 +88,7 @@ import { NewBranchLDPComponent } from './components/store/storeDashboard/storeSu
 import { DialogajusteComponent } from './components/store/storeDashboard/storeSucursales/stock/main/dialogajuste/dialogajuste.component';
 import { DialogpagosComponent } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogpagos/dialogpagos.component';
 
-
+import { NgxChartsModule }from '@swimlane/ngx-charts';
 
 
 
@@ -178,7 +178,9 @@ import { DialogpagosComponent } from './components/store/storeDashboard/storeSuc
     MatSelectModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    NgxChartsModule
+    
   ],
   providers: [
     AuthGuard,
