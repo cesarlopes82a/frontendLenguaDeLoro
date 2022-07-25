@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {UntypedFormBuilder, FormGroup} from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 
 
@@ -17,7 +17,7 @@ export class DialogquitartiendaComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogquitartiendaComponent>,
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private _userService: UserService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     

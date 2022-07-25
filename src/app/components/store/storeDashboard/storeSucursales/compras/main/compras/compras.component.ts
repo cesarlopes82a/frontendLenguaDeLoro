@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ComprasService } from 'src/app/services/compras.service';
 import { SidenavService } from 'src/app/services/sidebar.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {FormGroup, FormControl} from '@angular/forms';
+import {UntypedFormGroup, UntypedFormControl} from '@angular/forms';
 import { global } from 'src/app/services/global';
 import Swal from 'sweetalert2'
 
@@ -61,9 +61,9 @@ export class ComprasComponent implements OnInit {
 
   public startDate:string = new Date().toISOString().split('T')[0];
   public endDate:string = new Date().toISOString().split('T')[0];
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
+  range = new UntypedFormGroup({
+    start: new UntypedFormControl(),
+    end: new UntypedFormControl(),
   });
   public filtroFechaVtas:any = ""   //utilizo esto para filtrar las compras por fecha
 

@@ -77,7 +77,7 @@ export class ListarventasComponent implements OnInit {
       params => {
         this.branchId = params['id']
         console.log("esto es lo que me trajo el params: branchId:" + this.branchId)
-        this.getVentasByBranchIdAndPopulateInfo(this.branchId)        
+        this.getVentasByBranchIdAndPopulateInfo(this.branchId)                
       }
     )
     

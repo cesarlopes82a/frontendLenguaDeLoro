@@ -60,4 +60,11 @@ export class VentasService {
     
     return this._http.get(this.url+'/ventas/'+branchId + '/Info/',{headers:cabeceras})
   }
+
+  getVentasForStatistics1(userId:string){
+    console.log("MENSAJE: getVentasForStatistics() - obteniendo ventas para userId: " + userId)
+    let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
+    
+    return this._http.get(this.url+'/ventas/sttVtas1/Info/',{headers:cabeceras})
+  }
 }

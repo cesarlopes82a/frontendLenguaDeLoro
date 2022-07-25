@@ -13,7 +13,7 @@
 
                     <div *ngIf="loggedUser" class="sub-menu">                        
                         <div *ngFor="let tienda of loggedUser.tiendas " class="sub-menuTiendas ">
-                            <div *ngIf="itemMenuSeleccionadoId==tienda.store._id" class="test"></div>
+                            <!--<div *ngIf="itemMenuSeleccionadoId==tienda.store._id" class="test"></div>-->
                             <a  [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(tienda.store.storeName, tienda.store._id, tienda.store.defaultListaDP)"><span>{{tienda.store.storeName}}</span></a>
                             <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
                                 <!--<div *ngIf="itemMenuSeleccionadoId==branch._id" class="test"></div>-->
