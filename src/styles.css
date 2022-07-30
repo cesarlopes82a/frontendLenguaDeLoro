@@ -106,6 +106,32 @@
     padding-right: 40px;
 }
 
+.advanced-pie-legend .total-label {
+    font-size: 13px !important;
+    margin-bottom: 19px;
+}
+.advanced-pie-legend .legend-items-container .legend-items {
+    white-space: nowrap;
+    overflow: visible !important;
+}
+advanced-pie-legend .legend-items-container .legend-items .legend-item .item-percent {
+    font-size: 20px !important;
+    opacity: .7;
+    margin-left: 11px;
+}
+.advanced-pie-legend .legend-items-container .legend-items .legend-item .item-color {
+    border-left: 4px solid;
+    width: 4px;
+    height: 48px;
+    float: left;
+    margin-right: 7px;
+}
+.advanced-pie-legend .legend-items-container .legend-items .legend-item .item-label {
+    font-size: 14px;
+    opacity: .7;
+    margin-left: 11px;
+    margin-top: -1px !important;
+}
 
 /*********** cards ************/
 .card-body {

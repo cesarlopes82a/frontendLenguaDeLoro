@@ -1,0 +1,26 @@
+<hr>
+
+<div class="card ">
+  <div class="card-header">
+      <strong>E  S  T  A  D  I  S  T  I  C  A  S</strong>
+  </div>    
+
+  <div class="card-body">
+
+    <div class="row">
+      <div class="col-auto ml-5 justify-content-around">
+          
+        <mat-form-field appearance="legacy"  color=accent>
+          <mat-label>Año</mat-label>
+          <input [(ngModel)]="yearVentas" type="number" matInput value={{yearVentas}} min="2022" max="2023">
+          <mat-hint>Ventas</mat-hint>
+        </mat-form-field>
+        
+        <button mat-button color="accent" (click)="updateData2()" ><mat-icon>search</mat-icon>Actualizar</button>
+
+        
+      </div>
+
+    </div>
+  </div>
+</div>

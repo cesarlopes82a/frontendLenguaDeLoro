@@ -89,6 +89,8 @@ import { DialogajusteComponent } from './components/store/storeDashboard/storeSu
 import { DialogpagosComponent } from './components/store/storeDashboard/storeSucursales/ventas/new/dialogpagos/dialogpagos.component';
 
 import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { EstadistSucursalComponent } from './components/store/storeDashboard/storeSucursales/estadisticas/main/estadist-sucursal/estadist-sucursal.component';
+
 
 
 
@@ -149,6 +151,8 @@ import { NgxChartsModule }from '@swimlane/ngx-charts';
     NewBranchLDPComponent,
     DialogajusteComponent,
     DialogpagosComponent,
+    EstadistSucursalComponent,
+    
     
     
 

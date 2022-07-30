@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { global } from '../services/global';
 
 @Injectable({
@@ -61,10 +61,31 @@ export class VentasService {
     return this._http.get(this.url+'/ventas/'+branchId + '/Info/',{headers:cabeceras})
   }
 
-  getVentasForStatistics1(userId:string){
+  getVentasForStatistics1(userId:string, yearVentas:number){
+     console.log("$%%%%%%%%%%%")
+     console.log(yearVentas)
     console.log("MENSAJE: getVentasForStatistics() - obteniendo ventas para userId: " + userId)
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
+    const params = new HttpParams().append('param', yearVentas);
     
-    return this._http.get(this.url+'/ventas/sttVtas1/Info/',{headers:cabeceras})
+    
+    return this._http.get(this.url+'/ventas/sttVtas1/Info/',{headers:cabeceras, params})
+  }
+
+  getVentasForStatisticsPorSucursal(userId:string, branchId:string, yearVentas:number){
+    console.log("MENSAJE: getVentasForStatisticsPorSucursal() - obteniendo ventas para userId: " + userId+ ". Sucursal branchId: "+ branchId+". Año: "+yearVentas)
+    let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
+    let objParams = {
+      branchId: branchId,
+      yearVentas: yearVentas
+    }
+    let params = new HttpParams()
+                    .set("branchId",branchId)
+                    .set("yearVentas", yearVentas); 
+   
+    
+    
+    return this._http.get(this.url+'/ventas/sttVtas2/Info/',{headers:cabeceras, params})
+
   }
 }

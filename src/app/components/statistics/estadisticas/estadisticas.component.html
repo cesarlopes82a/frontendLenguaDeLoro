@@ -6,27 +6,32 @@
   </div>    
 
   <div class="card-body">
+
+    <div class="row">
+      <div class="col-auto ml-5 justify-content-around">
+          
+        <mat-form-field appearance="legacy"  color=accent>
+          <mat-label>Año</mat-label>
+          <input [(ngModel)]="yearVentas" type="number" matInput value={{yearVentas}} min="2022" max="2023">
+          <mat-hint>Ventas</mat-hint>
+        </mat-form-field>
+        
+        <button mat-button color="accent" (click)="updateData2()" ><mat-icon>search</mat-icon>Actualizar</button>
+
+        
+      </div>
+
+    </div>
+    <hr>
     <div class="row">
       <div class="example-container mat-elevation-z8">
         <h1 class="text-center mt-3">Total de Ventas</h1>
-        <div class="col-auto ml-5 justify-content-around">
-          
-          <mat-form-field appearance="legacy"  color=accent>
-            <mat-label>Año</mat-label>
-            <input [(ngModel)]="yearVentas" type="number" matInput value={{yearVentas}} min="2022" max="2023">
-            <mat-hint>Ventas</mat-hint>
-          </mat-form-field>
-          
-          <button (click)="updateData()">
-            Actualizar
-          </button>
-          
-        </div>
+        
 
         <div class="col-auto p-2 text-center">
           <ngx-charts-bar-vertical
             [view]="view"
-            [results]="totalVentasPorTienda"
+            [results]="totalVtasYearGeneral"
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
@@ -35,6 +40,7 @@
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
+            [showDataLabel]="showDataLabels"
             (select)="onSelect($event)">
           </ngx-charts-bar-vertical>
         </div>
@@ -43,11 +49,33 @@
     <hr>
     <div class="row">
       <div class="example-container mat-elevation-z8">
-        <h1 class="text-center mt-3">Cantidad de transacciones</h1>
+        <h1 class="text-center mt-3">Total de Ventas por forma de pago</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical-2d
+            [view]="view"            
+            [results]="totVtasYearPorSucursal" 
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [legendTitle]="legendTitle"
+            >
+          </ngx-charts-bar-vertical-2d>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">Cantidad de transacciones por tienda</h1>
         <div class="col-auto p-2 text-center">
           <ngx-charts-bar-vertical
             [view]="view"
-            [results]="totalCantVtasPorTienda"
+            [results]="totalCantVtasYearGeneral" 
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
@@ -56,6 +84,7 @@
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel1"
+            [showDataLabel]="showDataLabels"
             (select)="onSelect($event)">
           </ngx-charts-bar-vertical>
         </div>
@@ -64,17 +93,40 @@
     <hr>
     <div class="row">
       <div class="example-container mat-elevation-z8">
-        <h1 class="text-center mt-3">Cantidad de transacciones por forma de pago</h1>
+        <h1 class="text-center mt-3">Cantidad Total de transac por forma de pago</h1>
         <div class="col-auto p-2 justify-content-around"  >
           <ngx-charts-advanced-pie-chart 
             [view]="view3"            
-            [results]="totalTransacFormaDePagoGral"
+            [results]="totalCantTransacPorFormaPagoGral" 
             [gradient]="gradient"
             >
           </ngx-charts-advanced-pie-chart>
         </div>
       </div>
     </div>
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">Cantidad de transac por forma de pago por Tienda</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical-2d
+            [view]="view"            
+            [results]="totCantTransacPorFpagoXTienda"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [legendTitle]="legendTitle"
+            >
+          </ngx-charts-bar-vertical-2d>
+        </div>
+      </div>
+    </div>
+    
     
    
   </div>

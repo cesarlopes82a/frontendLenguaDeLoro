@@ -13,6 +13,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="card text-center">
                     <img src="images/gym.jpg" class="card-img-top">
@@ -114,6 +115,16 @@
                         <a [routerLink]="['/tienda', this.branchId,'ldp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
                     </div>
 
+                </div>
+            </div>
+            <div *ngIf="this.loggedUserRole == 'adminMaster' || 'adminGlobal' || 'adminTienda'" class="col-md-4">
+                <div class="card text-center">
+                    <img src="images/gym.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Estadisticas</h5>
+                        <p class="card-text">Aqui podras consultar estadisticas para esta sucursal.</p>
+                        <a [routerLink]="['/sucursal', this.branchId,'estadisticas']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                    </div>
                 </div>
             </div>
         </div>
