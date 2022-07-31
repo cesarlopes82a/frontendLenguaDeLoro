@@ -23,4 +23,196 @@
 
     </div>
   </div>
+  <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">$Ventas anuales por mes</h1>
+        <div class="col-auto p-2 text-center">
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [results]="totalVtasPorMesGeneral"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [showDataLabel]="showDataLabels"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">$Ventas anuales por forma de pago</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical-2d [barPadding]="1"
+            [view]="view"            
+            [results]="totalVtasPorMesGeneralFTyTJ" 
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [legendTitle]="legendTitle"
+            
+            [barPadding]="1"
+            [legendPosition]="below"
+            >
+          </ngx-charts-bar-vertical-2d>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">Transac anuales por mes</h1>
+        <div class="col-auto p-2 text-center">
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [results]="totalTransacPorMesGeneral"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel1"
+            [showDataLabel]="showDataLabels"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">Transac anuales por forma de pago</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical-2d [barPadding]="1"
+            [view]="view"            
+            [results]="totalTransacPorMesGeneralFTyTJ" 
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel1"
+            [legendTitle]="legendTitle"
+            
+            [barPadding]="1"
+            [legendPosition]="below"
+            >
+          </ngx-charts-bar-vertical-2d>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">$Ventas anuales por vendedor</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [results]="totalVentasPorVendedorAnual"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [showDataLabel]="showDataLabels"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+          
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">Transacciones anuales por vendedor</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [results]="totalTransacPorVendedorAnual"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel1"
+            [showDataLabel]="showDataLabels"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+          
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">Ventas por Vendedor mensual</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical-2d [barPadding]="1"
+            [view]="view"            
+            [results]="totalVentasPorVendedorMensual" 
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [legendTitle]="legendTitle"
+            
+            [barPadding]="1"
+            [legendPosition]="below"
+            >
+          </ngx-charts-bar-vertical-2d>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">Transacciones por Vendedor mensual</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical-2d [barPadding]="1"
+            [view]="view"            
+            [results]="totalTransacPorVendedorMensual" 
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel1"
+            [legendTitle]="legendTitle"
+            
+            [barPadding]="1"
+            [legendPosition]="below"
+            >
+          </ngx-charts-bar-vertical-2d>
+        </div>
+      </div>
+    </div>
 </div>
