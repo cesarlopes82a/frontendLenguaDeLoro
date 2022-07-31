@@ -21,6 +21,11 @@ export class EstadistSucursalComponent implements OnInit {
   public totalVentasPorVendedorMensual: any [] = [];
   public totalTransacPorVendedorAnual: string [] = [];
   public totalTransacPorVendedorMensual: any [] = [];
+  public totalProdMasVendidosAnual: any [] = [];
+  public totalProdMasVendidosAnualFull: any [] = [];
+  public totalProdMasVendidosMensual: any [] = [];
+  public totalProdMasVendidosMensualFull: any [] = [];
+  public totalProdMasVendidos$Mensual: any [] = [];
   
   
 
@@ -28,14 +33,17 @@ export class EstadistSucursalComponent implements OnInit {
   view: [number, number] = [1000, 250];
   // options
   showXAxis = true;
+  showXAxisFalse = false;
   showYAxis = true;
   gradient = true;
   showLegend = true;
+  showLegendFalse = false;
   showXAxisLabel = false;
   xAxisLabel = 'Mes';
   showYAxisLabel = true;
   yAxisLabel = 'Ventas $';
   yAxisLabel1 = 'Transacciones';
+  yAxisLabel2 = 'Cant Vendidos';
   showDataLabels = true
   legendTitle="Referencia"
   below = LegendPosition.Below
@@ -79,10 +87,13 @@ export class EstadistSucursalComponent implements OnInit {
     this.totalVentasPorVendedorMensual = [...this.totalVentasPorVendedorMensual]
     this.totalTransacPorVendedorAnual = [...this.totalTransacPorVendedorAnual]
     this.totalTransacPorVendedorMensual = [...this.totalTransacPorVendedorMensual]
+    this.totalProdMasVendidosAnual = [...this.totalProdMasVendidosAnual]
+    this.totalProdMasVendidosMensual = [...this.totalProdMasVendidosMensual]
+    this.totalProdMasVendidos$Mensual = [...this.totalProdMasVendidos$Mensual]
     
     
     
-
+    
   }
   updateData2(){
     const userId = this._authService.getDecodedAccessToken(String(this._authService.getToken())).id
@@ -104,6 +115,9 @@ export class EstadistSucursalComponent implements OnInit {
         this.totalVentasPorVendedorMensual.splice(0,this.totalVentasPorVendedorMensual.length)        
         this.totalTransacPorVendedorAnual.splice(0,this.totalTransacPorVendedorAnual.length)
         this.totalTransacPorVendedorMensual.splice(0,this.totalTransacPorVendedorMensual.length)
+        this.totalProdMasVendidosAnual.splice(0,this.totalProdMasVendidosAnual.length)
+        this.totalProdMasVendidosMensual.splice(0,this.totalProdMasVendidosMensual.length)
+        this.totalProdMasVendidos$Mensual.splice(0,this.totalProdMasVendidos$Mensual.length)
         
 
         console.log("MENSAJE: ventas obtenidas exitosamente para userId: " +userId+ ". branchId: " + this.branchId+ ". Año: " + this.yearVentas)
@@ -406,8 +420,8 @@ export class EstadistSucursalComponent implements OnInit {
 
         console.log("#########################")
         ///////////////////VENDEDORES
-        for (let ve = 0; ve <= this.datosForStatistic.vendedores.length; ve++) {                    
-          //VENTAS totales anuales POR vendedor
+        for (let ve = 0; ve < this.datosForStatistic.vendedores.length; ve++) {                    
+          //VENTAS totales anuales POR vendedor        
           let objVetasPorVendedorAnuales: any = {
             "name": this.datosForStatistic.vendedores[ve].username,
             "value": this.datosForStatistic.vendedores[ve].totalVentas
@@ -427,8 +441,6 @@ export class EstadistSucursalComponent implements OnInit {
           let objVentasPorVendedorMensual: any
           let objTransacPorVendedorMensual: any
           for (let mes = 1; mes <= 12; mes++) {
-            console.log(this.datosForStatistic.vendedores[ve].username)
-            console.log("#########################????")
             let mesNombre=""
             let totVentas=0
             let totTransac=0
@@ -493,7 +505,6 @@ export class EstadistSucursalComponent implements OnInit {
                   totVentas=this.datosForStatistic.vendedores[ve].totVtas12
                   totTransac=this.datosForStatistic.vendedores[ve].totTrasac12
                   break;
-
             }
        
           
@@ -510,7 +521,6 @@ export class EstadistSucursalComponent implements OnInit {
             mesEncontrado = false   
             for (let tvvm = 0; tvvm < this.totalVentasPorVendedorMensual.length; tvvm++) {   
               if(String(this.totalVentasPorVendedorMensual[tvvm].name) == mesNombre){
-                console.log(this.totalVentasPorVendedorMensual[tvvm].name)
                 this.totalVentasPorVendedorMensual[tvvm].series.push(seriesVtas)
                 mesEncontrado=true
               }
@@ -540,6 +550,156 @@ export class EstadistSucursalComponent implements OnInit {
             }            
           } 
         }
+
+        //PRODUCTOS
+        for (let p = 0; p < this.datosForStatistic.productos.length; p++) {
+          //TOTAL ANUALES      
+          let objTotalProdMasVendidosAnual: any = {
+            "name": this.datosForStatistic.productos[p].nombre,
+            "value": this.datosForStatistic.productos[p].totalVendido
+          }
+          this.totalProdMasVendidosAnual.push(objTotalProdMasVendidosAnual)
+
+          //TOTAL MENSUALES
+          let objTotalProdMasVendidosMensual: any
+          let objTotalProdMasVendidos$Mensual: any
+          let series: any
+          let series$: any
+          let mesEncontrado = false
+          for (let mes = 1; mes <= 12; mes++) {
+            let mesNombre=""
+            let totalVendido=0
+            let totalVendido$=0
+            switch (mes) {
+              case 1:                                       
+                  mesNombre="Enero"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo01
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$01                  
+                  break;
+              case 2:
+                  mesNombre="Febrero"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo02
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$02
+                  break;                        
+              case 3:
+                  mesNombre="Marzo"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo03
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$03
+                  break;
+              case 4:
+                  mesNombre="Abril"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo04
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$04
+                  break;
+              case 5:
+                  mesNombre="Mayo"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo05
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$05
+                  break;
+              case 6:
+                  mesNombre="Junio"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo06
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$06
+                  break;
+              case 7:
+                  mesNombre="Julio"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo07
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$07
+                  break;
+              case 8:
+                  mesNombre="Agosto"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo08
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$08
+                  break;                        
+              case 9:
+                  mesNombre="Septiembre"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo09
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$09
+                  break;
+              case 10:
+                  mesNombre="Octubre"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo10
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$10
+                  break;
+              case 11:
+                  mesNombre="Noviembre"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo11
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$11
+                  break;
+              case 12:
+                  mesNombre="Diciembre"
+                  totalVendido=this.datosForStatistic.productos[p].totalVdo12
+                  totalVendido$=this.datosForStatistic.productos[p].totalVdo$12
+                  break;
+            }
+
+
+            mesEncontrado = false 
+            series = {
+              "name": this.datosForStatistic.productos[p].nombre,
+              "value": totalVendido
+            }
+            series$ = {
+              "name": this.datosForStatistic.productos[p].nombre,
+              "value": totalVendido$
+            } 
+
+            objTotalProdMasVendidosMensual = {
+              "name": mesNombre,
+              "series": [series]
+            }
+            objTotalProdMasVendidos$Mensual = {
+              "name": mesNombre,
+              "series": [series$]
+            }
+
+            for (let t = 0; t < this.totalProdMasVendidosMensual.length; t++) {
+              if(String(this.totalProdMasVendidosMensual[t].name) == mesNombre){
+                this.totalProdMasVendidosMensual[t].series.push(series)
+                mesEncontrado=true
+              }
+            }
+            if(mesEncontrado==false){
+              this.totalProdMasVendidosMensual.push(objTotalProdMasVendidosMensual)
+            }
+
+            mesEncontrado=false
+            for (let t = 0; t < this.totalProdMasVendidos$Mensual.length; t++) {
+              if(String(this.totalProdMasVendidos$Mensual[t].name) == mesNombre){
+                this.totalProdMasVendidos$Mensual[t].series.push(series$)
+                mesEncontrado=true
+              }
+            }
+            if(mesEncontrado==false){
+              this.totalProdMasVendidos$Mensual.push(objTotalProdMasVendidos$Mensual)
+            }
+
+          }
+          
+  
+
+        }
+        this.totalProdMasVendidosAnual.sort(((a, b) => b.value - a.value))
+
+        //Ordeno los valores de las series mensuales
+        for (let s = 0; s < this.totalProdMasVendidosMensual.length; s++) {
+          this.totalProdMasVendidosMensual[s].series.sort(((a: { value: number; }, b: { value: number; }) => b.value - a.value))
+        }
+
+        //Ordeno los valores $ de las series mensuales
+        for (let s = 0; s < this.totalProdMasVendidos$Mensual.length; s++) {
+          this.totalProdMasVendidos$Mensual[s].series.sort(((a: { value: number; }, b: { value: number; }) => b.value - a.value))
+        }
+        
+
+        //Clonamos el array ordenado
+        this.totalProdMasVendidosAnualFull = this.totalProdMasVendidosAnual.slice();
+        //Dejamos solo los primeros 10 Productos
+        this.totalProdMasVendidosAnual = this.totalProdMasVendidosAnualFull.slice(0, 10)
+
+       
+       
+
         
       },
       error: (e) => console.error(e),

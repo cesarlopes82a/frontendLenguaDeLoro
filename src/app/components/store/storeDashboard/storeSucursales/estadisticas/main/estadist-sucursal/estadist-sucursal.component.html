@@ -215,4 +215,78 @@
         </div>
       </div>
     </div>
+
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">10 Productos mas vendidos en el año</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [results]="totalProdMasVendidosAnual"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel2"
+            [showDataLabel]="showDataLabels"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+          
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">10 Productos mas vendidos por mes</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-vertical-2d [barPadding]="1"
+            [view]="view"            
+            [results]="totalProdMasVendidosMensual" 
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel2"
+            [legendTitle]="legendTitle"
+            
+            [barPadding]="1"
+            [legendPosition]="below"
+            >
+          </ngx-charts-bar-vertical-2d>
+        </div>
+      </div>
+    </div>
+
+
+    <hr>
+    <div class="row">
+      <div class="example-container mat-elevation-z8">
+        <h1 class="text-center mt-3">Representacion de ingresos por productos vendidos</h1>
+        <div class="col-auto p-2 justify-content-around"  >
+          <ngx-charts-bar-horizontal-normalized
+            [view]="view"            
+            [results]="totalProdMasVendidos$Mensual"
+            [gradient]="gradient"
+            [xAxis]="showXAxisFalse"
+            [yAxis]="showYAxis"
+            [legend]="showLegendFalse"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-horizontal-normalized>
+        </div>
+      </div>
+    </div>
+
+    
 </div>
