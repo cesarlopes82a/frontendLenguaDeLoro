@@ -31,7 +31,7 @@ export class DialogprecioComponent implements OnInit {
     this.productName = this.data.productName
     console.log("el prodproductName")
     console.log(this.data.productName)
-    if(this.data.precioCompra == "-"){
+    if(this.data.precioCompra == "-" || this.data.precioCompra == 0){
       this.precioPorPorcentajeHabilitado = false
     }else{
       this.precioCompra = this.data.precioCompra

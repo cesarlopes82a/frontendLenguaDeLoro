@@ -90,6 +90,7 @@ import { DialogpagosComponent } from './components/store/storeDashboard/storeSuc
 
 import { NgxChartsModule }from '@swimlane/ngx-charts';
 import { EstadistSucursalComponent } from './components/store/storeDashboard/storeSucursales/estadisticas/main/estadist-sucursal/estadist-sucursal.component';
+import { DialogpreciomasivoComponent } from './components/store/storeDashboard/storeLdP/dialogPrecioMasivo/dialogpreciomasivo/dialogpreciomasivo.component';
 
 
 
@@ -152,6 +153,7 @@ import { EstadistSucursalComponent } from './components/store/storeDashboard/sto
     DialogajusteComponent,
     DialogpagosComponent,
     EstadistSucursalComponent,
+    DialogpreciomasivoComponent,
     
     
     

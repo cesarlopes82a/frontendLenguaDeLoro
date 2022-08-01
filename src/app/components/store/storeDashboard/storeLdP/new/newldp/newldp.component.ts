@@ -10,6 +10,7 @@ import { productOfLDP } from '../../../../../../models/productOfLDP';
 import { global } from '../../../../../../services/global';
 import { UserService } from '../../../../../../services/user.service';
 import { BranchService } from 'src/app/services/branch.service';
+import { DialogpreciomasivoComponent } from '../../dialogPrecioMasivo/dialogpreciomasivo/dialogpreciomasivo.component';
 
 @Component({
   selector: 'app-newldp',
@@ -94,6 +95,18 @@ export class NewldpComponent implements OnInit {
         console.log("estas son las branches que encontré")
         console.log(branches)
         this.branchesByStore = branches.slice()
+        if(this.branchesByStore.length == 0){
+          this._branchService.getBranchesByBranchId(storeId)
+          .subscribe({
+            next: (branches) => {        
+              console.log("estas son las branches que encontré")
+              console.log(branches)
+              this.branchesByStore.push(branches)
+            },
+            error: (e) => console.error(e),
+            complete: async () => {}
+          })
+        }
 
            
       },
@@ -130,13 +143,13 @@ export class NewldpComponent implements OnInit {
           arrayProductos.push(producto)
 
           //creo los elementos que voy a almacenar dentro de la lista de precios 
-          //defino la estructura del elemento que voy a guardar en la lista de procutos
+          //defino la estructura del elemento que voy a guardar en la lista de productos
           let productOfLDPnew = new productOfLDP(
             producto._id,
             producto.productName,
             producto.categoriaRubro.categoryName,
             producto.codigo,
-            producto.stock,
+            0,
             "-",   //producto.ultimoRegCompra.fechaDeCompra,
             0,  //producto.ultimoRegCompra.precioCompraUnitario,
             producto.precioVenta
@@ -182,14 +195,7 @@ export class NewldpComponent implements OnInit {
         //no podia leer la listaFoun asi que hago esto y ahora anda
         this.listadpOriginal = JSON.stringify(listaFound)
         this.listadpOriginal = JSON.parse(this.listadpOriginal)
-        //---------------------------------------
-        console.log("esta es la lista de precio original")
-        console.log(this.listadpOriginal) 
-        console.log(this.listadpOriginal.ldpProducts)
-        console.log("esta es la lista completa de todos los producto de la tienda")
-        console.log(this._productsList)
-        
-        console.log("forrr-----------------------------------------------------------")
+        //---------------------------------------      
         for (let [index, producto] of this._productsList.entries()) {
 
           const localizarTodasLasInstancias = (propiedad: string, valor: string) => {
@@ -197,22 +203,15 @@ export class NewldpComponent implements OnInit {
                 return element[propiedad] === valor;
             })
           }
-          console.log("busco este producto en this.listaOrigen.products " + producto._id )
+          
           let productoEncontrado = localizarTodasLasInstancias( 'product', producto._id)
           
           if(productoEncontrado.length > 0){          
-            console.log("indice: "+index + " - producto: ");
-            console.log(productoEncontrado)
-            console.log( this._productsList[index].precioVenta +"  -  " + productoEncontrado[0].precioVenta)
             this._productsList[index].precioVenta = productoEncontrado[0].precioVenta
             //this._productsList[index].precioVenta = productoEncontrado[0].
 
           }
-        }
-        
-        console.log("forrr-----------------------------------------------------------")
-        console.log("los productos despues del gfor")
-        console.log(this._productsList)
+        }        
 
       },
       error: (e) => {
@@ -225,15 +224,16 @@ export class NewldpComponent implements OnInit {
     
   }
 
+
   actualizarRefCostosStock(event: { isUserInput: any; source: { value: any; selected: any; }; }){
     if(event.isUserInput) {
-      console.log(event.source.value, event.source.selected);
-      let _newProductList:productOfLDP[] = []
+      console.log("event.source.value, event.source.selected")
+      console.log(event.source.value, event.source.selected);      
       if(event.source.value==""){
         for (let [i, producto] of this._productsList.entries()) {
           this._productsList[i].fechaUltimaCompra = "-"
           this._productsList[i].costoUnitario = 0
-          this._productsList[i].stock = "-"
+          this._productsList[i].stock = 0
         }
       }else{
         const index = this.branchesByStore.findIndex((object: { _id: any; }) => {
@@ -241,7 +241,6 @@ export class NewldpComponent implements OnInit {
         });
         if(index >=0){
           for (let [i, producto] of this._productsList.entries()) {
-        
             const indexProd = this.branchesByStore[index].stock.findIndex((object: { product: string; }) => {
               return object.product == producto._id;
             });
@@ -249,6 +248,10 @@ export class NewldpComponent implements OnInit {
               this._productsList[i].fechaUltimaCompra = this.branchesByStore[index].stock[indexProd].fechaUltimaCompra
               this._productsList[i].costoUnitario = this.branchesByStore[index].stock[indexProd].precioUnitUltCompra
               this._productsList[i].stock = this.branchesByStore[index].stock[indexProd].cantidad
+            }else{
+              this._productsList[i].fechaUltimaCompra = "-"
+              this._productsList[i].costoUnitario = 0
+              this._productsList[i].stock = 0
             }
     
           }
@@ -279,6 +282,26 @@ export class NewldpComponent implements OnInit {
     });
     
   }
+  openDialogAjusteMasivoPreios(_productsList:productOfLDP[]){
+    const dialogRefAMP = this.dialog.open(DialogpreciomasivoComponent,{
+      width:'80%',
+      data:{
+        '_productsList': _productsList
+      }
+    });
+
+    dialogRefAMP.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      console.log(`${result}`);
+      
+      if(`${result}` != "close"){
+      //  this._productsList[index].precioVenta = Number(`${result}`)
+      }
+      
+    });
+    
+  }
+
 
 
 

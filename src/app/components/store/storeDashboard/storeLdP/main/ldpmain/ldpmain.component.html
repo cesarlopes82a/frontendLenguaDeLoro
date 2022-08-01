@@ -1,6 +1,6 @@
 <div class="card ">
     <div class="card-header">
-        L  I  S  T  A  S        D  E       P  R  E  C  I  O  S      Sucursal:   <strong>{{tiendaNombre}}</strong>
+        L  I  S  T  A  S        D  E       P  R  E  C  I  O  S     TIENDA:   <strong>{{tiendaNombre}}</strong>
         
         
     </div>
@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">                
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 th.fit td.fit">                
     <ng-container *ngFor="let column of columnsToDisplay" >
         <ng-container matColumnDef="{{column}}">
             <th mat-header-cell *matHeaderCellDef > {{column}} </th>

@@ -34,6 +34,12 @@ export class BranchService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this._http.get(this.url+'/branches/bystoreid/'+storeId,{headers});
   }
+  getBranchesByBranchId(branchId:string):Observable<any>{
+    console.log("#####")
+    console.log(branchId)
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.get(this.url+'/branches/bybranchId/'+branchId,{headers});
+  }
   
   getStockByBranchId(branchId:string):Observable<any>{
     console.log("MENSAJE: getProductosByBranchId para "+ branchId + ".")

@@ -249,6 +249,18 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /*******************************************************************************/
+.centerPositive {
+    border: 5px solid transparent;
+    display: flex;
+    justify-content: center;
+    color:darkgreen;
+    }
+.centerNegative {
+    border: 5px solid transparent;
+    display: flex;
+    justify-content: center;
+    color: #df4343;
+    }
 .sidenav {
 
 	height: 100%;
@@ -262,7 +274,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .table td.fit, 
 .table th.fit {
-    white-space: nowrap;
+    white-space: nowrap !important;;
     width: 1%;
 }
 
