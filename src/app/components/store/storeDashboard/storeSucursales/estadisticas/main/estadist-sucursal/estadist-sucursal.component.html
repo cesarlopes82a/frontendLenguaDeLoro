@@ -245,7 +245,7 @@
         <h1 class="text-center mt-3">10 Productos mas vendidos por mes</h1>
         <div class="col-auto p-2 justify-content-around"  >
           <ngx-charts-bar-vertical-2d [barPadding]="1"
-            [view]="view"            
+            [view]="view2"            
             [results]="totalProdMasVendidosMensual" 
             [gradient]="gradient"
             [xAxis]="showXAxis"
@@ -255,8 +255,7 @@
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel2"
-            [legendTitle]="legendTitle"
-            
+            [legendTitle]="legendTitle"            
             [barPadding]="1"
             [legendPosition]="below"
             >

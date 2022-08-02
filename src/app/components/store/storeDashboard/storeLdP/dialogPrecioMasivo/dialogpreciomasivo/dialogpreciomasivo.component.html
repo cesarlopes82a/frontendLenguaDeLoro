@@ -1,9 +1,34 @@
 <h2 mat-dialog-title>Ajuste Masivo de precios</h2>
 
-<mat-form-field appearance="standard">
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-  </mat-form-field>
+<div class="row">
+    <div class="col-sm-8">
+        <mat-form-field appearance="standard">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+        </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+        <mat-radio-group aria-label="Select an option" (change)="setConfirmationStatusFalse()" [(ngModel)]="ajusteTipo">
+            <mat-radio-button value="1">Aumento</mat-radio-button>
+            <mat-radio-button value="2">Descuento</mat-radio-button>
+          </mat-radio-group>
+        
+        <mat-form-field class="example-full-width" appearance="fill" >
+            <mat-label>Porcentaje</mat-label>
+
+            <input type="number" matInput [formControl]="emailFormControl" [(ngModel)]="montoPorcentaje" (change)="setPorcentajeValido()" placeholder="Ex. 20%" >
+            <span matSuffix>% &nbsp;</span>
+            <mat-error *ngIf="emailFormControl.hasError('porcentaje') && !emailFormControl.hasError('required')">
+            Ajuste en terminos de porcentaje
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+            porcentaje <strong>incorrecto</strong>
+            </mat-error>
+        </mat-form-field>
+          
+    </div>
+</div>
+  <hr>
   
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -11,7 +36,7 @@
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+            <mat-checkbox (change)="$event ? toggleAllRows() : null; setConfirmationStatus()"
                             [checked]="selection.hasValue() && isAllSelected()"
                             [indeterminate]="selection.hasValue() && !isAllSelected()"
                             [aria-label]="checkboxLabel()">
@@ -19,7 +44,7 @@
             </th>
             <td mat-cell *matCellDef="let row">
             <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null"
+                            (change)="$event ? selection.toggle(row) : null; setConfirmationStatus()"
                             [checked]="selection.isSelected(row)"
                             [aria-label]="checkboxLabel(row)">
             </mat-checkbox>
@@ -36,24 +61,29 @@
         <!-- Progress Column -->
         <ng-container matColumnDef="codigo">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
-            <td mat-cell *matCellDef="let row"> {{row.codigo}}% </td>
+            <td mat-cell *matCellDef="let row"> {{row.codigo}}</td>
         </ng-container>
     
         <!-- Name Column -->
         <ng-container matColumnDef="costoUnitario">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
-            <td mat-cell *matCellDef="let row"> {{row.costoUnitario}} </td>
+            <td mat-cell *matCellDef="let row"> {{row.costoUnitario | currency: '$'}} </td>
         </ng-container>
     
         <!-- Fruit Column -->
         <ng-container matColumnDef="fechaUltimaCompra">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Ult Compra </th>
-            <td mat-cell *matCellDef="let row"> {{row.fechaUltimaCompra}} </td>
+            <td mat-cell *matCellDef="let row"> 
+                <ng-container *ngIf="row.fechaUltimaCompra !== '-'">
+                    {{row.fechaUltimaCompra |  date:'MM/dd/yyyy h:mm:ss'}} 
+                </ng-container>
+                
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="precioVenta">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
-            <td mat-cell *matCellDef="let row"> {{row.precioVenta}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio Vta </th>
+            <td mat-cell *matCellDef="let row"> {{row.precioVenta | currency: '$'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="productName">
@@ -89,13 +119,38 @@
 
 <hr>
 <div class="row">
-    <div class="col-sm-10">
-        <button type="button" class="btn btn-success" (click)="showSelectedData()" mat-dialog-close={{selection}} [disabled]="!selection" >Enviar</button>
+    <div *ngIf="confirmed" class="col-sm-10">
+        <button type="button" class="btn btn-success" mat-dialog-close={{selectedFileIds}} (click)="emitirSeleccion()" [disabled]="!ajusteTipo || emailFormControl.hasError('required')">Enviar</button>                
+    </div>    
+    <div *ngIf="!confirmed" class="col-sm-10">
+        <button type="button" class="btn btn-outline-warning" (click)="confirmSelectedData()" >Confirmar</button>
     </div>
+    
     <div class="col-sm-2">
         <button type="button" class="btn btn-primary" mat-dialog-close="close" >Close</button>        
     </div>
 </div>
+<div class="row">
+    <div *ngIf="!ajusteTipo && confirmed" class="col-sm-8">
+        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+            Seleccione <strong>tipo de ajuste</strong> para poder enviar!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div *ngIf="emailFormControl.hasError('required') && confirmed" class="col-sm-8">
+        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+            <strong>porcentaje</strong> no valido para poder enviar!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 
 
 

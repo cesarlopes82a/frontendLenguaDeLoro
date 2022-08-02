@@ -20,6 +20,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -185,7 +186,8 @@ import { DialogpreciomasivoComponent } from './components/store/storeDashboard/s
     MatCheckboxModule,
     MatMenuModule,
     MatListModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatRadioModule
     
   ],
   providers: [

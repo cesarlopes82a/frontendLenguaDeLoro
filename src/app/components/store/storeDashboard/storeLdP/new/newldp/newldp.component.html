@@ -28,28 +28,27 @@
           </mat-form-field>
 
         </div>
-        <hr>
+
         <div class="row">
-          <div class="col-sm-5">
-            <mat-form-field appearance="fill">
-              <mat-label>Referencias de costos/stock</mat-label>
-              <mat-select [(value)]="referenciaCostosStock">
-                <mat-option value="" (onSelectionChange)="actualizarRefCostosStock($event)">SinReferencia</mat-option>
-                <mat-option *ngFor="let branch of branchesByStore" value={{branch._id}} (onSelectionChange)="actualizarRefCostosStock($event)">{{branch.branchName}}</mat-option>             
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-2">
+          <div class="col-sm-6">                
             <ng-container *ngIf='listaOrigenIdparaClonar != ""'>
-              <button type="submit" class="btn btn-outline-success" (click)="openDialogAjusteMasivoPreios(_productsList)">Ajuste Masivo de precios</button>
+              <button type="submit" class="btn btn-outline-success" (click)="openDialogAjusteMasivoPreios(_productsList, 'precioVenta')">Ajuste masivo de precios en funcion del PRECIO DE VENTA actual</button>
               <!--<button mat-raised-button color="primary" (click)="openDialogPrecio(_productsList[i].costoUnitario, _productsList[i].productName, _productsList[i].precioVenta, i)">Edit</button>-->
-            </ng-container>
-            
+            </ng-container>            
+          </div>
+          <div class="col-sm-6">              
+            <ng-container *ngIf='listaOrigenIdparaClonar != ""'>              
+              <button type="submit" class="btn btn-outline-success" (click)="openDialogAjusteMasivoPreios(_productsList,'costo')">Ajuste masivo de precios en funcion del COSTO registrado</button>
+              <!--<button mat-raised-button color="primary" (click)="openDialogPrecio(_productsList[i].costoUnitario, _productsList[i].productName, _productsList[i].precioVenta, i)">Edit</button>-->
+            </ng-container>            
           </div>
         </div>
+     <p> </p>
+        
 
 
 
+<!--
 
         <table id="dtBasicExample" class="table table-hover td.fit th.fit" cellspacing="0" width="100%">
           <thead>
@@ -106,7 +105,7 @@
                           </ng-template>
                       </div>
                       <div class="col">
-                          <button mat-raised-button color="primary" (click)="openDialogPrecio(_productsList[i].costoUnitario, _productsList[i].productName, _productsList[i].precioVenta, i)">Edit</button>
+                          <button mat-raised-button color="primary" (click)="openDialogPrecio(_productsList[i].costoUnitario, _productsList[i].productName, _productsList[i].precioVenta, _productsList[i].codigo)">Edit</button>
                       </div>
                   </div>
               </td>
@@ -114,6 +113,133 @@
             </tr>            
           </tbody>
         </table>
+        -->
+        <hr>
+<!---------------------------------------------------------->
+<div class="row">
+  <div class="col-sm-3">
+    <mat-form-field appearance="standard">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-3">
+    <div class="row">
+      <div class="col-sm-2">
+        <mat-form-field appearance="fill">
+          <mat-label>Referencias de costos/stock</mat-label>
+          <mat-select [(value)]="referenciaCostosStock">
+            <mat-option value="" (onSelectionChange)="actualizarRefCostosStock($event)">SinReferencia</mat-option>
+            <mat-option *ngFor="let branch of branchesByStore" value={{branch._id}} (onSelectionChange)="actualizarRefCostosStock($event)">{{branch.branchName}}</mat-option>             
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>      
+      <!-- ID Column -->
+      <ng-container matColumnDef="_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let row"> {{row._id}} </td>
+      </ng-container>
+  
+      <!-- Progress Column -->
+      <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+          <td mat-cell *matCellDef="let row"> {{row.codigo}}</td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="costoUnitario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
+          <td mat-cell *matCellDef="let row"> 
+            <ng-container *ngIf="row.costoUnitario">
+              {{row.costoUnitario | currency: '$'}} 
+            </ng-container>
+          </td>
+      </ng-container>
+  
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="fechaUltimaCompra">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Ult Compra </th>
+          <td mat-cell *matCellDef="let row"> 
+              <ng-container *ngIf="row.fechaUltimaCompra !== '-'">
+                  {{row.fechaUltimaCompra |  date:'MM/dd/yyyy h:mm:ss'}} 
+              </ng-container>
+              
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="precioVenta">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio Vta </th>
+          <td mat-cell *matCellDef="let row"> {{row.precioVenta | currency: '$'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Producto </th>
+          <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rubro">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Rubro </th>
+          <td mat-cell *matCellDef="let row"> {{row.rubro}} </td>
+      </ng-container>
+
+      <!-- Diff Column -->
+      <ng-container matColumnDef="Diff">
+        <th mat-header-cell *matHeaderCellDef> Diferencia </th>
+        <td mat-cell *matCellDef="let row">
+          <ng-container *ngIf="row.costoUnitario && row.precioVenta">
+            <ng-container class="centerPositive" *ngIf='row.precioVenta - row.costoUnitario > 0; else negativo'>
+              <td style="white-space: nowrap; border-top: none;" class="align-middle centerPositive">{{row.precioVenta - row.costoUnitario |  currency: '$' }} </td>
+            </ng-container>
+            <ng-template class="centerNegative" #negativo>
+              <td style="white-space: nowrap; border-top: none;" class="align-middle centerNegative">{{row.precioVenta - row.costoUnitario |  currency: '$' }} </td>
+            </ng-template> 
+              
+          </ng-container>        
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+          <td mat-cell *matCellDef="let row"> {{row.stock}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> Editar </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-icon style="-webkit-text-fill-color:blue" (click)="openDialogPrecio(row.costoUnitario, row.productName, row.precioVenta, row.codigo)">open_in_browser</mat-icon>
+          <!--<button mat-raised-button color="primary" (click)="openDialogPrecio(row.costoUnitario, row.productName, row.precioVenta, 3)">Edit</button>-->
+        </td>
+      </ng-container>
+
+      
+      
+        
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+
+<hr>
+<!---------------------------------------------------------->
+
+
+
+
+
+
         <div class="form-group row">
           <div class="col-sm-10">
             <button (click)="registrarListaDePrecios()" class="btn btn-primary" [disabled]="!ldpForm.form.valid ">Crear</button>
