@@ -31,6 +31,7 @@ export class EstadistSucursalComponent implements OnInit {
 
 
   view: [number, number] = [1000, 250];
+  view2: [number, number] = [1000, 500];
   // options
   showXAxis = true;
   showXAxisFalse = false;

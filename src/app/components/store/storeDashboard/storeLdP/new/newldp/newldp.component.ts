@@ -1,4 +1,4 @@
-import { Component, Injectable, Pipe, OnInit } from '@angular/core';
+import { Component, Injectable, Pipe, OnInit,Inject, ViewChild } from '@angular/core';
 import { ProductService } from '../../../../../../../app/services/product.service';
 import { ListadepreciosService } from '../../../../../../services/listadeprecios.service';
 import { Params ,Router, ActivatedRoute } from '@angular/router';
@@ -11,6 +11,10 @@ import { global } from '../../../../../../services/global';
 import { UserService } from '../../../../../../services/user.service';
 import { BranchService } from 'src/app/services/branch.service';
 import { DialogpreciomasivoComponent } from '../../dialogPrecioMasivo/dialogpreciomasivo/dialogpreciomasivo.component';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-newldp',
@@ -33,6 +37,13 @@ export class NewldpComponent implements OnInit {
   public listadpOriginal!:any                 // es la lista de precios original traida desde el backend
   public referenciaCostosStock:string = ""
   public branchesByStore!: any
+  public selectedFileIds!:any
+  public valorDeReferencia!: string  // con esta variable determino si estoy haciendo un ajuste de precios en funcion del costo del produco o del precio de ventas existente
+
+  displayedColumns: string[] = ['codigo', 'productName', 'rubro', 'fechaUltimaCompra', 'costoUnitario', 'precioVenta', 'Diff', 'stock','edit'];
+  public dataSource!: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private _productService: ProductService,
@@ -52,6 +63,19 @@ export class NewldpComponent implements OnInit {
     // PASO 1: VERIFICO si esto es una copia de una lista o es una lista nueva 100%
     this._listadeprecioService.enviarListId.subscribe(data =>{   
       this._listadeprecioService.setListaId(data.data)
+      this.dataSource = new MatTableDataSource(this._productsList);
+      
+      this.updatePaginatorAndSort()
+    })
+    this._listadeprecioService.outputAjusteMasivoDePrecios.subscribe(data =>{   
+      console.log("####desde el evento que envia el outpuuuuttttttt")
+      console.log(data.data)
+      console.log(data.ajusteTipo)
+      console.log(data.montoPorcentaje)
+      this.actualizarPreciosEnMasa(data.data, data.ajusteTipo, data.montoPorcentaje)
+      //this.dataSource = new MatTableDataSource(this._productsList);
+      
+      //this.updatePaginatorAndSort()
     })
 
     //Lo primero que tengo que hacer es obtener el storeId
@@ -65,9 +89,27 @@ export class NewldpComponent implements OnInit {
     )
 
   }
-  
-  onSubmit(form: any){
-    
+
+  onSubmit(ldpForm:any){
+
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  updatePaginatorAndSort(){
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   registrarListaDePrecios(){
@@ -156,6 +198,8 @@ export class NewldpComponent implements OnInit {
           )
           //guardo todos estos elementos en un array (_productList)
           this._productsList.push(productOfLDPnew)
+          this.dataSource = new MatTableDataSource(this._productsList);
+          this.updatePaginatorAndSort()
           //this._listadeprecioService.addProductTothelist(productOfLDPnew)
         }
         this.products = arrayProductos
@@ -208,6 +252,10 @@ export class NewldpComponent implements OnInit {
           
           if(productoEncontrado.length > 0){          
             this._productsList[index].precioVenta = productoEncontrado[0].precioVenta
+            this.dataSource = new MatTableDataSource(this._productsList);
+            console.log("#########################################")
+            console.log(this.dataSource)
+            this.updatePaginatorAndSort()
             //this._productsList[index].precioVenta = productoEncontrado[0].
 
           }
@@ -234,6 +282,8 @@ export class NewldpComponent implements OnInit {
           this._productsList[i].fechaUltimaCompra = "-"
           this._productsList[i].costoUnitario = 0
           this._productsList[i].stock = 0
+          this.dataSource = new MatTableDataSource(this._productsList);
+          this.updatePaginatorAndSort()
         }
       }else{
         const index = this.branchesByStore.findIndex((object: { _id: any; }) => {
@@ -253,18 +303,15 @@ export class NewldpComponent implements OnInit {
               this._productsList[i].costoUnitario = 0
               this._productsList[i].stock = 0
             }
-    
           }
+          this.dataSource = new MatTableDataSource(this._productsList);
+          this.updatePaginatorAndSort()
         }
       }   
-        
-      
-
-       
     }
   }
 
-  openDialogPrecio(precioCompra:number, productName:string, precioVenta:number, index:number){
+  openDialogPrecio(precioCompra:number, productName:string, precioVenta:number, index:string){
     const dialogRef = this.dialog.open(DialogprecioComponent,{
       width:'50%',
       data:{'precioCompra':precioCompra,
@@ -276,30 +323,84 @@ export class NewldpComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if(`${result}` != "close"){
-        this._productsList[index].precioVenta = Number(`${result}`)
+      //  this._productsList[index].precioVenta = Number(`${result}`)
+        for(let i=0; i<this._productsList.length; i++){
+          if(this._productsList[i].codigo == index){
+            this._productsList[i].precioVenta = Number(`${result}`)
+          }
+        }
+        this.dataSource = new MatTableDataSource(this._productsList);
+        this.updatePaginatorAndSort()
       }
       
     });
     
   }
-  openDialogAjusteMasivoPreios(_productsList:productOfLDP[]){
+  openDialogAjusteMasivoPreios(_productsList:productOfLDP[],valorDeReferencia:string){
+    this.valorDeReferencia=valorDeReferencia
+    let selectedFileIds: string[]=[]
     const dialogRefAMP = this.dialog.open(DialogpreciomasivoComponent,{
+
       width:'80%',
       data:{
-        '_productsList': _productsList
+        '_productsList': _productsList,
+        'selectedFileIds': selectedFileIds,
+        'valorDeReferencia': valorDeReferencia
       }
     });
 
     dialogRefAMP.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if(`${result}` != "close"){
+        
+      }
+    })
+      /*
+    dialogRefAMP.afterClosed().subscribe(result => {
+      console.log(`Dialog result Masivooo: ${result}`);
       console.log(`${result}`);
+      this.selectedFileIds = `${result}`
+      //this.selectedFileIds.splice(0, this.selectedFileIds.length);
+      for (let item of this.selectedFileIds) {
+        console.log(item);
+        //this.selectedFileIds.push(item);
+      }
+      
+      console.log("selectedFileIds")
+      console.log(this.selectedFileIds)
       
       if(`${result}` != "close"){
       //  this._productsList[index].precioVenta = Number(`${result}`)
       }
       
-    });
+    });*/
     
+  }
+  actualizarPreciosEnMasa(selectedItems: any, ajusteTipo:number, montoPorcentaje:number){
+    //ajusteTipo  1=aumento  2=descuento
+    
+    for(let p=0; p<this._productsList.length; p++){
+      for(let s=0; s<selectedItems.length; s++){
+        if(this._productsList[p].codigo == selectedItems[s].codigo){
+          console.log("actualizaaaaarrr precio " + selectedItems[s].productName)
+          if(ajusteTipo==1){ //AUMENTO
+            if(this.valorDeReferencia == "precioVenta"){
+              this._productsList[p].precioVenta += selectedItems[s].precioVenta * montoPorcentaje / 100
+            }else if(this.valorDeReferencia == "costo"){
+              this._productsList[p].precioVenta = selectedItems[s].costoUnitario + selectedItems[s].costoUnitario * montoPorcentaje / 100
+            }
+          }else if(ajusteTipo==2){ //DESCUENTO
+            if(this.valorDeReferencia == "precioVenta"){
+              this._productsList[p].precioVenta -= selectedItems[s].costoUnitario * montoPorcentaje / 100
+            }else if(this.valorDeReferencia == "costo"){
+
+            }
+          }          
+          break
+        }
+      }
+    }
+    this.dataSource = new MatTableDataSource(this._productsList);
+    this.updatePaginatorAndSort()
   }
 
 

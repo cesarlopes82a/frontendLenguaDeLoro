@@ -11,6 +11,7 @@ import { global } from '../services/global';
 })
 export class ListadepreciosService {
   @Output() enviarListId: EventEmitter<any> = new EventEmitter();
+  @Output() outputAjusteMasivoDePrecios: EventEmitter<any> = new EventEmitter();
 
   _productsList: productOfLDP[] = []
   public url: string;
