@@ -344,7 +344,8 @@ export class NewldpComponent implements OnInit {
       width:'80%',
       data:{
         '_productsList': _productsList,
-        'selectedFileIds': selectedFileIds
+        'selectedFileIds': selectedFileIds,
+        'valorDeReferencia': valorDeReferencia
       }
     });
 

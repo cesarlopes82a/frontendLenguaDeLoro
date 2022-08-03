@@ -6,6 +6,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import {FormControl, Validators} from '@angular/forms';
 import { ListadepreciosService } from '../../../../../../services/listadeprecios.service'
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class DialogpreciomasivoComponent implements OnInit {
   public montoPorcentaje!: number
   public ajusteTipo!: string
   public porcentajeValido=false
+  public title!:string
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -42,6 +44,11 @@ export class DialogpreciomasivoComponent implements OnInit {
     this.listaDePreciosOriginal = this.data._productsList
     console.log(this.listaDePreciosOriginal)
     this.dataSource = new MatTableDataSource(this.listaDePreciosOriginal);
+    if(this.data.valorDeReferencia == "precioVenta"){
+      this.title = "Ajuste de precios en funcion de los COSTOS registrados."
+    }else if(this.data.valorDeReferencia == "costo"){
+      this.title = "Ajuste de precios en funcion del PRECIO DE VENTA registrado."
+    }
   }
 
   ngAfterViewInit() {
@@ -75,23 +82,44 @@ export class DialogpreciomasivoComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
-      this.selection.clear();
+      this.selection.clear() ;
       return;
     }
 
     this.selection.select(...this.dataSource.data);
   }
 
+  getPageData() {
+    return this.dataSource._pageData(this.dataSource._orderData(this.dataSource.filteredData));
+  }
+
+  isEntirePageSelected() {
+    return this.getPageData().every((row) => this.selection.isSelected(row));
+  }
+
+  masterToggle(checkboxChange: MatCheckboxChange) {
+    this.isEntirePageSelected() ?
+      this.selection.deselect(...this.getPageData()) :
+      this.selection.select(...this.getPageData());
+  }
+
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isEntirePageSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  }
+
+
   /** The label for the checkbox on the passed row */
+  /*
   checkboxLabel(row?: any): string {    
     if (!row) {      
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-
-    
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
-
+*/
   confirmSelectedData(){
     this.selectedFileIds.splice(0, this.selectedFileIds.length);
     for (let item of this.selection.selected) {

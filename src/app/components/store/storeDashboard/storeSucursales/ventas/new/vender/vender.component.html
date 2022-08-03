@@ -115,7 +115,7 @@
               <div class="form-group col-md-2">
                 <td><mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>Efectivo</mat-label>
-                  <input matInput type="number" placeholder="Monto en efectivo" name="montoEfectivo" (input)="calcularSaldoPendiente()" [(ngModel)]="montoEfectivo">
+                  <input style="font-size: 3.5em; font-family:'Courier New', Courier, monospace; color:green" matInput type="number" placeholder="Monto" name="montoEfectivo" (input)="calcularSaldoPendiente()" [(ngModel)]="montoEfectivo">
                   <span matPrefix>$&nbsp;</span>
                   <mat-hint align="start"><strong>Monto recibido en pesos</strong> </mat-hint>            
                 </mat-form-field></td>
@@ -126,7 +126,7 @@
               <div class="form-group col-md-2">
                 <td><mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>Tarjeta</mat-label>
-                  <input matInput type="number" placeholder="Monto con tarjeta C/D" name="montoTarjeta" (input)="calcularSaldoPendiente()" [(ngModel)]="montoTarjeta">
+                  <input style="font-size: 3.5em;font-family:'Courier New', Courier, monospace; color:green" matInput type="number" placeholder="Monto" name="montoTarjeta" (input)="calcularSaldoPendiente()" [(ngModel)]="montoTarjeta">
                   <span matPrefix>$&nbsp;</span>
                   <mat-hint align="start"><strong>Monto cobrado con tarjeta C/D</strong> </mat-hint>
                 </mat-form-field></td>
@@ -137,7 +137,7 @@
               <div class="form-group col-md-2">
                 <mat-form-field appearance="fill" floatLabel="always">
                   <mat-label>Saldo</mat-label>
-                  <input matInput type="number" class="example-right-align" placeholder="0" name="saldoPendiente" [ngModel]="saldoPendiente">
+                  <input style="font-size: 3.5em;font-family:'Courier New', Courier, monospace; color:red" matInput type="number" readonly class="example-right-align" placeholder="0" name="saldoPendiente" [ngModel]="saldoPendiente">
                   <span matPrefix>$&nbsp;</span>
                
                 </mat-form-field>

@@ -26,6 +26,7 @@ export class SidebarComponent implements OnInit {
   public loggedUserRole!: String;
   public storeId!: string
   public itemMenuSeleccionadoId!:string
+  public itemMenuSeleccionado!:string
   
 
   constructor(
@@ -51,6 +52,9 @@ export class SidebarComponent implements OnInit {
     console.log("esta es la lista defaultttttt------------")
     console.log(defaultListaDP)
     this.itemMenuSeleccionadoId = itemMenuSeleccionadoId
+    this.itemMenuSeleccionado = itemMenuSeleccionado
+    console.log("el itemMenuSeleccionado")
+    console.log(this.itemMenuSeleccionado)
     
     localStorage.setItem("defaultListaDP", defaultListaDP)
 

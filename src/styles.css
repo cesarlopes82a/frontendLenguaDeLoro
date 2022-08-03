@@ -91,10 +91,15 @@
     background-color:white;
     width: 5px;
     height: 53px;
-    position:fixed;
+    position:absolute;
     
 }
-
+.testigo1{
+    background-color:white;
+    width: 5px;
+    height: 60px;
+    position:absolute;    
+}
 /*MAIN*/
 
 .main {
