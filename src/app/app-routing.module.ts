@@ -51,6 +51,7 @@ import { BranchLDPmainComponent } from './components/store/storeDashboard/storeS
 import { NewBranchLDPComponent } from './components/store/storeDashboard/storeSucursales/branchLdP/new/new-branch-ldp/new-branch-ldp.component';
 
 import { EstadistSucursalComponent } from './components/store/storeDashboard/storeSucursales/estadisticas/main/estadist-sucursal/estadist-sucursal.component';
+import { EstadistTiendaComponent } from './components/store/storeDashboard/storeEstadisticas/estadisticas/main/estadist-tienda/estadist-tienda.component';
 
 const routes: Routes = [
   {
@@ -72,6 +73,7 @@ const routes: Routes = [
   { path: 'tienda/:id/ldp/nuevaldp', component: NewldpComponent },
   { path: 'tienda/:id/sucursales', component: StoreSucursalesComponent },
   { path: 'tienda/:id/sucursales/crearSucursal', component: NuevaSucComponent },
+  { path: 'tienda/:id/estadisticas', component: EstadistTiendaComponent},
   
   { path: 'sucursal/:id', component: StoreDashboardComponent },
   { path: 'sucursal/:id/usuarios', component: ListarVendedoresComponent },

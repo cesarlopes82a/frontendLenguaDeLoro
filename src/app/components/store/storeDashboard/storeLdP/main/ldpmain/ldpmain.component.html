@@ -33,7 +33,7 @@
             <ng-container *ngIf="column == 'Def'">
                 <ng-container mat-cell *matCellDef="let transaction">
                     <ng-container *ngIf="defaultLdp == transaction._id">
-                        <td align="center" style="vertical-align:center;">*</td>         
+                        <td style="vertical-align:center;">*</td>         
                     </ng-container>
                     <ng-container *ngIf="defaultLdp != transaction._id">
                         <td></td>         
