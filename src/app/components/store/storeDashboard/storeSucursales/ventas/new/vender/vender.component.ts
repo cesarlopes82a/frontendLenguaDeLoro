@@ -186,7 +186,9 @@ export class VenderComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.listaProdSeleccionados);
     this.totalVenta = this.listaProdSeleccionados.map((t: { total: any; }) => t.total).reduce((acc: any, value: any) => acc + value, 0);
     this.montoEfectivo = this.totalVenta
+    this.montoTarjeta = 0
     this.cd.detectChanges()   //esto es importante para que salga el error "ng0100 expression has changed after it was checked"
+    this.getTotalCost()
 
   }
   getTotalCost() {

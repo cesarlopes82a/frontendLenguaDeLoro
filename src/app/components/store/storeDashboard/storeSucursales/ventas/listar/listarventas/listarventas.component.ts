@@ -51,7 +51,7 @@ export class ListarventasComponent implements OnInit {
   public totalVtasTarjeta:number = 0
   public totalVtasEfectivo:number =0
   public totalVtasPendienteCobro:number =0
-  
+  public fechaActual =  new Date().toISOString().slice(0, 19).replace('T', ' ')
   dataSource!: MatTableDataSource<any>;
   public startDate:string = new Date().toISOString().split('T')[0];
   public endDate:string = new Date().toISOString().split('T')[0];
@@ -76,7 +76,6 @@ export class ListarventasComponent implements OnInit {
     this._route.params.subscribe(
       params => {
         this.branchId = params['id']
-        console.log("esto es lo que me trajo el params: branchId:" + this.branchId)
         this.getVentasByBranchIdAndPopulateInfo(this.branchId)                
       }
     )
@@ -93,8 +92,7 @@ export class ListarventasComponent implements OnInit {
     let endDate:string = new Date(this.endDate).toISOString().split('T')[0];
 
     let ELEMENT_DATA: any[] = []
-    for (let i=0; i<this.ventasByBranchId.length; i++) {
-      console.log(this.ventasByBranchId[i])
+    for (let i=0; i<this.ventasByBranchId.length; i++) {    
       let fechaVta:string = new Date(this.ventasByBranchId[i].fechaDeVta).toISOString().split('T')[0];
 
 
@@ -110,7 +108,6 @@ export class ListarventasComponent implements OnInit {
           TOTAL: this.ventasByBranchId[i].totalVta,
           productosVendidos: this.ventasByBranchId[i].productosVendidos
         }
-        console.log("pusssssshhhh")
         ELEMENT_DATA.push(VentaELEMENT_DATA) 
       }
     }
@@ -119,18 +116,11 @@ export class ListarventasComponent implements OnInit {
     this.getTotalVentas()
     this.getTotalEfectivo()
     this.getTotalTarjeta()
-    this.getTotalSaldo()
-    console.log(this.dataSource.filteredData)
-    console.log("Los usuariossssssssssss - vendedores" )
-    console.log(this.usrsFoundEnVentas)
-    
+    this.getTotalSaldo()    
   }
 
   onChangeUsuario($event: any) {
     
-    console.log($event.target.value);
-
-    console.log(this.usuarioId)
     
   }
   getTotalVentas() {
@@ -157,7 +147,7 @@ export class ListarventasComponent implements OnInit {
     .subscribe({
       next: (v) => {
         console.log("MENSAJE: VENTAS recibidas con exito para branchId: " + branchId)
-        console.log(v)
+        
         let respuesta: any
         respuesta = v
         this.ventasByBranchId = respuesta.slice()
@@ -165,7 +155,7 @@ export class ListarventasComponent implements OnInit {
       },
       error: (e) => console.error(e),
       complete: () => {
-        console.info('este es el complete') 
+        console.info("MENSAJE: procesando ventas recibidas...") 
 
         let ELEMENT_DATA: any[] = []
         for (let i=0; i<this.ventasByBranchId.length; i++) {
@@ -187,16 +177,20 @@ export class ListarventasComponent implements OnInit {
             TOTAL: this.ventasByBranchId[i].totalVta,
             productosVendidos: this.ventasByBranchId[i].productosVendidos
           }
-          console.log("pusssssshhhh")
+        
           ELEMENT_DATA.push(VentaELEMENT_DATA)        
         
         }
 
+        
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+        
         this.getTotalVentas()
         this.getTotalEfectivo()
         this.getTotalTarjeta()
         this.getTotalSaldo()
+
+        this.aplicarFiltro()
 
       }
     })
