@@ -4,6 +4,7 @@ import { VentasService } from 'src/app/services/ventas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {FormGroup, FormControl} from '@angular/forms';
+import Swal from 'sweetalert2'
 
 
 export class TableExpandableRowsExample {
@@ -11,6 +12,7 @@ export class TableExpandableRowsExample {
 }
 
 export interface VentaElement {
+  ventaId: string;
   fecha: string;
   sucursal: string;
   vendedor: string;
@@ -18,7 +20,10 @@ export interface VentaElement {
   efectivo: number;
   saldo: number;
   TOTAL: number;
-  productosVendidos: any
+  productosVendidos: any;
+  anulada: boolean;
+  anuladaPor: string;
+  anuladaFecha: string
 }
 
 @Component({
@@ -99,6 +104,7 @@ export class ListarventasComponent implements OnInit {
       if((fechaVta >= startDate && fechaVta <= endDate) && (this.selectedUser=="Todos" || this.selectedUser == this.ventasByBranchId[i].userId._id)){
         let VentaELEMENT_DATA: VentaElement
         VentaELEMENT_DATA = {
+          ventaId: this.ventasByBranchId[i]._id,
           fecha: this.ventasByBranchId[i].fechaDeVta,
           sucursal: this.ventasByBranchId[i].branchId,
           vendedor: this.ventasByBranchId[i].userId,
@@ -106,8 +112,24 @@ export class ListarventasComponent implements OnInit {
           efectivo: this.ventasByBranchId[i].montoEfectivo,
           saldo: this.ventasByBranchId[i].totalVta - this.ventasByBranchId[i].montoEfectivo - this.ventasByBranchId[i].montoTarjeta,
           TOTAL: this.ventasByBranchId[i].totalVta,
-          productosVendidos: this.ventasByBranchId[i].productosVendidos
+          productosVendidos: this.ventasByBranchId[i].productosVendidos,
+          anulada :  this.ventasByBranchId[i].anulada.anulada,
+          anuladaPor : this.ventasByBranchId[i].anulada.anuladaPor,
+          anuladaFecha : this.ventasByBranchId[i].anulada.anuladaFecha
         }
+
+          /*
+          anulada: false,
+          anuladaPor: "",
+          anuladaFecha: this.fechaActual
+          }
+          if(this.ventasByBranchId[i].anulada){
+            VentaELEMENT_DATA.anulada =  this.ventasByBranchId[i].anulada.anulada,
+            VentaELEMENT_DATA.anuladaPor = this.ventasByBranchId[i].anulada.anuladaPor,
+            VentaELEMENT_DATA.anuladaFecha = this.ventasByBranchId[i].anulada.anuladaFecha
+          }
+          */
+
         ELEMENT_DATA.push(VentaELEMENT_DATA) 
       }
     }
@@ -124,24 +146,121 @@ export class ListarventasComponent implements OnInit {
     
   }
   getTotalVentas() {
-    this.totalVentas = this.dataSource.filteredData.map((t: { TOTAL: any; }) => t.TOTAL).reduce((acc: any, value: any) => acc + value, 0);  
+    this.totalVentas = 0
+    for(let t = 0; t<this.dataSource.filteredData.length; t++){
+      if(this.dataSource.filteredData[t].anulada !=true){
+        this.totalVentas += this.dataSource.filteredData[t].TOTAL
+      }
+    }
+    //this.totalVentas = this.dataSource.filteredData.map((t: { TOTAL: any; }) => t.TOTAL).reduce((acc: any, value: any) => acc + value, 0);  
     return this.totalVentas
   }
   getTotalEfectivo() {
-    this.totalVtasEfectivo = this.dataSource.filteredData.map((t: { efectivo: any; }) => t.efectivo).reduce((acc: any, value: any) => acc + value, 0);  
+    this.totalVtasEfectivo = 0
+    for(let t = 0; t<this.dataSource.filteredData.length; t++){
+      if(this.dataSource.filteredData[t].anulada !=true){
+        this.totalVtasEfectivo += this.dataSource.filteredData[t].efectivo
+      }
+    }
+    //this.totalVtasEfectivo = this.dataSource.filteredData.map((t: { efectivo: any; }) => t.efectivo).reduce((acc: any, value: any) => acc + value, 0);  
     return this.totalVtasEfectivo
   }
   getTotalTarjeta() {
-    this.totalVtasTarjeta = this.dataSource.filteredData.map((t: { tarjeta: any; }) => t.tarjeta).reduce((acc: any, value: any) => acc + value, 0);  
+    this.totalVtasTarjeta = 0
+    for(let t = 0; t<this.dataSource.filteredData.length; t++){
+      if(this.dataSource.filteredData[t].anulada !=true){
+        this.totalVtasTarjeta += this.dataSource.filteredData[t].tarjeta
+      }
+    }
+    //this.totalVtasTarjeta = this.dataSource.filteredData.map((t: { tarjeta: any; }) => t.tarjeta).reduce((acc: any, value: any) => acc + value, 0);  
     return this.totalVtasTarjeta
   }
-  getTotalSaldo() {
+  getTotalSaldo() {    
     this.totalVtasPendienteCobro = this.getTotalVentas()-this.getTotalEfectivo()-this.getTotalTarjeta()
     return this.totalVtasPendienteCobro
   }
+  anularVenta(ventaId:string){
+    Swal.fire({
+      icon: 'warning',
+      title: 'Anular Venta!',
+      html: '<p style="color: #FF3333 !important; font-size: 2.5em;"> IMPORTANTE: Esta accion no podrá revertirse!</p>',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        console.log("MENSAJE: Iniciando proceso de anulacion de ventaId: " + ventaId + ". branchId: " + this.branchId)   
+        this._ventasService.postAnularVenta(this.branchId, ventaId, "motivo")
+        .subscribe({
+          next: (respuesta) => {
+            console.log("MENSAJE: Proceso de anulacion de ventaId: " + ventaId + ". branchId: " + this.branchId + " Completado exitosamente!")
+            console.log(respuesta)
+        
+          
+          },
+          error: (e) => console.error(e),
+          complete: () => {
+            console.log("MENSAJE: actualizando datos frontend...")
+
+            let ELEMENT_DATA: any[] = []
+            let ventaAnuladaEstado = false
+            
+            for (let i=0; i<this.ventasByBranchId.length; i++) {
+              console.log(this.ventasByBranchId[i]._id + " - " + ventaId)
+              if(String(this.ventasByBranchId[i]._id) == String(ventaId)){          
+                this.ventasByBranchId[i].anulada.anulada = true
+                this.ventasByBranchId[i].anulada.anuladaPor = localStorage.getItem("loggedUserName")                
+                this.ventasByBranchId[i].anulada.anuladaFecha = this.fechaActual
+                ventaAnuladaEstado = true
+
+              }else{
+                ventaAnuladaEstado = this.ventasByBranchId[i].anulada.anulada
+              }
+              let VentaELEMENT_DATA: VentaElement
+              VentaELEMENT_DATA = {
+                ventaId: this.ventasByBranchId[i]._id,
+                fecha: this.ventasByBranchId[i].fechaDeVta,
+                sucursal: this.ventasByBranchId[i].branchId,
+                vendedor: this.ventasByBranchId[i].userId,
+                tarjeta: this.ventasByBranchId[i].montoTarjeta,
+                efectivo: this.ventasByBranchId[i].montoEfectivo,
+                saldo: this.ventasByBranchId[i].totalVta - this.ventasByBranchId[i].montoEfectivo - this.ventasByBranchId[i].montoTarjeta,
+                TOTAL: this.ventasByBranchId[i].totalVta,
+                productosVendidos: this.ventasByBranchId[i].productosVendidos,
+                anulada :  ventaAnuladaEstado,
+                anuladaPor : this.ventasByBranchId[i].anulada.anuladaPor,
+                anuladaFecha : this.ventasByBranchId[i].anulada.anuladaFecha
+              }
+
+
+              ELEMENT_DATA.push(VentaELEMENT_DATA)
+
+            }
+            this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+            this.getTotalVentas()
+            this.getTotalEfectivo()
+            this.getTotalTarjeta()
+            this.getTotalSaldo()
+            this.aplicarFiltro()
+            console.log(ELEMENT_DATA)
+
+
+          }
+        })
+
+
+        
+
+
+      }
+    })
+
+    console.log("MENSAJE: Iniciando proceso de anulacion de venta. ventaId: "+ventaId)
+  }
 
   
-
   getVentasByBranchIdAndPopulateInfo(branchId:string){
     this._ventasService.getVentasByBranchIdAndPopulateInfo(branchId)
     .subscribe({
@@ -151,6 +270,7 @@ export class ListarventasComponent implements OnInit {
         let respuesta: any
         respuesta = v
         this.ventasByBranchId = respuesta.slice()
+        console.log(this.ventasByBranchId)
      
       },
       error: (e) => console.error(e),
@@ -166,8 +286,9 @@ export class ListarventasComponent implements OnInit {
           }
           /////////////////////////////////////////////////////////
 
-          let VentaELEMENT_DATA: VentaElement          
+          let VentaELEMENT_DATA: VentaElement
           VentaELEMENT_DATA = {
+            ventaId: this.ventasByBranchId[i]._id,
             fecha: this.ventasByBranchId[i].fechaDeVta,
             sucursal: this.ventasByBranchId[i].branchId,
             vendedor: this.ventasByBranchId[i].userId,
@@ -175,8 +296,25 @@ export class ListarventasComponent implements OnInit {
             efectivo: this.ventasByBranchId[i].montoEfectivo,
             saldo: this.ventasByBranchId[i].totalVta - this.ventasByBranchId[i].montoEfectivo - this.ventasByBranchId[i].montoTarjeta,
             TOTAL: this.ventasByBranchId[i].totalVta,
-            productosVendidos: this.ventasByBranchId[i].productosVendidos
+            productosVendidos: this.ventasByBranchId[i].productosVendidos,  
+            anulada :  this.ventasByBranchId[i].anulada.anulada,
+            anuladaPor : this.ventasByBranchId[i].anulada.anuladaPor,
+            anuladaFecha : this.ventasByBranchId[i].anulada.anuladaFecha
           }
+
+            /*
+            anulada: false,
+            anuladaPor: "",
+            anuladaFecha: this.fechaActual
+          }
+          if(this.ventasByBranchId[i].anulada){
+            VentaELEMENT_DATA.anulada =  this.ventasByBranchId[i].anulada.anulada,
+            VentaELEMENT_DATA.anuladaPor = this.ventasByBranchId[i].anulada.anuladaPor,
+            VentaELEMENT_DATA.anuladaFecha = this.ventasByBranchId[i].anulada.anuladaFecha
+          }
+          */
+
+            
         
           ELEMENT_DATA.push(VentaELEMENT_DATA)        
         

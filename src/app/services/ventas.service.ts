@@ -62,8 +62,7 @@ export class VentasService {
   }
 
   getVentasForStatistics1(userId:string, yearVentas:number){
-     console.log("$%%%%%%%%%%%")
-     console.log(yearVentas)
+
     console.log("MENSAJE: getVentasForStatistics() - obteniendo ventas para userId: " + userId)
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
     const params = new HttpParams().append('param', yearVentas);
@@ -87,5 +86,21 @@ export class VentasService {
     
     return this._http.get(this.url+'/ventas/sttVtas2/Info/',{headers:cabeceras, params})
 
+  }
+
+  postAnularVenta(branchId:string, ventaId:string, motivo:string): Observable<any>{
+    
+    let parametros = {
+      branchId: branchId,
+      ventaId: ventaId,   
+      motivo: motivo
+    }
+    console.log("los paramas antes de enviarlossssssssssssssssssssssssssssssssssssssss")
+    console.log(parametros)
+    let params = JSON.stringify(parametros)
+    
+    
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.post(this.url+'/ventas/postAnularVenta',params,{headers});
   }
 }

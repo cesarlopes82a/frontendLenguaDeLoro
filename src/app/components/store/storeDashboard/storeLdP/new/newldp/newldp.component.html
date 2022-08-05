@@ -192,7 +192,7 @@
         <th mat-header-cell *matHeaderCellDef> Diferencia </th>
         <td mat-cell *matCellDef="let row">
           <ng-container *ngIf="row.costoUnitario && row.precioVenta">
-            <ng-container class="centerPositive" *ngIf='row.precioVenta - row.costoUnitario > 0; else negativo'>
+            <ng-container class="centerPositive" *ngIf='row.precioVenta - row.costoUnitario > 0; else negativo'>              
               <td style="white-space: nowrap; border-top: none;" class="align-middle centerPositive">{{row.precioVenta - row.costoUnitario |  currency: '$' }} </td>
             </ng-container>
             <ng-template class="centerNegative" #negativo>

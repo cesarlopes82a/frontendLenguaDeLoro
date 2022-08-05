@@ -10,10 +10,10 @@
     <button type="submit" class="btn btn-primary" [routerLink]="['/sucursal/' + this.branchId + '/ventas/vender']" [routerLinkActive]="['actived']" >Registrar Nueva Venta</button>
 
     <div class="card-body">
-        <div class="example-container mat-elevation-z8">
+        <div class="mat-elevation-z8">
             <hr>
             <div class="row">
-                <div class="col-md">
+                <div class="col-md-4">
                     <mat-form-field appearance="fill">
                         <mat-label>Rango de fechas</mat-label>
                         <mat-date-range-input [rangePicker]="picker" >
@@ -30,10 +30,10 @@
                     </mat-form-field>
 
                 </div>
-                <div class="col-md">
+                <div class="col-md-2">
                     <button type="submit" class="btn btn-primary" (click)="aplicarFiltro()">Filtrar</button>
                 </div>
-                <div class="col-md">
+                <div class="col-md-2">
                     <mat-form-field appearance="fill">
                         <mat-label>Vendedor</mat-label>
                         <mat-select [(value)]="selectedUser" >
@@ -48,87 +48,163 @@
             </div>
             <hr>
 
-            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+            
+        </div>  
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
                 
-                <ng-container *ngFor="let column of columnsToDisplay">
-                    <ng-container matColumnDef="{{column}}">
-                        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-                        <ng-container *ngIf="column == 'fecha'">
-                            <td mat-cell *matCellDef="let transaction"> {{transaction.fecha | date:'medium'}} </td> 
-                            <td mat-footer-cell *matFooterCellDef>  </td>                         
-                        </ng-container>
-                        <ng-container *ngIf="column == 'sucursal'">
-                            <td mat-cell *matCellDef="let transaction"> {{transaction.sucursal.branchName}} </td>                        
-                            <td mat-footer-cell *matFooterCellDef>  </td>
-                        </ng-container>
-                        <ng-container *ngIf="column == 'vendedor'">
-                            <td mat-cell *matCellDef="let transaction"> {{transaction.vendedor.username}} </td>
-                            <td mat-footer-cell *matFooterCellDef> TOTAL: </td>
-                        </ng-container>
-                        <ng-container *ngIf="column == 'tarjeta'">
-                            <td mat-cell *matCellDef="let transaction"> {{transaction.tarjeta | currency }} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{ this.totalVtasTarjeta | currency }} </td>
-                            <td mat-footer-cell *matFooterCellDef>  </td>
-                        </ng-container>
-                        <ng-container *ngIf="column == 'efectivo'">
-                            <td mat-cell *matCellDef="let transaction"> {{transaction.efectivo | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{ this.totalVtasEfectivo | currency }} </td>
-                            <td mat-footer-cell *matFooterCellDef>  </td>
-                        </ng-container>
-                        <ng-container *ngIf="column == 'saldo'">
-                            <td mat-cell *matCellDef="let transaction"> {{transaction.saldo | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{ this.totalVtasPendienteCobro | currency }}  </td>
-                            <td mat-footer-cell *matFooterCellDef>  </td>
-                        </ng-container>
-                        <ng-container *ngIf="column == 'TOTAL'">
-                            <td mat-cell *matCellDef="let transaction"> {{transaction.TOTAL | currency}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{ this.totalVentas | currency }} </td>
-                        </ng-container>                       
-                    </ng-container>                                        
-                </ng-container>                              
-                <tr mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
-               
-                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-                <ng-container matColumnDef="expandedDetail">                    
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                    <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr style="color:rgb(231, 236, 231); background-color: rgb(192, 192, 191);">                        
-                                    <th>Producto</th>
-                                    <th>Codigo</th>
-                                    <th>Rubro</th>
-                                    <th>Precio</th>
-                                    <th>Cant</th>
-                                    <th>SubTotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                <tr *ngFor="let producto of element.productosVendidos" style="color:green; background-color: rgb(248, 248, 247);">                        
-                                    <td>{{producto.nombre}}</td>
-                                    <td>{{producto.codigo}}</td>
-                                    <td>{{producto.rubro.categoryName}}</td>                                    
-                                    <td>{{producto.precio | currency: '$'}}</td>
-                                    <td>{{producto.cantidad}}</td>
-                                    <td>{{producto.total | currency: '$'}}</td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
+            <ng-container *ngFor="let column of columnsToDisplay">
+                <ng-container matColumnDef="{{column}}">
+                    <th  mat-header-cell *matHeaderCellDef> {{column}} </th>
+                    <ng-container *ngIf="column == 'fecha'">                    
+                            <td mat-cell *matCellDef="let transaction">
+                                <ng-container *ngIf='transaction.anulada == false' >
+                                    {{transaction.fecha  | date:'medium'}}
+                                </ng-container>
+                                <ng-container *ngIf='transaction.anulada == true'>                                    
+                                    <p style="color: #FF3333"> {{transaction.fecha | date:'medium'}} (anulada) </p>
+                                </ng-container>                                  
+                            </td>                        
+                        <td mat-footer-cell *matFooterCellDef>  </td>                         
+                    </ng-container>
+                    <ng-container *ngIf="column == 'sucursal'">
+                            <td mat-cell *matCellDef="let transaction">
+                                <ng-container *ngIf='transaction.anulada == false' >
+                                    {{transaction.sucursal.branchName}}
+                                </ng-container>
+                                <ng-container *ngIf='transaction.anulada == true'>                                    
+                                    <p style="color: #FF3333">{{transaction.sucursal.branchName}}</p>
+                                </ng-container>                                  
+                            </td> 
+                        <td mat-footer-cell *matFooterCellDef>  </td>
+                    </ng-container>
+                    <ng-container *ngIf="column == 'vendedor'">
+                            <td mat-cell *matCellDef="let transaction">
+                                <ng-container *ngIf='transaction.anulada == false' >
+                                    {{transaction.vendedor.username}}
+                                </ng-container>
+                                <ng-container *ngIf='transaction.anulada == true'>                                    
+                                    <p style="color: #FF3333">{{transaction.vendedor.username}}</p>
+                                </ng-container>                                  
+                            </td> 
+                        <td mat-footer-cell *matFooterCellDef> TOTAL: </td>
+                    </ng-container>
+                    <ng-container *ngIf="column == 'tarjeta'">                        
+                        <td mat-cell *matCellDef="let transaction">
+                            <ng-container *ngIf='transaction.anulada == false' >
+                                {{transaction.tarjeta | currency }}
+                            </ng-container>
+                            <ng-container *ngIf='transaction.anulada == true'>                                    
+                                <p style="color: #FF3333">{{transaction.tarjeta | currency }}</p>
+                            </ng-container>                                  
+                        </td> 
+                        <td mat-footer-cell *matFooterCellDef> {{ this.totalVtasTarjeta | currency }} </td>
+                        <td mat-footer-cell *matFooterCellDef>  </td>
+                    </ng-container>
+                    <ng-container *ngIf="column == 'efectivo'">
+                            <td mat-cell *matCellDef="let transaction">
+                                <ng-container *ngIf='transaction.anulada == false' >
+                                    {{transaction.efectivo | currency}} 
+                                </ng-container>
+                                <ng-container *ngIf='transaction.anulada == true'>                                    
+                                    <p style="color: #FF3333">{{transaction.efectivo | currency}} </p>
+                                </ng-container>                                  
+                            </td> 
+                        <td mat-footer-cell *matFooterCellDef> {{ this.totalVtasEfectivo | currency }} </td>
+                        <td mat-footer-cell *matFooterCellDef>  </td>
+                    </ng-container>
+                    <ng-container *ngIf="column == 'saldo'">
+                        <td mat-cell *matCellDef="let transaction">
+                            <ng-container *ngIf='transaction.anulada == false' >
+                                {{transaction.saldo | currency}} 
+                            </ng-container>
+                            <ng-container *ngIf='transaction.anulada == true'>                                    
+                                <p style="color: #FF3333">{{transaction.saldo | currency}}</p>
+                            </ng-container>                                  
+                        </td> 
+                        <td mat-footer-cell *matFooterCellDef> {{ this.totalVtasPendienteCobro | currency }}  </td>
+                        <td mat-footer-cell *matFooterCellDef>  </td>
+                    </ng-container>
+                    <ng-container *ngIf="column == 'TOTAL'">
+                        <td mat-cell *matCellDef="let transaction">
+                            <ng-container *ngIf='transaction.anulada == false' >
+                                {{transaction.TOTAL | currency}}  
+                            </ng-container>
+                            <ng-container *ngIf='transaction.anulada == true'>                                    
+                                <p style="color: #FF3333">{{transaction.TOTAL | currency}} </p>
+                            </ng-container>                                  
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> {{ this.totalVentas | currency }} </td>
+                    </ng-container>                       
+                </ng-container>                                        
+            </ng-container>                              
+            <tr mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
+           
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            
+            <ng-container matColumnDef="expandedDetail">
+                
+                
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    
+                    <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">  
+                        <div class="container">
+                            <div class="row">                              
+                              <div class="col-12 align-self-center">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr style="color:rgb(235, 252, 2); background-color: rgb(192, 192, 191);">                        
+                                            <th>Producto</th>
+                                            <th>Codigo</th>
+                                            <th>Rubro</th>
+                                            <th>Precio</th>
+                                            <th>Cant</th>
+                                            <th>SubTotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let producto of element.productosVendidos" >                        
+                                            <td>{{producto.nombre}}</td>
+                                            <td>{{producto.codigo}}</td>
+                                            <td>{{producto.rubro.categoryName}}</td>                                    
+                                            <td>{{producto.precio | currency: '$'}}</td>
+                                            <td>{{producto.cantidad}}</td>
+                                            <td>{{producto.total | currency: '$'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                              </div>
+                              <div class="container">
+                                <div class="d-flex flex-column">
+                                    <div class="p-2">
+                                        <button (click)="anularVenta(element.ventaId)" [disabled]="element.anulada" class="btn btn-outline-warning" > ANULAR </button>
+                                    </div>
+                                    <div class="p-2">
+                                        <ng-container *ngIf="element.anulada">
+                                            <p style="color:rgb(252, 2, 2);">***Venta anulada por usuario {{element.anuladaPor}}:{{element.anuladaFecha}}</p>
+                                        </ng-container>    
+                                    </div>
+                                </div>
+                                <p> </p>
+                              </div>
+                            </div>
+                        </div>
+                        
+                    </div>                
+                </td>
 
-                    </div>
-                    </td>
-                </ng-container>
+                    
+                
+                
+            </ng-container>
+            
 
-                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" 
-                    [class.example-expanded-row]="expandedElement === element"
-                    (click)="expandedElement = expandedElement === element ? null : element">
-                </tr>
-                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-            </table>
-        </div>    
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" 
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>  
     </div>
 
     <hr>

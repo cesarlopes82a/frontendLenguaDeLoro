@@ -112,30 +112,30 @@
           <mat-card-subtitle>Forma de pago</mat-card-subtitle>
           <mat-card-content>          
             <div class="form-row">
-              <div class="form-group col-md-2">
-                <td><mat-form-field class="example-full-width" appearance="fill">
+              <div class="form-group col-md-3">
+                <td><mat-form-field class="example-full-width" [style.width.px]=300 appearance="fill">
                   <mat-label>Efectivo</mat-label>
                   <input style="font-size: 3.5em; font-family:'Courier New', Courier, monospace; color:green" matInput type="number" placeholder="Monto" name="montoEfectivo" (input)="calcularSaldoPendiente()" [(ngModel)]="montoEfectivo">
                   <span matPrefix>$&nbsp;</span>
-                  <mat-hint align="start"><strong>Monto recibido en pesos</strong> </mat-hint>            
+                  <mat-hint ><strong>Monto recibido en pesos</strong> </mat-hint>            
                 </mat-form-field></td>
               </div>
               <div class="form-group col-md-1">
     
               </div>
-              <div class="form-group col-md-2">
-                <td><mat-form-field class="example-full-width" appearance="fill">
+              <div class="form-group col-md-3">
+                <td><mat-form-field class="example-full-width" [style.width.px]=300 appearance="fill">
                   <mat-label>Tarjeta</mat-label>
                   <input style="font-size: 3.5em;font-family:'Courier New', Courier, monospace; color:green" matInput type="number" placeholder="Monto" name="montoTarjeta" (input)="calcularSaldoPendiente()" [(ngModel)]="montoTarjeta">
                   <span matPrefix>$&nbsp;</span>
-                  <mat-hint align="start"><strong>Monto cobrado con tarjeta C/D</strong> </mat-hint>
+                  <mat-hint ><strong>Monto cobrado con tarjeta C/D</strong> </mat-hint>
                 </mat-form-field></td>
               </div>
               <div class="form-group col-md-1">
     
               </div>
-              <div class="form-group col-md-2">
-                <mat-form-field appearance="fill" floatLabel="always">
+              <div class="form-group col-md-3">
+                <mat-form-field appearance="fill" floatLabel="always" [style.width.px]=300>
                   <mat-label>Saldo</mat-label>
                   <input style="font-size: 3.5em;font-family:'Courier New', Courier, monospace; color:red" matInput type="number" readonly class="example-right-align" placeholder="0" name="saldoPendiente" [ngModel]="saldoPendiente">
                   <span matPrefix>$&nbsp;</span>
@@ -148,8 +148,8 @@
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Comentario</mat-label>
                 <input matInput #message maxlength="256" placeholder="Ej. se canselará el saldo a fin de mes..." name="comentarioVenta" [(ngModel)]="comentarioVenta">
-                <mat-hint align="start"><strong>Informacion adjunta a la venta.</strong> </mat-hint>
-                <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+                <mat-hint ><strong>Informacion adjunta a la venta.</strong> </mat-hint>
+                <mat-hint >{{message.value.length}} / 256</mat-hint>
               </mat-form-field>
             </form>
 
