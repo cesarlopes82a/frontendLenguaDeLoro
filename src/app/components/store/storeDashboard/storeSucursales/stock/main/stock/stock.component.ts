@@ -119,7 +119,7 @@ export class StockComponent implements OnInit {
         if(`${result}` != "close"){
           let ELEMENT_DATA: any[] = []
           for (let i=0; i<this.branchFullInfo.stock.length; i++) {
-
+            
             console.log("--------------------------------------------")
               let StockELEMENT_DATA: StockElement          
               StockELEMENT_DATA = {
@@ -134,7 +134,17 @@ export class StockComponent implements OnInit {
                 ajustes: this.branchFullInfo.stock[i].ajustes
               }
               if(transaction.prodId == this.branchFullInfo.stock[i].product._id){
+                let objAjuste = {
+                  //fechaAjuste: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                  fechaAjuste: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                  accion: "Se ajusta stock de mercaderias - Valor: " + this.branchFullInfo.stock[i].cantidad + " - NuevoValor: " + `${result}` ,
+                  userName: localStorage.getItem("loggedUserName"),
+                  userRole: localStorage.getItem("loggedUserRole")               
+                }
+                this.branchFullInfo.stock[i].ajustes.push(objAjuste)
+                StockELEMENT_DATA.ajustes =  this.branchFullInfo.stock[i].ajustes
                 StockELEMENT_DATA.cantidad = `${result}`
+                
               }
               ELEMENT_DATA.push(StockELEMENT_DATA)
             }

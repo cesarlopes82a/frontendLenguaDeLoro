@@ -198,9 +198,24 @@ export class ListarventasComponent implements OnInit {
             console.log("MENSAJE: Proceso de anulacion de ventaId: " + ventaId + ". branchId: " + this.branchId + " Completado exitosamente!")
             console.log(respuesta)
         
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Venta anulada exitosamente!!',
+              showConfirmButton: false,
+              timer: 1500
+            })
           
           },
-          error: (e) => console.error(e),
+          error: (e) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: '<strong>ERROR: </a>' + e
+            })
+            console.error(e)
+          },
           complete: () => {
             console.log("MENSAJE: actualizando datos frontend...")
 
@@ -246,6 +261,7 @@ export class ListarventasComponent implements OnInit {
             this.aplicarFiltro()
             console.log(ELEMENT_DATA)
 
+            
 
           }
         })

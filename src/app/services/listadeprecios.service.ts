@@ -1,4 +1,4 @@
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { productOfLDP } from 'src/app/models/productOfLDP';
@@ -97,6 +97,17 @@ export class ListadepreciosService {
     
 
     return this._http.post(this.url+'/ldp/setDefaultStoreLDP/'+itemMenuSeleccionadoId,params,{headers});
+  }
+  eliminarListaDP(storeId:string, listaId:string): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    let params = new HttpParams()
+                    .set("listaId",listaId)
+                    .set("storeId", storeId); 
+       
+    
+    return this._http.delete(this.url+'/ldp/eliminarListaDP/',{headers, params})
+   // return this._http.delete(this.url+'/ldp/eliminarListaDP/',{headers,params});
   }
 
 }

@@ -41,7 +41,6 @@ export interface ldpElement {
 export class LDPmainComponent implements OnInit {
   public tiendaNombre:string = String(localStorage.getItem('itemMenuSeleccionado'))
   public storeId!:string
-  public quieroEliminarEsteRegistro!: string
   public listasdeprecios!: any
   public defaultLdp!:string
   public defaultListaDP!: string
@@ -70,12 +69,7 @@ export class LDPmainComponent implements OnInit {
     )
   }
 
-  editarItem(){
-    console.log("editarItem")
-  }
-  eliminarItem(){
-    console.log("editarItem")
-  }
+
   getListasdpByStoreIdAndPopulateInfo(storeId: string){
     this._listadpSevice.getListasdpByStoreIdAndPopulateInfo(storeId)
     .subscribe({
@@ -110,8 +104,6 @@ export class LDPmainComponent implements OnInit {
           ELEMENT_DATA.push(ldpELEMENT_DATA)
         }
 
-        console.log("veooooooooooooooooooooooooooooooo")
-        console.log(ELEMENT_DATA)
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         
         //////////////////////////////////////////////
@@ -122,20 +114,98 @@ export class LDPmainComponent implements OnInit {
     })
   }
 
-  pidoEliminar(listaId:string){
-    this.quieroEliminarEsteRegistro=listaId;
-    console.log("es este: " + this.quieroEliminarEsteRegistro)
+  pidoEliminarListaDP(listaId:string){
+    Swal.fire({
+      title: 'Está seguro de proceder ELIMINAR?',
+      text: "Esta accion no puede revertirse!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const registroEliminado = await this.eliminarListaDP(listaId)
+        if(registroEliminado){        
+          Swal.fire(
+            'Eliminadooo!',
+            'Lista de precios eliminada exitosamente.',
+            'success'
+          )
+        }
+      }
+    })
+    
   }
-  consultoEstadoEliminar(listaId:string){
-    if(listaId==this.quieroEliminarEsteRegistro) return true;
-    return false;
+  
+  async eliminarListaDP(listaId:string){
+    return new Promise((resolve, reject) => {
+      this._listadpSevice.eliminarListaDP(this.storeId, listaId)
+      .subscribe({
+        next: (v) => {
+          console.log("respuesta ")
+          console.log(v) 
+          Swal.fire(
+            'Eliminado!',
+            'Lista de precios eliminada exitosamente.',
+            'success'
+          ) 
+
+          //ACTUALIZO EL FRONTEND
+          let ELEMENT_DATA: any[] = []
+          for (let i=0; i<this.listasdeprecios.length; i++) {
+            if(String(this.listasdeprecios[i]._id) != listaId){
+              let ldpELEMENT_DATA: ldpElement
+              let defaultLdp = false
+              if(String(localStorage.getItem('defaultListaDP')) == String(this.listasdeprecios[i]._id)){
+                defaultLdp = true
+                this.defaultLdp = this.listasdeprecios[i]._id
+              }else{
+                defaultLdp = false
+              }
+  
+              ldpELEMENT_DATA = {
+                _id: this.listasdeprecios[i]._id,
+                listaNombre: this.listasdeprecios[i].listaNombre,
+                creador: this.listasdeprecios[i].creadapor.username,
+                createdAt: this.listasdeprecios[i].createdAt,
+                descripcion:this.listasdeprecios[i].descripcion,
+                ldpProducts:this.listasdeprecios[i].ldpProducts,
+                defaultLdp: defaultLdp
+              }
+              ELEMENT_DATA.push(ldpELEMENT_DATA)
+            }            
+          }
+          this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+          /////////////////////
+        },
+        error: (e) => {
+          console.log("errrrrooooss")
+          if(e.status == 405){
+            Swal.fire({
+              icon: 'error',
+              title: 'No es posible eliminar...',
+              text: 'La lista esta siendo utilizada como defaultLDP en la tienda o una de sus sucursales!',
+              //footer: '<a href="">Why do I have this issue?</a>'
+            })
+                    
+          }
+          if(e.status == 400){
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Algo salió mal al intentar eliminar la lista!',
+              //footer: '<a href="">Why do I have this issue?</a>'
+            })
+          }
+          console.error(e)
+
+        },
+        complete: () => console.info('este es el complete') 
+      })
+    })
   }
-  pidoCancelarEliminar(){
-    this.quieroEliminarEsteRegistro="";
-  }
-  deleteLista(listaId:string){
-    console.log("intento eliminar el usuario")
-  }
+  
 
   pidoClonar(listaId:string){
     console.log("la listaId")
@@ -144,6 +214,7 @@ export class LDPmainComponent implements OnInit {
       data:listaId
     })
   }
+
   
   setDefaultStoreLDP(listaId:string, listaNombre:string){
     

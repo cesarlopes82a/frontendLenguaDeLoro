@@ -278,10 +278,10 @@ export class ComprasComponent implements OnInit {
       })
       
 
-      setTimeout(function(){
+    //  setTimeout(function(){
       //  resolve(true)
         //reject(new Error("Error al intentar ASOSCIAr el nuevo registro de compra a la sucursal"))
-      },3000);
+    //  },3000);
       
       //resolve(response)
       

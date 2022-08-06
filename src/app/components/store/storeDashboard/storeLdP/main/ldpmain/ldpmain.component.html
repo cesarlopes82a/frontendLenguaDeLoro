@@ -59,12 +59,8 @@
                     <button  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                         <mat-icon>more_vert</mat-icon>
                       </button>
-                      <mat-menu #menu="matMenu">                                    
-                        <button mat-menu-item (click)="editarItem()">
-                          <mat-icon >edit</mat-icon>
-                          <span>editar</span>
-                        </button>
-                        <button mat-menu-item (click)="eliminarItem()">
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="pidoEliminarListaDP(transaction._id)">
                           <mat-icon>delete_outline</mat-icon>
                           <span>eliminar</span>
                         </button>
