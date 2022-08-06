@@ -3,6 +3,7 @@ import { Product } from '../../../../../models/product';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import Swal from 'sweetalert2'
  
 @Component({
   selector: 'app-nuevo-producto',
@@ -68,9 +69,29 @@ export class NuevoProductoComponent implements OnInit {
         next: (v) => {
           console.log("despues del saveProducto")
           console.log(v)
-          this._router.navigate(['/tienda', this.storeId,'productos']);     
+
+          this._router.navigate(['/tienda', this.storeId,'productos']);   
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Producto registrado exitosamente!!',
+            showConfirmButton: false,
+            timer: 1500
+          })  
         },
-        error: (e) => console.error(e),
+        error: (e) => {
+          if(e.status == 403){
+            Swal.fire({
+              icon: 'error',
+              title: 'El producto ya existe dentro de la DB de productos!',
+              text: e.error,
+              //footer: '<a href="">Why do I have this issue?</a>'
+            })
+            
+          }
+          console.error(e)
+        },
+        
         complete: () => console.info('complete') 
       })
   }
