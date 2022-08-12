@@ -32,8 +32,8 @@
                 </thead>
                 <tbody>
                     
-                    <tr (click)="clickFila(producto.product.codigo)" *ngFor="let producto of listasdeprecios.ldpProducts | filtroproductos: filtroProd">
-                        <ng-container *ngIf="producto.precioVenta > 0">
+                    <tr (click)="clickFila(producto.product.codigo)" *ngFor="let producto of listasdeprecios.ldpProducts | filtroproductos: filtroProd" >
+                        <ng-container *ngIf="producto.precioVenta > 0 && producto.product.desactivado.estado != true">
                             <td>{{producto.product.productName}}</td>
                             <td>{{producto.product.codigo}}</td>
                             <td>{{producto.product.categoriaRubro.categoryName}}</td>

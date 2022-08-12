@@ -44,6 +44,16 @@ export class ProductService {
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
     return this._http.get(this.url+'/products/storep/'+storeId,{headers:cabeceras})
   }
+
+  postChangeStatusProductById(productId: string):Observable<any>{
+    console.log("MENSAJE: productService - cambiar estado de productId: " + productId + " - Iniciando proceso... ")
+
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let params = JSON.stringify(productId)
+    console.log(params)
+    return this._http.post(this.url + '/products/chStatus/'+productId,{headers})
+
+  }
   
 
 }

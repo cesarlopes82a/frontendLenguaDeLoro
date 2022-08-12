@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class SigninComponent implements OnInit {
 
-
+  public unauthorized = false
 
   user={
     userName:'',
@@ -42,17 +42,14 @@ export class SigninComponent implements OnInit {
         localStorage.setItem("loggedUserName", this._authService.getDecodedAccessToken(String(this._authService.getToken())).username),
         localStorage.setItem("loggedUserDB", this._authService.getDecodedAccessToken(String(this._authService.getToken())).userDB)
 
-        console.log("MUESTRO LOS DATOS DESDE EL LOCAL STORAGE------------------")
-        console.log(localStorage.getItem("loggedUserID"))
-        console.log(localStorage.getItem("loggedUserEmail"))
-        console.log(localStorage.getItem("loggedUserRole"))
-        console.log(localStorage.getItem("loggedUserName"))
-        console.log(localStorage.getItem("loggedUserDB"))
 
         this.router.navigate(['/private'])
         console.log(res)
       },
-      error: (e) => console.error(e),
+      error: (e) => {
+        this.unauthorized = true
+        console.error(e)
+      },
       complete: () => console.info('(903458)complete desde signIn signIn.component') 
      })
 

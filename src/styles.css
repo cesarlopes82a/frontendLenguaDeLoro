@@ -164,6 +164,9 @@ advanced-pie-legend .legend-items-container .legend-items .legend-item .item-per
 /**********************************/
 
 
+button:focus {
+    outline: none;
+}
 
 
 /*mediaquerys*/
@@ -254,6 +257,11 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /*******************************************************************************/
+.centerDesactivado {    
+    display: flex;
+    justify-content: middle;
+    color: #b6b3b3;    
+}
 .centerPositive {
     border: 5px solid transparent;
     display: flex;
@@ -265,7 +273,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     display: flex;
     justify-content: center;
     color: #df4343;
-    }
+}
 .sidenav {
 
 	height: 100%;

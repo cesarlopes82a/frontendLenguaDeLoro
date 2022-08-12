@@ -18,10 +18,10 @@ export class StoreProductosComponent implements OnInit {
   public title!: string;
   public storeId!:string;
   public productos!: any;
-  public quieroEliminarEsteProducto!:string;
+  
 
 
-  displayedColumns: string[] = ['codigo', 'productName', 'unidadMedida', 'categoryName'];
+  displayedColumns: string[] = ['codigo', 'productName', 'unidadMedida', 'categoryName', 'menu'];
   public dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;  
@@ -34,6 +34,7 @@ export class StoreProductosComponent implements OnInit {
     this.title = "P   R   O   D   U   C   T   O   S"
    }
   ngOnInit(): void {
+    
     this._route.params.subscribe(
       params => {
         this.storeId = params['id']
@@ -41,13 +42,17 @@ export class StoreProductosComponent implements OnInit {
     this.getProductosByStoreId()    
   }
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if(this.dataSource){
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   updatePaginatorAndSort(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if(this.dataSource){
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   applyFilter(event: Event) {
@@ -68,7 +73,7 @@ export class StoreProductosComponent implements OnInit {
         
           this.productos = response;
           console.log("despues de la asgnacion")
-        console.log(this.productos)
+          console.log(this.productos)
 
        // window.location.reload();
       },
@@ -80,16 +85,30 @@ export class StoreProductosComponent implements OnInit {
       }
     })
   }
-  pidoEliminar(idProducto:string){
-    this.quieroEliminarEsteProducto=idProducto;
-    console.log("es este: " + this.quieroEliminarEsteProducto)
-  }
-  consultoEstadoEliminar(idProducto:string){
-    if(idProducto==this.quieroEliminarEsteProducto) return true;
-    return false;
-  }
-  pidoCancelarEliminar(){
-    this.quieroEliminarEsteProducto="";
+  cambiarEstadoProducto(productId: string){
+    this._productService.postChangeStatusProductById(productId)
+    .subscribe({
+      next: (response) => {
+        console.log(response)
+        for(let i = 0; i<this.productos.length; i++){
+          console.log(this.productos[i]._id + "  -  " + productId)
+          if(String(this.productos[i]._id) == productId){
+            console.log("asigno... " +response.estado)
+            this.productos[i].desactivado.estado = response.estado
+            this.productos[i].desactivado.desactivadoPor = response.desactivadoPor
+            this.productos[i].desactivado.desactivadoFecha = response.desactivadoFecha
+            break
+          }
+        }
+        this.dataSource = new MatTableDataSource(this.productos);
+        this.updatePaginatorAndSort()         
+      },
+      error: (e) => console.error(e),
+      complete: () => {
+        console.info('este es el complete despoes de traer los productos') 
+      
+      }
+    })
   }
   deletePrducto(id:string){
     console.log("intento eliminar el producto")

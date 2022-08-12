@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { ComprasService } from '../../../../../../services/compras.service';
+
 import { ListadepreciosService } from '../../../../../../services/listadeprecios.service';
 import { SidenavService } from 'src/app/services/sidebar.service';
 import { global } from '../../../../../../services/global';

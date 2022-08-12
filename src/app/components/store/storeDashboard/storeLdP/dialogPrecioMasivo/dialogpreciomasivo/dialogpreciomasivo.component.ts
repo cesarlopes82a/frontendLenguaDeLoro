@@ -39,7 +39,7 @@ export class DialogpreciomasivoComponent implements OnInit {
   ) {
     
    }
-
+   
   ngOnInit(): void {    
     this.listaDePreciosOriginal = this.data._productsList
     console.log(this.listaDePreciosOriginal)
