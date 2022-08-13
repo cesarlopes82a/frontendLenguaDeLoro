@@ -23,6 +23,7 @@ export class StoreProductosComponent implements OnInit {
 
   displayedColumns: string[] = ['codigo', 'productName', 'unidadMedida', 'categoryName', 'menu'];
   public dataSource!: MatTableDataSource<any>;
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;  
 
@@ -110,6 +111,12 @@ export class StoreProductosComponent implements OnInit {
       }
     })
   }
+  editarProducto(fila:any){
+    this._productService.enviarDatosProductoQueQuieroEditar.emit({
+      data: fila
+    })
+  }
+  
   deletePrducto(id:string){
     console.log("intento eliminar el producto")
     /*

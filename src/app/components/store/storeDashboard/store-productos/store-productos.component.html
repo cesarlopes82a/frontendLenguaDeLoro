@@ -75,7 +75,8 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                
+                <button mat-menu-item [routerLink]="['/tienda/'+ this.storeId +'/productos/editarProducto', row._id]" (click)="editarProducto(row)">
                   <mat-icon>edit</mat-icon>
                   <span>editar</span>
                 </button>  
@@ -89,8 +90,9 @@
               </mat-menu>
         </td>
         <td mat-footer-cell *matFooterCellDef>  </td>   
-    </ng-container> 
-  
+      </ng-container> 
+
+      
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;">
       </tr>

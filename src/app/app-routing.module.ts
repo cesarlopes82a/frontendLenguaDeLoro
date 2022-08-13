@@ -17,6 +17,8 @@ import { StoreDashboardComponent } from './components/store/storeDashboard/store
 import { StoreUsuariosComponent } from './components/store/storeDashboard/store-usuarios/store-usuarios.component';
 import { StoreProductosComponent } from './components/store/storeDashboard/store-productos/store-productos.component';
 import { NuevoProductoComponent } from './components/store/storeDashboard/storeProductos/nuevo-producto/nuevo-producto.component'
+import { EditarProductov2Component } from './components/store/storeDashboard/storeProductos/editar-productov2/editar-productov2.component'
+
 import { StoreSucursalesComponent } from './components/store/storeDashboard/store-sucursales/store-sucursales.component';
 
 import { ListarVendedoresComponent } from './components/store/storeDashboard/storeSucursales/listar-vendedores/listar-vendedores.component';
@@ -69,6 +71,7 @@ const routes: Routes = [
   { path: 'tienda/:id/usuarios/crearUsuario', component: NuevoUsuarioComponent },
   { path: 'tienda/:id/productos', component: StoreProductosComponent },
   { path: 'tienda/:id/productos/nuevoProducto', component: NuevoProductoComponent },
+  { path: 'tienda/:sid/productos/editarProducto/:id', component: EditarProductov2Component },
   { path: 'tienda/:id/ldp', component: LDPmainComponent },
   { path: 'tienda/:id/ldp/nuevaldp', component: NewldpComponent },
   { path: 'tienda/:id/sucursales', component: StoreSucursalesComponent },
