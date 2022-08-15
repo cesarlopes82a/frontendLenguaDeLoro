@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { global } from 'src/app/services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { DialogquitartiendaComponent } from './dialogs/dialogquitartienda/dialogquitartienda.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -16,7 +17,6 @@ export class UsersComponent implements OnInit {
   public title: string;
   public usuarios!: any;
   public usuariosPopulated!: any;
-  public quieroEliminarEsteUsuario!:string;
   public url!:string;
   public adminMasterTiendas!:any;
   public usrSelecionado!:any
@@ -73,9 +73,6 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  deleteUsuario(idUsuario:string){
-    console.log("intento eliminar el usuario")
-  }
   
   onChange(tiendaId:string, isChecked: boolean) {
     if(isChecked) {
@@ -268,34 +265,92 @@ export class UsersComponent implements OnInit {
     console.log("hice click en el boton")
   }
 
-
-  pidoEliminar(idUsuario:string){
-    this.quieroEliminarEsteUsuario=idUsuario;
-    console.log("es este: " + this.quieroEliminarEsteUsuario)
-  }
-  consultoEstadoEliminar(idUsuario:string){
-    if(idUsuario==this.quieroEliminarEsteUsuario) return true;
-    return false;
-  }
-  pidoCancelarEliminar(){
-    this.quieroEliminarEsteUsuario="";
-  }
-
-
-
   async getUsers(){
     this._userService.getUsers()
-    .subscribe({
-      next: (v) => {
-        console.log("estos son los usuarios")
-        console.log(v)
-        this.usuarios =  v
-      },
-      error: (e) => console.error(e),
-      complete: () => console.info('este es el complete') 
+  }
+
+  activarDesactivarCuenta(userId:string, accion: string){
+    Swal.fire({
+      title: accion + ' de cuenta.',
+      text: "Esta accion requiere confirmacion para proceder!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this._userService.activarDesactivarCuenta(userId)
+        .subscribe({
+          next: (v) => {
+            Swal.fire(
+              accion + ' de cuenta.',
+              'Proceso finalizado exitosamente!',
+              'success'
+            )
+
+            //actualizo el frontend
+            for (let i=0; i<this.usuarios.length; i++){
+              if(String(this.usuarios[i]._id) == userId){
+                this.usuarios[i].activated = v
+              }
+            }
+          },
+          error: (e) => {
+            Swal.fire(
+              accion + ' de cuenta.',
+              'Ha ocurrido un error!',
+              'error'
+            )
+            console.error(e)},
+          complete: () => console.info('este es el complete') 
+        })
+
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
     })
   }
 
+  changePassword(userId:string){
+    Swal.fire({
+      title: 'Ingrese el nuevo password',
+      input: 'password',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar!',
+
+      preConfirm: (login) => {
+
+        this._userService.postChangePassword(userId,login)
+        .subscribe({
+          next: (v) => {
+            Swal.fire(
+              'Password:',
+              'El password fue cambiado exitosamente!',
+              'success'
+            )
+          },
+          error: (e) => {
+            Swal.fire(
+              'Password:',
+              'Ha ocurrido un error al intentar cambiar el password!',
+              'error'
+            )
+            console.error(e)},
+          complete: () => console.info('este es el complete') 
+        })
+
+      },
+      
+    })
+  }
   
 
 

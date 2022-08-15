@@ -50,6 +50,27 @@ export class UserService {
     return this.testVAR
   }
 
+  postChangePassword(userId: string, password:string): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let datos={
+      userTargetId: userId,
+      password: password
+    }
+    let params = JSON.stringify(datos)
+    
+    return this._http.post(this.url + '/users/changePassword',params,{headers}) 
+  }
+
+  activarDesactivarCuenta(userId:string): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let datos={
+      userTargetId: userId,
+    }
+    let params = JSON.stringify(datos)
+    
+    return this._http.post(this.url + '/users/activarDesactivarCuenta',params,{headers}) 
+  }
+
   createNewUser(user: any): Observable<any>{
     if(global.loggedUserRole ="adminMaster"){
       user.roles=["adminGlobal"]

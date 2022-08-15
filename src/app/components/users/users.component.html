@@ -13,29 +13,28 @@
                                     <th>Nombre</th>
                                     <th>Email</th>
                                     <th>Roles</th>
-                                    <th>Opciones</th>
+                                    <th> </th>
                                 </tr>
                             </thead>                            
                             <tbody *ngFor="let usuario of usuarios; let i = index;">
-                                <tr data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <tr *ngIf="usuario.activated == false" style="color: rgb(182, 47, 13); background-color: rgb(189, 190, 190);">
                                     <td>{{usuario.username}}</td>
                                     <td>{{usuario.email}}</td>
                                     <td>
-                                        <p *ngFor="let role of usuario.roles">
-                                            {{role.roleName}}
-                                        </p>   
+                                        {{usuario.roles[0].roleName}}                                          
                                     </td>
+                                    <td  data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <mat-icon>settings</mat-icon>                                       
+                                    </td>
+                                </tr>
+                                <tr *ngIf="usuario.activated == true">
+                                    <td>{{usuario.username}}</td>
+                                    <td>{{usuario.email}}</td>
                                     <td>
-                                        <p *ngIf="consultoEstadoEliminar(usuario._id)==false">
-                                            <a class="iconoenlinea" [routerLink]="['/productos/producto',usuario._id]"><i class="fas fa-eye" style="margin-left: 5%;"></i></a>
-                                            <a class="iconoenlinea" [routerLink]="['/productos/editar/', usuario._id]"><i class="fa-solid fa-pencil" style="margin-left: 5%;"></i></a>
-                                            <a (click)="pidoEliminar(usuario._id)" class="iconoenlinea"><i class="fas fa-trash-alt" style="margin-left: 5%;"></i></a>
-                                        </p>
-                                        <p *ngIf="consultoEstadoEliminar(usuario._id)==true">
-                                            <a (click)="deleteUsuario(usuario._id)"></a>
-                                            <a (click)="deleteUsuario(usuario._id)"><i class="fas fa-check" style="color: rgb(24, 185, 24);"></i></a>
-                                            <a (click)="pidoCancelarEliminar()"><i class="fas fa-check" style="color: red; margin-left: 20%; "></i></a>
-                                        </p>
+                                        {{usuario.roles[0].roleName}}  
+                                    </td>
+                                    <td  data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <mat-icon>settings</mat-icon>                                       
                                     </td>
                                 </tr>
                                 <tr>
@@ -48,27 +47,31 @@
                                                 </div>
                                                 <div *ngFor="let tienda of usuario.tiendas">
                                                     <p><strong>{{tienda.store.storeName}}</strong></p>
-                                                    
                                                     <div *ngFor="let sucursal of tienda.branches">
                                                         <p>{{sucursal.branchName}}</p>
-
                                                     </div>
                                                 </div>
                                                 <hr>
-                                                <div class="row justify-content-center">
-                                                
-                                                    <!-- Button trigger modal 
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="listarLasTiendas(usuario._id, 'agregar')">
-                                                        Agregar una tienda
-                                                    </button>
-                                                    -->
-                                                    <div class="justify-content-center" ></div>
-                                                    <button type="button" class="btn btn-outline-danger" (click)="openDialogAsignacionDeTiendas(usuario._id)">
-                                                        asignar tiendas
-                                                    </button>
-                                                
-                                                </div>
-
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-md-4 d-flex justify-content-center">
+                                                            <button type="button" style="font-family: 'Courier New', monospace;" class="btn btn-light" (click)="changePassword(usuario._id)">
+                                                                reset password
+                                                            </button>
+                                                        </div>
+                                                        <div  class="col-md-4 d-flex justify-content-center">
+                                                            <button type="button"  style="font-family: 'Courier New', monospace;" class="btn btn-light" (click)="openDialogAsignacionDeTiendas(usuario._id)">
+                                                                asignar tiendas
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-md-4 d-flex justify-content-center">
+                                                            <button *ngIf="usuario.activated == true" type="button" style="font-family: 'Courier New', monospace;" class="btn btn-light" (click)="activarDesactivarCuenta(usuario._id, 'Desactivación')">
+                                                                desactivar cuenta
+                                                            </button>
+                                                            <button *ngIf="usuario.activated == false" type="button" style="font-family: 'Courier New', monospace;" class="btn btn-light" (click)="activarDesactivarCuenta(usuario._id, 'Activación')">
+                                                                activar cuenta
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                             </div>
                                         </div>   
                                     </td>
