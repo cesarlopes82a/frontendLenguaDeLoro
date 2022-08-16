@@ -298,20 +298,24 @@ export class UsersComponent implements OnInit {
             }
           },
           error: (e) => {
+            if(e.status == 403){
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: e.error,
+                //footer: '<a href="">Why do I have this issue?</a>'
+              })
+            } else{
             Swal.fire(
               accion + ' de cuenta.',
-              'Ha ocurrido un error!',
-              'error'
+              'Ha ocurrido un error! ',              
+              'error' 
             )
-            console.error(e)},
+            }
+            console.error(e)
+          },
           complete: () => console.info('este es el complete') 
         })
-
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
       }
     })
   }
@@ -338,12 +342,22 @@ export class UsersComponent implements OnInit {
             )
           },
           error: (e) => {
-            Swal.fire(
-              'Password:',
-              'Ha ocurrido un error al intentar cambiar el password!',
-              'error'
-            )
-            console.error(e)},
+            if(e.status == 403){
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: e.error,
+                //footer: '<a href="">Why do I have this issue?</a>'
+              })
+            } else{
+              Swal.fire(
+                'Password:',
+                'Ha ocurrido un error al intentar cambiar el password!',
+                'error'
+              )
+            }
+            console.error(e)
+          },
           complete: () => console.info('este es el complete') 
         })
 
