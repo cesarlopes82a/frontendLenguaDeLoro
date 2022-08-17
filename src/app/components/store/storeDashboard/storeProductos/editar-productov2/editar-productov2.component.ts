@@ -29,7 +29,7 @@ export class EditarProductov2Component implements OnInit {
     private _productService: ProductService,
     private _categoryService: CategoryService,
   ) {
-    this.getCategories()
+    
     this.producto = new Product('','','','','');
   }
 
@@ -52,7 +52,7 @@ export class EditarProductov2Component implements OnInit {
       params => {
         this.productId = params['id']
         this.storeId = params['sid']
-
+        this.getCategories()
     })
 
     this.obtenerDatosDelProductoQueQuieroEditar(this.productId)
@@ -67,7 +67,7 @@ export class EditarProductov2Component implements OnInit {
   }
 
   getCategories(){
-    this._categoryService.getCategories()
+    this._categoryService.getCategoriasByStoreId(this.storeId)
     .subscribe({
       next: (v) => {
         this.categoriasRubros = v;
