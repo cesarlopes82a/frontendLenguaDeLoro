@@ -119,19 +119,7 @@ export class StoreProductosComponent implements OnInit {
   
   deletePrducto(id:string){
     console.log("intento eliminar el producto")
-    /*
-    this._productService.deleteProducto(id).subscribe(
-      response => {
-        if(response.producto){
-          this._router.navigate(['/productos/listar'])
-        }
-      },
-      error => {
-        console.log(<any>error);
-      }
-    )
-    location.reload(true);
-    */
+ 
   }
 
 }

@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NuevoRubroComponent } from './nuevo-rubro.component';
+import { NuevorubroComponent } from './nuevorubro.component';
 
-describe('NuevoRubroComponent', () => {
-  let component: NuevoRubroComponent;
-  let fixture: ComponentFixture<NuevoRubroComponent>;
+describe('NuevorubroComponent', () => {
+  let component: NuevorubroComponent;
+  let fixture: ComponentFixture<NuevorubroComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NuevoRubroComponent ]
+      declarations: [ NuevorubroComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(NuevoRubroComponent);
+    fixture = TestBed.createComponent(NuevorubroComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

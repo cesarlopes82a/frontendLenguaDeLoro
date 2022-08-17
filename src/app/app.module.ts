@@ -40,13 +40,7 @@ import { StoreDashboardComponent } from './components/store/storeDashboard/store
 import { HomeComponent } from './components/home/home.component';
 
 import { StoreProductosComponent } from './components/store/storeDashboard/store-productos/store-productos.component';
-//import { ListarProductosComponent } from './components/store/storeDashboard/storeProductos/listar-productos/listar-productos.component';
-//import { EditarProductoComponent } from './components/store/storeDashboard/storeProductos/editar-producto/editar-producto.component';
 import { NuevoProductoComponent } from './components/store/storeDashboard/storeProductos/nuevo-producto/nuevo-producto.component';
-
-import { ListarRubrosComponent } from './components/store/storeDashboard/storeProductos/listar-rubros/listar-rubros.component';
-//import { EditarRubroComponent } from './components/store/storeDashboard/storeProductos/editar-rubro/editar-rubro.component';
-import { NuevoRubroComponent } from './components/store/storeDashboard/storeProductos/nuevo-rubro/nuevo-rubro.component';
 
 import { StoreUsuariosComponent } from './components/store/storeDashboard/store-usuarios/store-usuarios.component';
 import { ListarUsuariosComponent } from './components/store/storeDashboard/storeUsuarios/listar-usuarios/listar-usuarios.component';
@@ -94,8 +88,8 @@ import { EstadistSucursalComponent } from './components/store/storeDashboard/sto
 import { DialogpreciomasivoComponent } from './components/store/storeDashboard/storeLdP/dialogPrecioMasivo/dialogpreciomasivo/dialogpreciomasivo.component';
 import { EstadistTiendaComponent } from './components/store/storeDashboard/storeEstadisticas/estadisticas/main/estadist-tienda/estadist-tienda.component';
 import { EditarProductov2Component } from './components/store/storeDashboard/storeProductos/editar-productov2/editar-productov2.component';
-
-
+import { RubrosComponent } from './components/store/storeDashboard/storeRubros/main/rubros/rubros.component';
+import { NuevorubroComponent } from './components/store/storeDashboard/storeRubros/dialogs/nuevorubro/nuevorubro.component';
 
 
 
@@ -114,12 +108,7 @@ import { EditarProductov2Component } from './components/store/storeDashboard/sto
     HomeComponent,
     StoreUsuariosComponent,
     StoreProductosComponent,
-   // ListarProductosComponent,
-   // EditarProductoComponent,
     NuevoProductoComponent,
-    ListarRubrosComponent,
-   // EditarRubroComponent,
-    NuevoRubroComponent,
     ListarUsuariosComponent,
     EditarUsuarioComponent,
     NuevoUsuarioComponent,
@@ -159,6 +148,8 @@ import { EditarProductov2Component } from './components/store/storeDashboard/sto
     DialogpreciomasivoComponent,
     EstadistTiendaComponent,
     EditarProductov2Component,
+    RubrosComponent,
+    NuevorubroComponent
     
     
     

@@ -38,7 +38,7 @@ export class NuevoProductoComponent implements OnInit {
     
     console.log("###################3####################################")
     
-    this.getCategories()
+    
    // console.log("esto va despues del getCategorias")
    // console.log(this.categoriasRubros)
    }
@@ -60,8 +60,9 @@ export class NuevoProductoComponent implements OnInit {
     this._route.params.subscribe(
       params => {
         this.storeId = params['id']
+        this.getCategories()
       })
-    
+      
   }
   onSubmit(form: any){
 
@@ -99,7 +100,9 @@ export class NuevoProductoComponent implements OnInit {
 
   
   getCategories(){
-    this._categoryService.getCategories()
+    console.log("esta esssssssssssssssssssssssssss")
+    console.log(this.storeId)
+    this._categoryService.getCategoriasByStoreId(this.storeId)
     .subscribe({
       next: (v) => {
         console.log("esto es lo que me mandan de categorias")
