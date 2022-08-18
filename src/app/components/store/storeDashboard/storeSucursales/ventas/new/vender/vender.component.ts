@@ -6,7 +6,7 @@ import { DialogventaComponent } from '../dialogventa/dialogventa.component';
 import { VentasService } from 'src/app/services/ventas.service';
 import {MatTableDataSource} from '@angular/material/table';
 import Swal from 'sweetalert2'
-import { faGrinTongue } from '@fortawesome/free-regular-svg-icons';
+
 
 
 export interface prodSeleccionadoVta {

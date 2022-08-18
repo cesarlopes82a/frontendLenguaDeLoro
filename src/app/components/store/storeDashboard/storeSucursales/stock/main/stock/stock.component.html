@@ -14,7 +14,12 @@
                             <td mat-footer-cell *matFooterCellDef>  </td>                            
                         </ng-container>
                         <ng-container *ngIf="column == 'Ultima Compra'">
-                            <td mat-cell *matCellDef="let transaction"> {{transaction.fechaUltimaCompra | date:'medium'}} </td> 
+                            
+                            <td mat-cell *matCellDef="let transaction">
+                                <ng-container *ngIf="transaction.fechaUltimaCompra!='-'">
+                                    {{transaction.fechaUltimaCompra | date:'medium'}} 
+                                </ng-container>
+                            </td>
                             <td mat-footer-cell *matFooterCellDef>  </td>                         
                         </ng-container>
                         <ng-container *ngIf="column == '$Costo Unitario'">
@@ -53,8 +58,12 @@
                         <div>
                             <hr>
                             <ng-container *ngFor="let ajuste of element.ajustes">
-                                
-                                <p>{{ajuste.fechaAjuste}} - Usuario: {{ajuste.userName}}({{ajuste.userRole}}). {{ajuste.accion}}  </p>
+                                <ng-container *ngIf="ajuste?.fechaAjuste!='-'">
+                                    <p>{{ajuste?.fechaAjuste}} - Usuario: {{ajuste.userName}}({{ajuste.userRole}}). {{ajuste.accion}}  </p>
+                                </ng-container>
+                                <ng-container *ngIf="ajuste?.fechaAjuste=='-'">
+                                    <p> Usuario: {{ajuste.userName}}({{ajuste.userRole}}). {{ajuste.accion}}  </p>
+                                </ng-container>
                                 
                             </ng-container>
                             <hr>

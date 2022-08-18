@@ -45,3 +45,115 @@ table {
   .example-element-description-attribution {
     opacity: 0.5;
   }
+
+  
+  .container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  h2 {
+    font-size: 26px;
+    margin: 20px 0;
+    text-align: center;
+    
+  }
+  h2 small {
+    font-size: 0.5em;
+  }
+  
+  .responsive-table li {
+    border-radius: 3px;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+  .responsive-table .table-header {
+    background-color: #95A5A6;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .responsive-table table-row {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+  }
+  .responsive-table .col-1 {
+    flex-basis: 10%;
+  }
+  .responsive-table .col-2 {
+    flex-basis: 40%;
+  }
+  .responsive-table .col-3 {
+    flex-basis: 25%;
+  }
+  .responsive-table .col-4 {
+    flex-basis: 25%;
+  }
+ 
+  @media all and (max-width: 767px) {
+    .table-header {
+      display: none;
+    }
+    .table-row{
+      
+    }
+    li {
+      display: block;
+    }
+    .col {
+      
+      flex-basis: 100%;
+      
+    }
+    .col {
+      display: flex;
+      padding: 10px 0;
+    }
+  }
+
+  table.comicGreen {
+    font-family: "Courier New", Courier, monospace;
+    border: 2px solid #4F7849;
+    background-color: #EEEEEE;
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+  }
+  table.comicGreen td, table.comicGreen th {
+    border: 1px solid #4F7849;
+    padding: 3px 2px;
+  }
+  table.comicGreen tbody td {
+    font-size: 12px;
+    font-weight: bold;
+    color: #4F7849;
+  }
+  table.comicGreen tr:nth-child(even) {
+    background: #CEE0CC;
+  }
+  table.comicGreen thead {
+    background: #4F7849;
+    background: -moz-linear-gradient(top, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+    background: -webkit-linear-gradient(top, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+    background: linear-gradient(to bottom, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+    border-bottom: 1px solid #444444;
+  }
+  table.comicGreen thead th {
+    font-size: 15px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    border-left: 2px solid #D0E4F5;
+  }
+  table.comicGreen thead th:first-child {
+    border-left: none;
+  }
+  
+  table.comicGreen tfoot td {
+    font-size: 21px;
+  }

@@ -45,8 +45,6 @@
         </mat-card>
         <hr>
 
-        
-
         <div class="example-container mat-elevation-z8">
           <table mat-table [dataSource]="dataSource">
             <!-- Item Column -->
@@ -143,7 +141,7 @@
                 </mat-form-field>
               </div>
             </div>
-            <div class="form-row"></div>
+            <!--
             <form class="example-form">
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Comentario</mat-label>
@@ -152,20 +150,14 @@
                 <mat-hint >{{message.value.length}} / 256</mat-hint>
               </mat-form-field>
             </form>
-
+            -->
           </mat-card-content>
-
         </mat-card>
-        
-
-
        <hr>
-       
-
         <div class="container-fluid h-100">
           <div class="row w-100">
             <div class="col-md-10">
-              <button class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 " (click)="solicitarRegistrarCompra()"> Finalizar venta </button>
+              <button class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 || saldoPendiente > 0" (click)="solicitarRegistrarCompra()"> Finalizar venta </button>
             </div>
             <div class="col">
               <button [routerLink]="['/sucursal/' + this.branchId + '/ventas/listar']" [routerLinkActive]="['actived']" class="btn btn-outline-danger" > Volver </button>
@@ -173,7 +165,5 @@
           </div>
       
         </div>
-
-
       </form>
 

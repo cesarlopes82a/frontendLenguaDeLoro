@@ -29,7 +29,7 @@
             </div>
             <div class="form-group col-md-4">
                 
-                <input type="text" [disabled]="!habilitoEscaneearCod" class="form-control" id="prodCodigo" placeholder="Escanee el código" name="prodCodigo" #prodCodigo="ngModel" [(ngModel)]="productoCodigo" required>
+                <input type="text" [disabled]="!habilitoEscaneearCod" class="form-control" id="prodCodigo" placeholder="Escanee el código" name="prodCodigo" #prodCodigo="ngModel" (input)="actualizarComboProd()" [(ngModel)]="productoCodigo" required>
                 <input type="checkbox" name="habilitoEscaneearCod" [(ngModel)]="habilitoEscaneearCod" />
                 <label for="checkbox">Habilitar</label>
             </div>       
@@ -40,12 +40,14 @@
           <div class="col-sm-3">
             <input name="fechaDeCompra" class="form-control"  [(ngModel)]="fechaDeCompra" type="date" required>
           </div>
+          <!--
           <label for="compraDate" class="col-sm-2 col-form-label">Fecha de Vencimiento</label>
           <div class="col-sm-3">
             <input [disabled]="!tieneVencimiento" class="form-control" name="date" [(ngModel)]="fechaDeVencimiento" type="date">
             <input type="checkbox" name="tieneVencimiento" [(ngModel)]="tieneVencimiento" />
             <label for="checkbox">Habilitar</label>
           </div>
+          -->
         </div>
 
         <div class="form-group row">

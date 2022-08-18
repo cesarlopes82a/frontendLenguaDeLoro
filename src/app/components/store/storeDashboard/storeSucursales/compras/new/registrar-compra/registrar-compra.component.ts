@@ -116,6 +116,14 @@ export class RegistrarCompraComponent implements OnInit {
 
     console.log("onsubmit")
   }
+
+  actualizarComboProd(){
+    for(let i=0;i<this.productos.length;i++){
+      if(String(this.productos[i].codigo) == String(this.productoCodigo)){
+        this.productoId = this.productos[i]._id
+      }
+    }
+  }
   getProveedores(){
     this._supplierService.getProveedores()
     .subscribe({

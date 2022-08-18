@@ -95,13 +95,17 @@ export class NewldpComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if(this.dataSource){
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   updatePaginatorAndSort(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if(this.dataSource){
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   applyFilter(event: Event) {
@@ -380,19 +384,23 @@ export class NewldpComponent implements OnInit {
     
     for(let p=0; p<this._productsList.length; p++){
       for(let s=0; s<selectedItems.length; s++){
-        if(this._productsList[p].codigo == selectedItems[s].codigo){
+        if(String(this._productsList[p].codigo) == String(selectedItems[s].codigo)){
           console.log("actualizaaaaarrr precio " + selectedItems[s].productName)
           if(ajusteTipo==1){ //AUMENTO
+            console.log("aumento")
+            console.log(this.valorDeReferencia)
             if(this.valorDeReferencia == "precioVenta"){
               this._productsList[p].precioVenta += selectedItems[s].precioVenta * montoPorcentaje / 100
             }else if(this.valorDeReferencia == "costo"){
               this._productsList[p].precioVenta = selectedItems[s].costoUnitario + selectedItems[s].costoUnitario * montoPorcentaje / 100
             }
           }else if(ajusteTipo==2){ //DESCUENTO
+            console.log("descuento")
+            console.log(this.valorDeReferencia)
             if(this.valorDeReferencia == "precioVenta"){
               this._productsList[p].precioVenta -= selectedItems[s].costoUnitario * montoPorcentaje / 100
             }else if(this.valorDeReferencia == "costo"){
-
+              this._productsList[p].precioVenta = selectedItems[s].costoUnitario - selectedItems[s].costoUnitario * montoPorcentaje / 100
             }
           }          
           break

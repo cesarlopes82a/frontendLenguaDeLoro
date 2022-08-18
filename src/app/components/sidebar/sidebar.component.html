@@ -5,7 +5,7 @@
                 <nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
                     <p></p>
                     <div *ngIf="itemMenuSeleccionado=='estadisticas'" class="testigo1"></div>
-                    <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/estadisticas']" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado('estadisticas', 'tienda.store._id', 'tienda.store.defaultListaDP')"><i class="fas fa-user" style="margin-right: 5%;"></i><span> Estadisticas</span></a>
+                    <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/estadisticas']" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado('estadisticas', 'tienda.store._id', 'tienda.store.defaultListaDP')"><i class='fa-solid fa-chart-column' style="margin-right: 5%;"></i> <span> Estadisticas</span></a>
                     <!--<a [routerLink]="['/estadisticas']" ><i class="far fa-chart-bar" style="margin-right: 5%;" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado('estadisticas', 'tienda.store._id', 'tienda.store.defaultListaDP')"></i><span>Estadisticas</span></a>-->
                     
                     <div *ngIf="itemMenuSeleccionado=='usuarios'" class="testigo1"></div>

@@ -13,10 +13,10 @@
     -->
    
     <mat-sidenav-container [inputSideNav]="sideNav">
-        <mat-sidenav #sideNav mode="side">
+        <mat-sidenav #sideNav mode="side" opened>
             <app-sidebar ></app-sidebar>
         </mat-sidenav>
-        <mat-sidenav-content [inputSideNav]="sideNav" style="height:1000px">
+        <mat-sidenav-content [inputSideNav]="sideNav" style="height: 937px;">
             <router-outlet [inputSideNav]="sideNav"></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>

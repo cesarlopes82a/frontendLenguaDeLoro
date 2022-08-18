@@ -30,91 +30,22 @@
         </div>
 
         <div class="row">
-          <div class="col-sm-6">                
-            <ng-container *ngIf='listaOrigenIdparaClonar != ""'>
-              <button type="submit" class="btn btn-outline-success" (click)="openDialogAjusteMasivoPreios(_productsList, 'precioVenta')">Ajuste masivo de precios en funcion del PRECIO DE VENTA actual</button>              
-            </ng-container>            
+          <div  class="col-sm-6" *ngIf='listaOrigenIdparaClonar != ""'>  
+            <!--EN CASO DE ESTAR CLONANDO UNA LISTA DE PERCIOS-->              
+              <button [disabled]="!referenciaCostosStock" type="submit" class="btn btn-outline-success" (click)="openDialogAjusteMasivoPreios(_productsList, 'precioVenta')">Ajuste masivo de precios en funcion del <strong>PRECIO DE VENTA</strong> actual</button>
           </div>
-          <div class="col-sm-6">              
-            <ng-container *ngIf='listaOrigenIdparaClonar != ""'>              
-              <button type="submit" class="btn btn-outline-success" (click)="openDialogAjusteMasivoPreios(_productsList,'costo')">Ajuste masivo de precios en funcion del COSTO registrado</button>
-              <!--<button mat-raised-button color="primary" (click)="openDialogPrecio(_productsList[i].costoUnitario, _productsList[i].productName, _productsList[i].precioVenta, i)">Edit</button>-->
-            </ng-container>            
+          <div class="col-sm-6" *ngIf='listaOrigenIdparaClonar != ""'>              
+              <button [disabled]="!referenciaCostosStock" type="submit" class="btn btn-outline-success" (click)="openDialogAjusteMasivoPreios(_productsList,'costo')">Ajuste masivo de precios en funcion del <strong>COSTO</strong> registrado</button>
+          </div>
+          <!--EN CASO DE ESTAR GENERANDO UNA LISTA NUEVA DESDE 0-->   
+          <div class="col-sm-12" *ngIf='listaOrigenIdparaClonar == ""'>              
+            <button [disabled]="!referenciaCostosStock" type="submit" class="btn btn-outline-success" (click)="openDialogAjusteMasivoPreios(_productsList,'costo')">Ajuste masivo de precios en funcion del <strong>COSTO</strong> registrado</button>
           </div>
         </div>
      <p> </p>
         
 
 
-
-<!--
-
-        <table id="dtBasicExample" class="table table-hover td.fit th.fit" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th style="white-space: nowrap;" class="th-sm">#</th>
-              <th style="white-space: nowrap;" class="th-sm">Producto</th>
-              <th style="white-space: nowrap;" class="th-sm">Rubro</th>
-              <th style="white-space: nowrap;" class="th-sm">Codigo</th>
-              <th style="white-space: nowrap;" class="th-sm">Stock</th>
-              <th style="white-space: nowrap;" class="th-sm">Fecha Ultima Compra</th>
-              <th style="white-space: nowrap;" class="th-sm">Costo</th>
-              <th style="white-space: nowrap;" class="th-sm">Precio de venta</th>
-              <th style="vertical-align:middle;" class="th-sm" >Dif</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let product of _productsList; let i = index">
-            <tr>
-              <td style="white-space: nowrap;" class="align-middle">{{i}}</td>
-              <td style="white-space: nowrap;" class="align-middle" >{{_productsList[i].productName}}</td>
-              <td style="white-space: nowrap;" class="align-middle">{{_productsList[i].rubro}}</td>
-              <td style="white-space: nowrap;" class="align-middle">{{_productsList[i].codigo}}</td>
-              <td style="white-space: nowrap;" class="align-middle">{{_productsList[i].stock}}</td>
-              
-              <ng-container *ngIf='_productsList[i].fechaUltimaCompra && _productsList[i].fechaUltimaCompra === "-"; else fechaCompra'>
-                  <td style="white-space: nowrap;" class="align-middle">-</td>
-              </ng-container>
-              <ng-template #fechaCompra >
-                  <td style="white-space: nowrap;" class="align-middle">{{_productsList[i].fechaUltimaCompra |  date:'MM/dd/yyyy h:mm:ss' }} </td>
-              </ng-template>
-              
-              <ng-container *ngIf='_productsList[i].fechaUltimaCompra === "-"; else precioCompra'>
-                  <td style="white-space: nowrap;" class="align-middle">-</td>
-              </ng-container>
-              <ng-template #precioCompra>
-                  <td style="white-space: nowrap;" class="align-middle">{{_productsList[i].costoUnitario | currency: '$'}}</td>
-              </ng-template>
-
-              <td style="white-space: nowrap;" class="align-middle" >{{_productsList[i].precioVenta | currency: '$'}}</td>
-
-              <td style="white-space: nowrap;" class="align-middle">
-                  <div class="row">
-                      <div class="col center" >                          
-                          <ng-container class="center" *ngIf='_productsList[i].fechaUltimaCompra != "-" && _productsList[i].precioVenta > 0; else diferencia'>
-                            <ng-container class="centerPositive" *ngIf='_productsList[i].precioVenta - _productsList[i].costoUnitario > 0; else negativo'>
-                              <td style="white-space: nowrap; border-top: none;" class="align-middle centerPositive">{{_productsList[i].precioVenta - _productsList[i].costoUnitario |  currency: '$' }} </td>
-                            </ng-container>
-                            <ng-template class="centerNegative" #negativo>
-                              <td style="white-space: nowrap; border-top: none;" class="align-middle centerNegative">{{_productsList[i].precioVenta - _productsList[i].costoUnitario |  currency: '$' }} </td>
-                            </ng-template>  
-                            
-                          </ng-container>
-                          <ng-template class="center" #diferencia>
-                            <td style="white-space: nowrap;" class="align-middle">-</td>  
-                          </ng-template>
-                      </div>
-                      <div class="col">
-                          <button mat-raised-button color="primary" (click)="openDialogPrecio(_productsList[i].costoUnitario, _productsList[i].productName, _productsList[i].precioVenta, _productsList[i].codigo)">Edit</button>
-                      </div>
-                  </div>
-              </td>
-
-            </tr>            
-          </tbody>
-        </table>
-        -->
-        <hr>
-<!---------------------------------------------------------->
 <div class="row">
   <div class="col-sm-3">
     <mat-form-field appearance="standard">
@@ -174,7 +105,7 @@
 
       <ng-container matColumnDef="precioVenta">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio Vta </th>
-          <td mat-cell *matCellDef="let row"> {{row.precioVenta | currency: '$'}} </td>
+          <td mat-cell *matCellDef="let row"><strong> {{row.precioVenta | currency: '$'}} </strong></td>
       </ng-container>
 
       <ng-container matColumnDef="productName">
