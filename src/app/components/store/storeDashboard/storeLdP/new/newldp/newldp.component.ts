@@ -172,39 +172,46 @@ export class NewldpComponent implements OnInit {
         // voy a reemplazar por un (-) lo valores que pueden ser null
         //paso todos los productos a un nuevo array arrayProductos con los datos bien formateados(sin null)
         for (let producto of productos) {
-          //no tengo mas la clave ultimoRegCompra. hago esto para que siga funcionando. ningun producto va a tener un ultimo reg de compra de esta lista
-          /*
-          if(producto.ultimoRegCompra === null){
-            let regCompra = {
-              fechaDeCompra:"-",
-              precioCompraUnitario: "-"
+
+          if(producto.desactivado.estado == false){
+            //no tengo mas la clave ultimoRegCompra. hago esto para que siga funcionando. ningun producto va a tener un ultimo reg de compra de esta lista
+            /*
+            if(producto.ultimoRegCompra === null){
+              let regCompra = {
+                fechaDeCompra:"-",
+                precioCompraUnitario: "-"
+              }
+              producto.ultimoRegCompra = regCompra          
             }
-            producto.ultimoRegCompra = regCompra          
+            */
+            //producto.ultimoRegCompra.fechaDeCompra="-";             ///agrego esto para salvar
+            //producto.ultimoRegCompra.precioCompraUnitario = "-"     ///agrego esto para salvar
+
+            producto.precioVenta = null
+            arrayProductos.push(producto)
+
+            //creo los elementos que voy a almacenar dentro de la lista de precios 
+            //defino la estructura del elemento que voy a guardar en la lista de productos
+            let productOfLDPnew = new productOfLDP(
+              producto._id,
+              producto.productName,
+              producto.categoriaRubro.categoryName,
+              producto.codigo,
+              0,
+              "-",   //producto.ultimoRegCompra.fechaDeCompra,
+              0,  //producto.ultimoRegCompra.precioCompraUnitario,
+              producto.precioVenta,
+              producto.desactivado.estado
+            )
+            //guardo todos estos elementos en un array (_productList)
+            
+            this._productsList.push(productOfLDPnew)
+            this.dataSource = new MatTableDataSource(this._productsList);
+            this.updatePaginatorAndSort()
+            //this._listadeprecioService.addProductTothelist(productOfLDPnew)
           }
-          */
-          //producto.ultimoRegCompra.fechaDeCompra="-";             ///agrego esto para salvar
-          //producto.ultimoRegCompra.precioCompraUnitario = "-"     ///agrego esto para salvar
 
-          producto.precioVenta = null
-          arrayProductos.push(producto)
-
-          //creo los elementos que voy a almacenar dentro de la lista de precios 
-          //defino la estructura del elemento que voy a guardar en la lista de productos
-          let productOfLDPnew = new productOfLDP(
-            producto._id,
-            producto.productName,
-            producto.categoriaRubro.categoryName,
-            producto.codigo,
-            0,
-            "-",   //producto.ultimoRegCompra.fechaDeCompra,
-            0,  //producto.ultimoRegCompra.precioCompraUnitario,
-            producto.precioVenta
-          )
-          //guardo todos estos elementos en un array (_productList)
-          this._productsList.push(productOfLDPnew)
-          this.dataSource = new MatTableDataSource(this._productsList);
-          this.updatePaginatorAndSort()
-          //this._listadeprecioService.addProductTothelist(productOfLDPnew)
+          
         }
         this.products = arrayProductos
         console.log("this.products---------------son todos los productos que tiene la tienda. lo recibo del backend")

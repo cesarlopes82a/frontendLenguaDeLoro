@@ -9,6 +9,7 @@ export class productOfLDP{
         public fechaUltimaCompra:string,
         public costoUnitario: number,
         public precioVenta: number,
+        public desactivado: boolean
         
     ){}
 }
