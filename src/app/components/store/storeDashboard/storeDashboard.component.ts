@@ -19,6 +19,7 @@ export class StoreDashboardComponent implements OnInit {
 
   public title: string;
   public url: string = "";
+  public urlImageCompras: string = "http://localhost:4011/api/images/compras/compras.png"
   public store: any;
   public branch: any;
   public user:any;
