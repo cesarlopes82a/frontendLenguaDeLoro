@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="col-md-2">
-            <input type="number" min="1" step="1" onkeypress="return event.charCode >= 48" class="form-control" placeholder="Cant =1 " [(ngModel)]="cantProductos" (change)="onChangeInputCantidad($event)">
+            <input type="number" min="0" onkeypress="(event.charCode >= 48 && event.charCode <= 57) || event.charCode == 13" class="form-control" placeholder="Cant = 1" [(ngModel)]="cantProductos" (change)="onChangeInputCantidad($event)">
         </div>
 
     </div>
@@ -49,8 +49,6 @@
                             <td>{{producto.product.categoriaRubro.categoryName}}</td>
                             <td>{{producto.precioVenta | currency: '$'}}</td>
                             <td><mat-icon style="color: green;" (click)="addProduct(producto.product.codigo)">add_shopping_cart</mat-icon></td>
-
-                                <!--<button mat-raised-button color="warn" (click)="addProduct(producto.product.codigo)">add</button>-->
                         </ng-container>
                     </tr>
                     

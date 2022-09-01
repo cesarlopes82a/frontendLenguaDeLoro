@@ -75,11 +75,24 @@ export class VenderComponent implements OnInit {
     this._ventasService.enviarProductoSeleccionado.subscribe( data => {
       console.log("VENDER<--COMPONENTE RECIBO EL PRODUCTO.................-------------")
       console.log(data.data)
-      this.agregarProducto(data.data)
+      if(data.data.product.unidadMedida == "Unidades" && Number.isInteger(this.cantProdSeleccionado) == false){
+        Swal.fire(
+          'Mensaje!',
+          'El producto NO se comercializa en fracciones.',
+          'warning'
+        ) 
+        this.cantProdSeleccionado = Math.trunc(this.cantProdSeleccionado)
+        
+      }
+      
+        this.agregarProducto(data.data)
+      
+      
     })
     this._ventasService.enviarCantProductoSeleccionado.subscribe( data => {
       console.log("enviarCantProductoSeleccionado<--COMPONENTE RECIBO cantidad.................-------------")
       console.log(data.data)
+      
       this.cantProdSeleccionado=data.data      
     })
     

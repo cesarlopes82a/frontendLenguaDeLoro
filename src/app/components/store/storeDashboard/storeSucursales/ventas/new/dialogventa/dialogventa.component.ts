@@ -1,8 +1,5 @@
-import { Component, OnInit, Inject,AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 import {VentasService} from '../../../../../../../services/ventas.service';
 
 
@@ -13,7 +10,6 @@ import {VentasService} from '../../../../../../../services/ventas.service';
   styleUrls: ['./dialogventa.component.css']
 })
 export class DialogventaComponent implements OnInit {
-
 
   public listasdeprecios!:any;    //esta es la lista de precios completa con toda la info. la recibo en el oninit
   public producIdSeleccionado!:string
@@ -60,7 +56,10 @@ export class DialogventaComponent implements OnInit {
   addProduct(codigo: string){
     console.log("---------")
     console.log(codigo)
-    this.filtroProd = codigo
+    if(this.cantProductos !=0 ){
+      this.filtroProd = codigo
+    }
+    
   }
 
  
