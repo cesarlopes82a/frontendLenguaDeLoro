@@ -81,11 +81,13 @@ export class VenderComponent implements OnInit {
           'El producto NO se comercializa en fracciones.',
           'warning'
         ) 
-        this.cantProdSeleccionado = Math.trunc(this.cantProdSeleccionado)
+        this.cantProdSeleccionado = 1
         
+      } else {
+        this.agregarProducto(data.data)
       }
       
-        this.agregarProducto(data.data)
+        
       
       
     })
