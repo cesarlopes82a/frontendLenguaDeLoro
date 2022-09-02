@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div>
-                            <a *ngIf="loggedUserRole=='adminMaster' || loggedUserRole==='adminGlobal'" href="/tienda/crearTienda"><span>Crear Tienda</span><i class="fa-solid fa-folder-plus"style="margin-left: 5%;"></i></a>
+                            <a *ngIf="loggedUserRole=='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/tienda/crearTienda']"><span>Crear Tienda</span><i class="fa-solid fa-folder-plus"style="margin-left: 5%;"></i></a>                            
                         </div>
                         
                     </div>

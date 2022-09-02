@@ -1,3 +1,4 @@
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -186,10 +187,11 @@ import { NuevorubroComponent } from './components/store/storeDashboard/storeRubr
     
   ],
   providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptorService,
+      useClass: TokenInterceptorService,  
       multi: true
     },
     {
@@ -199,6 +201,7 @@ import { NuevorubroComponent } from './components/store/storeDashboard/storeRubr
 
     MatSidenav
   ],
+  
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
