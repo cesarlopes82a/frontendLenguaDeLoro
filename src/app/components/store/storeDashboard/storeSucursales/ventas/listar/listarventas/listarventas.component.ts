@@ -96,6 +96,10 @@ export class ListarventasComponent implements OnInit {
     let startDate:string = new Date(this.startDate).toISOString().split('T')[0];
     let endDate:string = new Date(this.endDate).toISOString().split('T')[0];
 
+    console.log("*****----------******")
+    console.log(startDate)
+    console.log(endDate)
+
     let ELEMENT_DATA: any[] = []
     for (let i=0; i<this.ventasByBranchId.length; i++) {    
       let fechaVta:string = new Date(this.ventasByBranchId[i].fechaDeVta).toISOString().split('T')[0];

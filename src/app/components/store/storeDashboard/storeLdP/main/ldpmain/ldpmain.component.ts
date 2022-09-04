@@ -39,6 +39,7 @@ export interface ldpElement {
   ],
 })
 export class LDPmainComponent implements OnInit {
+  public loggedUserRole: string = String(localStorage.getItem("loggedUserRole"))
   public tiendaNombre:string = String(localStorage.getItem('itemMenuSeleccionado'))
   public storeId!:string
   public listasdeprecios!: any

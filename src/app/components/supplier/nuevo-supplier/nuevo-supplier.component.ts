@@ -3,6 +3,7 @@ import { Proveedor } from '../../../models/proveedor'
 import { CategoryService } from 'src/app/services/category.service';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-nuevo-supplier',
@@ -18,6 +19,7 @@ export class NuevoSupplierComponent implements OnInit {
   constructor(
     private _supplierService: SupplierService,
     private _categoryService: CategoryService,
+    private _router:Router
   ) {
     this.getCategories()
     this.proveedor = new Proveedor('','','','','','');
@@ -43,12 +45,28 @@ export class NuevoSupplierComponent implements OnInit {
 
     this._supplierService.saveProveedor(this.proveedor).subscribe({
       next: (v) => {
-        console.log("despues del saveProveedor")
-        console.log(v)
-       // this._router.navigate(['/tienda', this.storeId,'productos']);     
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Producto actualizado exitosamente!!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        
+        
       },
-      error: (e) => console.error(e),
-      complete: () => console.info('complete') 
+      error: (e) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'algo salió mal!',
+          footer: '<strong>ERROR: </a>' + e
+        })
+        console.error(e)
+      },
+      complete: () => {
+        this._router.navigate(['/proveedores']);
+      }
     })
   }
   onChangeCategoria($event: any) {

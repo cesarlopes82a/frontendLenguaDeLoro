@@ -10,7 +10,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Estadisticas</h5>
                         <p class="card-text">Aqui podras consultar estadisticas de ventas por sucursal, por usuario, por fechas y horarios</p>
-                        <a [routerLink]="['/tienda', this.storeId,'estadisticas']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/tienda', this.storeId,'estadisticas']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -22,7 +27,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Usuarios</h5>
                         <p class="card-text">Acceda a esta seccion para administrar usuarios y sus permisos</p>
-                        <a [routerLink]="['/tienda', this.storeId,'usuarios']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                                                                     
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/tienda', this.storeId,'usuarios']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -33,7 +43,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Productos</h5>
                         <p class="card-text">Desde aquí podrás definir los productos que se comercializan en esta tienda.</p>
-                        <a [routerLink]="['/tienda', this.storeId,'productos']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/tienda', this.storeId,'productos']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -44,7 +59,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Categorias</h5>
                         <p class="card-text">Desde aquí podrás definir los rubros/categorias que agruparán los productos a comercializar.</p>
-                        <a [routerLink]="['/tienda', this.storeId,'categorias']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/tienda', this.storeId,'categorias']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -55,7 +75,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Listas de Precios</h5>
                         <p class="card-text">Desde aquí podrás definir diferentes listas de precios que luego aplicaras a una o mas sucursales.</p>
-                        <a [routerLink]="['/tienda', this.storeId,'ldp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/tienda', this.storeId,'ldp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -66,7 +91,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Sucursales</h5>
                         <p class="card-text">Desde aquí podrás administrar las sucursales para esta tienda.</p>
-                        <a [routerLink]="['/tienda', this.storeId,'sucursales']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/tienda', this.storeId,'sucursales']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -83,7 +113,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Compras</h5>
                         <p class="card-text">En esta sección podrás registrar el ingreso de mercaderias.</p>
-                        <a [routerLink]="['/sucursal/' + this.branchId + '/compras']" [routerLinkActive]="['actived']" (click)="envioStoreId()"><span>Click aquí</span></a>                        
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/sucursal/' + this.branchId + '/compras']" [routerLinkActive]="['actived']" (click)="envioStoreId()"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -94,7 +129,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Stock</h5>
                         <p class="card-text">Lleva un control de los productos en stock</p>
-                        <a [routerLink]="['/sucursal/' + this.branchId + '/stock']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                        
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/sucursal/' + this.branchId + '/stock']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -121,7 +161,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Vendedores</h5>
                         <p class="card-text">Aqui podras Crear y Administrar los vendedores para esta sucursal.</p>
-                        <a [routerLink]="['/sucursal', this.branchId,'usuarios']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>                                                                     
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/sucursal', this.branchId,'usuarios']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
 
                 </div>
@@ -133,7 +178,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Lista de precios</h5>
                         <p class="card-text">Aqui podrás asignar la lista de precios por defecto para esta sucursal.</p>
-                        <a [routerLink]="['/tienda', this.branchId,'ldp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/tienda', this.branchId,'ldp']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
 
                 </div>
@@ -145,7 +195,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Estadisticas</h5>
                         <p class="card-text">Aqui podras consultar estadisticas para esta sucursal.</p>
-                        <a [routerLink]="['/sucursal', this.branchId,'estadisticas']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        <ng-container *ngIf="loggedUserRole!='vendedor'">
+                            <a [routerLink]="['/sucursal', this.branchId,'estadisticas']" [routerLinkActive]="['actived']"><span>Click aquí</span></a>
+                        </ng-container>
+                        <ng-container *ngIf="loggedUserRole=='vendedor'">
+                            <span>Click aquí</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>

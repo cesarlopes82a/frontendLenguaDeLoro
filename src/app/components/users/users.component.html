@@ -6,7 +6,13 @@
                     <div class="panel-heading">
                         U S U A R I O S
                     </div>
-                    <div class="panel-body">
+                    <div class="d-flex  justify-content-center">
+                        <button class="btn btn-primary" [routerLink]="['/usuarios/crearUsuario']"> 
+                            Nuevo Administrador GLOBAL
+                        </button>
+                    </div>
+                    <p></p>
+                    <div >
                         <table class="table table-condensed table-striped" >
                             <thead>
                                 <tr>
@@ -84,11 +90,7 @@
         </div>
     </table>
     <p>
-        <div class="d-flex  justify-content-center">
-            <button class="btn btn-primary" [routerLink]="['/usuarios/crearUsuario']"> 
-                Nuevo Administrador GLOBAL
-            </button>
-        </div>
+        
 
  <!-- Modal -->
  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">

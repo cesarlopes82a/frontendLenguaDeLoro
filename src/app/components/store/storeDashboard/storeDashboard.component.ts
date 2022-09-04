@@ -16,7 +16,7 @@ import { ComprasService } from '../../../services/compras.service';
   providers: [StoreService]
 })
 export class StoreDashboardComponent implements OnInit {
-
+  
   public title: string;
   public url: string = "";
   //public urlImageCompras: string = "http://localhost:4011/api/images/compras/compras.png"
@@ -26,7 +26,7 @@ export class StoreDashboardComponent implements OnInit {
   public storeId:any;
   public branchId:any;
   public loggedUser:any;
-  public loggedUserRole!: string;
+  public loggedUserRole: string = String(localStorage.getItem("loggedUserRole"))
 
   @Input() userService!: UserService;
 
