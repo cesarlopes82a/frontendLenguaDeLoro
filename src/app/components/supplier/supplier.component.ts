@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Proveedor } from '../../models/proveedor'
 import { CategoryService } from 'src/app/services/category.service';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-supplier',
@@ -15,14 +18,40 @@ export class SupplierComponent implements OnInit {
   public proveedores!: any;
   public quieroEliminarEsteProveedor!:string;
 
+  displayedColumns: string[] = ['id', 'Nombre', 'Contacto', 'Email', 'Categoria/Rubro','menu'];
+  public dataSource!: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;  
+
   constructor(
     private _supplierService: SupplierService,
+    private _router: Router,
   ) { 
     this.title = "P   R   O   V   E   D   O   R   E   S"
   }
 
   ngOnInit(): void {
     this.getProveedores()
+  }
+  ngAfterViewInit() {
+    if(this.dataSource){
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+  updatePaginatorAndSort(){
+    if(this.dataSource){
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
   getProveedores(){
     console.log("estoy dentro del getProductos()")
@@ -38,8 +67,12 @@ export class SupplierComponent implements OnInit {
        // window.location.reload();
       },
       error: (e) => console.error(e),
-      complete: () => console.info('este es el complete despoes de traer los productos') 
-      })
+      complete: () => {
+        console.info('este es el complete despoes de traer los productos') 
+        this.dataSource = new MatTableDataSource(this.proveedores);
+        this.updatePaginatorAndSort()
+      }
+    })
   }
   pidoEliminar(idProducto:string){
     this.quieroEliminarEsteProveedor=idProducto;
@@ -68,7 +101,12 @@ export class SupplierComponent implements OnInit {
     location.reload(true);
     */
   }
-  editarItem(){
+  editarItem(proveedor: any){
+    console.log(proveedor)
+    this._supplierService.enviarProveedorSeleccionado.emit({
+      data:proveedor
+    })
+    this._router.navigate(['/proveedores/editarProveedor',proveedor._id])
 
   }
   eliminarItem(){

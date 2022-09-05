@@ -45,9 +45,9 @@ export class DialogpreciomasivoComponent implements OnInit {
     console.log(this.listaDePreciosOriginal)
     this.dataSource = new MatTableDataSource(this.listaDePreciosOriginal);
     if(this.data.valorDeReferencia == "precioVenta"){
-      this.title = "Ajuste de precios en funcion de los COSTOS registrados."
+      this.title = "Ajuste de precios en funcion de los PRECIO DE VENTA registrados."
     }else if(this.data.valorDeReferencia == "costo"){
-      this.title = "Ajuste de precios en funcion del PRECIO DE VENTA registrado."
+      this.title = "Ajuste de precios en funcion del PRECIO DE COSTOS registrado."
     }
   }
 

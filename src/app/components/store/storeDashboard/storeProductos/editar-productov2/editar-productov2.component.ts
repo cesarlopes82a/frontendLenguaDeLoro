@@ -15,7 +15,6 @@ import Swal from 'sweetalert2'
   ]
 })
 export class EditarProductov2Component implements OnInit {
-  public originalDataProduct! : any
   public productId!: string
   public storeId!: string
   public producto!: Product;
@@ -29,7 +28,6 @@ export class EditarProductov2Component implements OnInit {
     private _productService: ProductService,
     private _categoryService: CategoryService,
   ) {
-    
     this.producto = new Product('','','','','');
   }
 
@@ -56,10 +54,6 @@ export class EditarProductov2Component implements OnInit {
     })
 
     this.obtenerDatosDelProductoQueQuieroEditar(this.productId)
-
-    this._productService.enviarDatosProductoQueQuieroEditar.subscribe( data => {
-      this.originalDataProduct = data.data      
-    })
 
   }
   showData(){
@@ -113,8 +107,6 @@ export class EditarProductov2Component implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
-        
-        this.router.navigate(['/tienda', this.storeId,'productos'])
       },
       error: (e) => {
         
@@ -123,12 +115,13 @@ export class EditarProductov2Component implements OnInit {
           title: 'Hubo un problema al intentar actualizar el producto!',
           text: e.error,
           //footer: '<a href="">Why do I have this issue?</a>'
-        })
-        
+        })        
         console.error(e)
       },
-      
-      complete: () => console.info('complete') 
+      complete: () => {
+        console.info('complete') 
+        this.router.navigate(['/tienda', this.storeId,'productos'])
+      }
     })
     
 }

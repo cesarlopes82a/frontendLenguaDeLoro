@@ -1,1 +1,97 @@
-<p>editar-supplier works!</p>
+<h1>P R O V E E D O R E S</h1>
+
+  <div class="card ">
+    <div class="card-header">
+        Editar proveedor
+    </div>
+    <div class="card-body">
+      <p class="card-text">Complete los datos del nuevo proveedor a continuacion.</p>
+
+      <form #proveedorForm="ngForm" (ngSubmit)="onSubmit(proveedorForm)">
+        <div class="form-group row">
+          <label for="inputProveedorName" class="col-sm-2 col-form-label">Proveedor Id</label>
+          <div class="col-sm-10">
+            <input disabled type="text" class="form-control" id="proveedorId" name="proveedorId" #proveedorName="ngModel" [(ngModel)]="proveedor._id">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputProveedorName" class="col-sm-2 col-form-label">Nombre</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="proveedorName" placeholder="Ingrese el nombre del proveedor" name="proveedorName" #proveedorName="ngModel" [(ngModel)]="proveedor.proveedorName" required>
+          </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputProveedorNroCto" class="col-sm-2 col-form-label">Telefono de contacto</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="proveedorNroCto" placeholder="Ingrese el telefono de contacto proveedor" name="proveedorNroCto" #proveedorNroCto="ngModel" [(ngModel)]="proveedor.nroContacto" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputProveedorEmailCto" class="col-sm-2 col-form-label">Email de contacto</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="proveedorEmailCto" placeholder="Ingrese el email del proveedor" name="proveedorEmailCto" #proveedorEmailCto="ngModel" [(ngModel)]="proveedor.emailContacto" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputProveedorDescrip" class="col-sm-2 col-form-label">Informacion relevante del proveedor</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="proveedorDescrip" placeholder="Ingrese Informacion relevante del proveedor" name="proveedorDescrip" #proveedorDescrip="ngModel" [(ngModel)]="proveedor.descripProovedor">
+            </div>
+        </div>
+        
+        
+        <div class="form-group row">
+          <div class="col-sm-2">Rubro / Categoria</div>            
+            <div class="form-group col-md-4">
+              <select class="form-control" (change)="onChangeCategoria($event)" name="categoria" [(ngModel)]="proveedor.categoriaRubro">
+                <option disabled selected [value]="null">Seleccione una categoria</option>
+                <option *ngFor="let categoria of categoriasRubros" [value]="categoria._id">{{categoria.categoryName}}</option>            
+              </select>
+          </div>          
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <div class="row">
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-primary" [disabled]="!proveedorForm.form.valid || !proveedor.categoriaRubro  ">Confirmar</button>
+              </div>
+              <div class="col-md-8">
+                
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-danger" [routerLink]="['/proveedores/']">Cancelar</button>
+              </div>
+              
+            
+            </div>
+          
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorName.touched && !proveedorName.valid">
+                Ingrese el <strong>nombre del proveedor</strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorNroCto.touched && !proveedorNroCto.valid">
+                Ingrese un <strong>numero de telefono valido </strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" *ngIf="proveedorEmailCto.touched && !proveedorEmailCto.valid">
+                Ingrese un <strong>Email valido </strong> para poder confirmar!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+         
+
+
+          </div>
+          
+        </div>
+      </form>
+
+
+
+
+

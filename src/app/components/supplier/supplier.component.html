@@ -8,62 +8,102 @@
   <div class="card-body">
       <div class="example-container mat-elevation-z8">
 
-            <table class="table table-striped ">
-              <thead>
-                <tr>
-                  <th>Proveedor</th>
-                  <th>Contacto</th>
-                  <th>email</th>
-                  <th>Categoria/Rubro</th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let proveedor of proveedores"><!--| filtroProductos:filterProductos"> -->
-                    <td>{{proveedor.proveedorName}}</td>
-                    <td>{{proveedor.nroContacto}}</td>
-                    <td>{{proveedor.emailContacto}}</td>
-                    <td>{{proveedor.categoriaRubro.categoryName}}</td>
-                  
-
-                    <td>
+        <div >
+          <div class="col-sm-8">
+          <mat-form-field appearance="standard">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+          </mat-form-field>
+          </div>
+          <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort>
+      
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+                  <td mat-cell *matCellDef="let row">
+                      <ng-container>
+                          {{row._id}} 
+                      </ng-container>
+                  </td>
+              </ng-container>
+          
+              <!-- Progress Column -->
+              <ng-container matColumnDef="Nombre">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                  <td mat-cell *matCellDef="let row"> 
+                      <ng-container>
+                          {{row.proveedorName}} 
+                      </ng-container>              
+                  </td>
+              </ng-container>
+          
+              <!-- Name Column -->
+              <ng-container matColumnDef="Contacto">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Contacto </th>
+                  <td mat-cell *matCellDef="let row">
+                      <ng-container>
+                          {{row.nroContacto }} 
+                      </ng-container>                      
+                  </td>
+              </ng-container>
+      
+              <!-- Name Column -->
+              <ng-container matColumnDef="Email">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                  <td mat-cell *matCellDef="let row">
+                  <ng-container>
+                      {{row.emailContacto}} 
+                  </ng-container>                   
+                  </td>
+              </ng-container>
+      
+              <!-- Name Column -->
+              <ng-container matColumnDef="Categoria/Rubro">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Categoria/Rubro </th>
+                <td mat-cell *matCellDef="let row">
+                <ng-container>
+                    {{row.categoriaRubro.categoryName}} 
+                </ng-container>                   
+                </td>
+            </ng-container>
+                      
+              <ng-container matColumnDef="menu">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> menu </th>
+                  <td mat-cell *matCellDef="let row"> 
                       <button  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                        <mat-icon>more_vert</mat-icon>
+                          <mat-icon>more_vert</mat-icon>
                       </button>
-                      <mat-menu #menu="matMenu">                                    
-                      <button mat-menu-item (click)="editarItem()">
-                          <mat-icon >edit</mat-icon>
-                          <span>editar</span>
-                      </button>
-                      <button mat-menu-item (click)="eliminarItem()">
-                          <mat-icon>delete_outline</mat-icon>
-                          <span>eliminar</span>
-                      </button>
+                      <mat-menu #menu="matMenu">                    
+                          <button mat-menu-item (click)="editarItem(row)">                  
+                            <mat-icon >edit</mat-icon>
+                            <span>editar</span>                     
+                          </button>
+                                      
                       </mat-menu>
-                      <!--
-                      <p *ngIf="consultoEstadoEliminar(proveedor._id)==false">
-                        <a class="iconoenlinea" [routerLink]="['/proveedores/proveedor',proveedor._id]"><i class="fas fa-eye" style="margin-left: 5%;"></i></a>
-                        <a class="iconoenlinea" [routerLink]="['/proveedores/proveedor/editar/', proveedor._id]"><i class="fa-solid fa-pencil" style="margin-left: 5%;"></i></a>
-                        <a (click)="pidoEliminar(proveedor._id)" class="iconoenlinea"><i class="fas fa-trash-alt" style="margin-left: 5%;"></i></a>
-                      </p>
-                      <p *ngIf="consultoEstadoEliminar(proveedor._id)==true">
-                        <a (click)="deleteProveedor(proveedor._id)">
-                          <div class="botonEnLinea">
-                            
-                            <img (click)="deleteProveedor(proveedor._id)" src="../../../../assets/img/iconitos/trash-can_115312.png">
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <img (click)="pidoCancelarEliminar()" src="../../../../assets/img/iconitos/cancel_77947.png">
-                          </div>
-                          
-                        </a>
-                      </p>
-                      -->
-                  
-                    </td>
-                </tr>
-              </tbody>
-            </table>
+                  </td>
+                  <td mat-footer-cell *matFooterCellDef>  </td>   
+              </ng-container> 
+      
+              
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+              </tr>
+          
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+              
+          </table>
+      
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+          </div>
+        </div>
       </div>
  
     </div>
   </div>
+
+  <hr>
+

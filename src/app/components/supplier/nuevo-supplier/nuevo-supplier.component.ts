@@ -52,15 +52,13 @@ export class NuevoSupplierComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
-        
-        
       },
       error: (e) => {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'algo salió mal!',
-          footer: '<strong>ERROR: </a>' + e
+          footer: '<strong>ERROR: </a>' + e.error
         })
         console.error(e)
       },

@@ -7,10 +7,11 @@
                     <div *ngIf="itemMenuSeleccionado=='estadisticas'" class="testigo1"></div>
                     <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/estadisticas']" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado('estadisticas', 'tienda.store._id', 'tienda.store.defaultListaDP')"><i class='fa-solid fa-chart-column' style="margin-right: 5%;"></i> <span> Estadisticas</span></a>
                     <!--<a [routerLink]="['/estadisticas']" ><i class="far fa-chart-bar" style="margin-right: 5%;" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado('estadisticas', 'tienda.store._id', 'tienda.store.defaultListaDP')"></i><span>Estadisticas</span></a>-->
-                    
+
+
                     <div *ngIf="itemMenuSeleccionado=='usuarios'" class="testigo1"></div>
                     <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/usuarios']" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado('usuarios', 'tienda.store._id', 'tienda.store.defaultListaDP')"><i class="fas fa-user" style="margin-right: 5%;"></i><span> Usuarios</span></a>
-                    
+
                     <div *ngIf="itemMenuSeleccionado=='proveedores'" class="testigo1"></div>
                     <a *ngIf="loggedUserRole==='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/proveedores']" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado('proveedores', 'tienda.store._id', 'tienda.store.defaultListaDP')"><i class="fas fa-address-book" style="margin-right: 5%;"></i><span> Proveedores</span></a>
 
@@ -27,7 +28,7 @@
                             </div>
                         </div>
                         <div>
-                            <a *ngIf="loggedUserRole=='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/tienda/crearTienda']"><span>Crear Tienda</span><i class="fa-solid fa-folder-plus"style="margin-left: 5%;"></i></a>                            
+                            <a *ngIf="loggedUserRole=='adminMaster' || loggedUserRole==='adminGlobal'" [routerLink]="['/tienda/crearTienda']"><span>Crear Tienda</span><i class="fa-solid fa-folder-plus"style="margin-left: 5%;"></i></a>
                         </div>
                         
                     </div>

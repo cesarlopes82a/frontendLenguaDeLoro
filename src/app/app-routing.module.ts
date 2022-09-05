@@ -36,6 +36,7 @@ import { EstadisticasGlobalComponent } from './components/statistics/estadistica
 
 import { SupplierComponent } from './components/supplier/supplier.component';
 import { NuevoSupplierComponent } from './components/supplier/nuevo-supplier/nuevo-supplier.component';
+import { EditarSupplierComponent } from './components/supplier/editar-supplier/editar-supplier.component';
 
 import { ComprasComponent } from './components/store/storeDashboard/storeSucursales/compras/main/compras/compras.component';
 import { RegistrarCompraComponent } from './components/store/storeDashboard/storeSucursales/compras/new/registrar-compra/registrar-compra.component';
@@ -55,6 +56,7 @@ import { NewBranchLDPComponent } from './components/store/storeDashboard/storeSu
 import { EstadistSucursalComponent } from './components/store/storeDashboard/storeSucursales/estadisticas/main/estadist-sucursal/estadist-sucursal.component';
 import { EstadistTiendaComponent } from './components/store/storeDashboard/storeEstadisticas/estadisticas/main/estadist-tienda/estadist-tienda.component';
 import { RubrosComponent } from './components/store/storeDashboard/storeRubros/main/rubros/rubros.component';
+
 
 const routes: Routes = [
   {
@@ -106,7 +108,9 @@ const routes: Routes = [
   { path: 'usuarios/crearUsuario', component: NuevoUsuarioGlobalComponent },
 
   { path: 'proveedores', component: SupplierComponent },
-  { path: 'proveedores/crearProveedor', component: NuevoSupplierComponent }
+  { path: 'proveedores/crearProveedor', component: NuevoSupplierComponent },
+  { path: 'proveedores/editarProveedor/:id', component: EditarSupplierComponent }
+  
 
 ];
 

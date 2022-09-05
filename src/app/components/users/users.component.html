@@ -23,29 +23,29 @@
                                 </tr>
                             </thead>                            
                             <tbody *ngFor="let usuario of usuarios; let i = index;">
-                                <tr *ngIf="usuario.activated == false" style="color: rgb(182, 47, 13); background-color: rgb(189, 190, 190);">
+                                <tr *ngIf="usuario.activated == false" style=" color: rgb(182, 47, 13); background-color: rgb(189, 190, 190);">
                                     <td>{{usuario.username}}</td>
                                     <td>{{usuario.email}}</td>
                                     <td>
                                         {{usuario.roles[0].roleName}}                                          
                                     </td>
-                                    <td  data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <td  style="width: 5%;" data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
                                         <mat-icon>settings</mat-icon>                                       
                                     </td>
                                 </tr>
-                                <tr *ngIf="usuario.activated == true">
+                                <tr *ngIf="usuario.activated == true" >
                                     <td>{{usuario.username}}</td>
                                     <td>{{usuario.email}}</td>
                                     <td>
                                         {{usuario.roles[0].roleName}}  
                                     </td>
-                                    <td  data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <td  style="width: 5%;" data-bs-toggle="collapse" [attr.href]="'#tiendascollapse_' + i" role="button" aria-expanded="false" aria-controls="collapseExample">
                                         <mat-icon>settings</mat-icon>                                       
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">
-                                        <div class="collapse" [id]="'tiendascollapse_' + i" >
+                                        <div class="collapse" [id]="'tiendascollapse_' + i"  >
                                             <div class="card card-body">
                                                 <div class="panel-heading" >
                                                     <strong>T</strong> i e n d a s   <strong>A</strong>  s  i  g  n  a  d  a  s
@@ -92,7 +92,7 @@
     <p>
         
 
- <!-- Modal -->
+ <!-- Modal  width: 31%;-->
  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
