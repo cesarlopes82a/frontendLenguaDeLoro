@@ -32,8 +32,6 @@ export class SidebarComponent implements OnInit {
   constructor(
     private _userService:UserService,
     private _authService:AuthService,
-    private _comprasService:ComprasService,
-    private _sidenavService:SidenavService
   ) { 
     if (this._authService.loggedIn()){
       console.log("ESTOY LOGUEADOOOOOOOOO SIDEBARRRRRRRRR")

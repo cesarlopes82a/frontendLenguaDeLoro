@@ -111,6 +111,7 @@ export class EstadisticasGlobalComponent implements OnInit {
     this.getVentasForStatistics1(userId)
 
   }
+  
 
   getVentasForStatistics1 = async (userId:string) => {
     console.log("MENSAJE: Obteniendo VentasForStatistics para userId: " +userId + "year:" +this.yearVentas )

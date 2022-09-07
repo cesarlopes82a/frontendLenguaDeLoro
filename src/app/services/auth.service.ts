@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router';
 import { global } from './global';
@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode';
 })
 export class AuthService {
   private URL = global.url
+
 
   constructor(
     private http: HttpClient,
@@ -37,6 +38,14 @@ export class AuthService {
   logout(){
     localStorage.removeItem('token');
     this.router.navigate(['/signin'])
+    localStorage.removeItem("loggedUserName");
+    localStorage.removeItem("loggedUserEmail");
+    localStorage.removeItem("loggedUserRole");
+    localStorage.removeItem("loggedUserDB");
+    localStorage.removeItem("itemMenuSeleccionadoId");
+    localStorage.removeItem("itemMenuSeleccionado");
+    localStorage.removeItem("defaultListaDP");
+    localStorage.removeItem("loggedUserID");
   }
   
   getDecodedAccessToken(token: string): any {

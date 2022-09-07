@@ -5,9 +5,6 @@
             <a class="navbar-brand" routerLink="/private">Lengua De Loro</a>
           </ng-container>
           <ng-template #sidebarShowEnabled>
-            <!--<div *ngIf="inputSideNav.open()">
-              
-            </div>-->
             <a (click)="inputSideNav.toggle()" class="navbar-brand">Lengua De Loro</a>
           </ng-template>
             
@@ -26,8 +23,7 @@
                 </li>
               </ul>
               <ul class="navbar-nav ml-auto" >
-                <ng-container *ngIf="!_authService.loggedIn(); else loggedIn">
-                  
+                <ng-container *ngIf="!_authService.loggedIn(); else loggedIn">                  
                   <li class="nav-item">
                     <a class="nav-link" routerLink="/signup" >Signup</a>
                   </li>

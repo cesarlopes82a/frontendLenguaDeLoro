@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class PrivateComponent implements OnInit {
   private reload:boolean=true
 
   constructor(
-    
+    private _authService:AuthService,
 
   ) {
     //window.location.reload();
@@ -22,8 +23,6 @@ export class PrivateComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("oninit")
-    
-
     //this.inputSideNav.toggle()
   }
    

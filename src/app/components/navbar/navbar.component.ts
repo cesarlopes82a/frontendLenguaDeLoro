@@ -23,10 +23,13 @@ export class NavbarComponent implements OnInit {
   constructor(
     public _authService:AuthService, 
     public _userService:UserService
-    ) { }
+    ) { 
+      
+    }
 
    ngOnInit(): void {
-    console.log("MENSAJE: NavbarComponent - OnInit navbar.")
+    console.log("MENSAJE: NavbarComponent - OnInit navbar....")
+
     this.loggedUserName = String(localStorage.getItem("loggedUserName"))
     this.loggedUserEmail = String(localStorage.getItem("loggedUserEmail"))
     this.loggedUserRole = String(localStorage.getItem("loggedUserRole"))
@@ -43,7 +46,18 @@ export class NavbarComponent implements OnInit {
       this.getUserByIdAndPopulateStores(userId)
       this.inputSideNav.open()
       console.log("tiro el opeeeennnnn-----------------------------")
+    }else{
+      this.inputSideNav.close()
+      localStorage.removeItem("loggedUserName");
+      localStorage.removeItem("loggedUserEmail");
+      localStorage.removeItem("loggedUserRole");
+      localStorage.removeItem("loggedUserDB");
+      localStorage.removeItem("itemMenuSeleccionadoId");
+      localStorage.removeItem("itemMenuSeleccionado");
+      localStorage.removeItem("defaultListaDP");
+      localStorage.removeItem("loggedUserID");
     }
+    
   }
   async ngAfterViewInit() 
   {

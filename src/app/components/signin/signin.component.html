@@ -18,10 +18,11 @@
                             <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Password" required autofocus>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">SignIn</button>
+                        
                     </form>
                 </div>
             </div>
-        </div>        
+        </div>       
     </div>
     <div style="color: #FF3333" class="row d-flex justify-content-center">
         <p *ngIf="unauthorized"> Cuenta Desactivada: Su cuenta se encuentra desactivada. Consulte al administrador del sistema.</p>

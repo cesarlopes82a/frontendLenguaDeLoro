@@ -26,6 +26,9 @@ export class SigninComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    if(this._authService.loggedIn()){
+      this.router.navigate(['/private'])
+    }
   }
 
   signIn(){
@@ -41,19 +44,22 @@ export class SigninComponent implements OnInit {
         localStorage.setItem("loggedUserRole",this._authService.getDecodedAccessToken(String(this._authService.getToken())).role),
         localStorage.setItem("loggedUserName", this._authService.getDecodedAccessToken(String(this._authService.getToken())).username),
         localStorage.setItem("loggedUserDB", this._authService.getDecodedAccessToken(String(this._authService.getToken())).userDB)
-
-
-        this.router.navigate(['/private'])
+              
         console.log(res)
       },
       error: (e) => {
         this.unauthorized = true
         console.error(e)
       },
-      complete: () => console.info('(903458)complete desde signIn signIn.component') 
+      complete: () => {
+        console.info('(903458)complete desde signIn signIn.component') 
+        
+        location.reload()
+        
+      }
      })
 
   }
-  
+
 
 }
