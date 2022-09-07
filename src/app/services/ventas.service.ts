@@ -87,6 +87,19 @@ export class VentasService {
     return this._http.get(this.url+'/ventas/sttVtas2/Info/',{headers:cabeceras, params})
 
   }
+  getVentasForStatisticsPorTienda(userId:string, storeId:string, yearVentas:number){
+    console.log("MENSAJE: getVentasForStatisticsPorTienda() - obteniendo ventas para userId: " + userId+ ". Tienda storeId: "+ storeId+". Año: "+yearVentas)
+    let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
+    let objParams = {
+      storeId: storeId,
+      yearVentas: yearVentas
+    }
+    let params = new HttpParams()
+                    .set("storeId",storeId)
+                    .set("yearVentas", yearVentas); 
+
+    return this._http.get(this.url+'/ventas/sttVtas3/Info/',{headers:cabeceras, params})
+  }
 
   postAnularVenta(branchId:string, ventaId:string, motivo:string): Observable<any>{
     

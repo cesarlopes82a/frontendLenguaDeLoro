@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NuevorubroComponent } from '../../dialogs/nuevorubro/nuevorubro.component';
 import Swal from 'sweetalert2'
 
+
 @Component({
   selector: 'app-rubros',
   templateUrl: './rubros.component.html',
@@ -19,9 +20,6 @@ export class RubrosComponent implements OnInit {
   public title!: string;
   public storeId!:string;
   public categorias!: any;
-  
-  
-
 
   displayedColumns: string[] = ['_id', 'categoryName', 'createdAt', 'updatedAt', 'menu'];
   public dataSource!: MatTableDataSource<any>;

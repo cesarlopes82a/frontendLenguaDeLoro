@@ -243,6 +243,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .example-container {
     height: 80%;
     overflow: auto;
+    margin-left: 5%;
   }
   
   table {

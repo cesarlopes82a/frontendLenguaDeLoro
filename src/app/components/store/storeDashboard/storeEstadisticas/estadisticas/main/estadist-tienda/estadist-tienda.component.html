@@ -24,4 +24,28 @@
     </div>
   </div>
   <hr>
+  <div class="row">
+    <div class="example-container mat-elevation-z8">
+      <h1 class="text-center mt-3">Total de Ventas</h1>
+      
+
+      <div >
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [results]="totalVtasYearGeneral"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [showDataLabel]="showDataLabels"
+          (select)="onSelect($event)">
+        </ngx-charts-bar-vertical>
+      </div>
+    </div>
+  </div>
+  <hr>
 </div>

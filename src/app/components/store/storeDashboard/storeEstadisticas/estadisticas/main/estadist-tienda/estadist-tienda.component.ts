@@ -13,6 +13,24 @@ export class EstadistTiendaComponent implements OnInit {
   public yearVentas!: number
   public storeId!: string;
   public datosForStatistic!: any
+  public totalVtasYearGeneral: string [] = [];
+
+  view: [number, number] = [600, 250];
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = true;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Tiendas';
+  showYAxisLabel = true;
+  yAxisLabel = 'Ventas $';
+  showDataLabels = true
+  legendTitle="Referencia"
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
 
   constructor(
     private _route: ActivatedRoute,
@@ -38,9 +56,27 @@ export class EstadistTiendaComponent implements OnInit {
   }
   getVentasForStatisticsPorTienda = async (userId:string) => {
     console.log("MENSAJE: Obteniendo VentasForStatisticsPorTienda para userId: " +userId + "year:" +this.yearVentas )
-    this._ventasService.getVentasForStatisticsPorSucursal(userId, this.storeId, this.yearVentas)
+    this._ventasService.getVentasForStatisticsPorTienda(userId, this.storeId, this.yearVentas)
     .subscribe({
       next: (v) => {
+        this.totalVtasYearGeneral.splice(0, this.totalVtasYearGeneral.length);
+
+
+        this.datosForStatistic = v
+        let objTotalVtasYearGeneral: any
+
+
+        for (let i = 0; i < this.datosForStatistic.length; i++) {
+
+          let serie: string [] = []
+          //chart total $ ventas por tienda
+          objTotalVtasYearGeneral = {
+            name: this.datosForStatistic[i].branchName,
+            value: this.datosForStatistic[i].totalVentas
+          }
+          this.totalVtasYearGeneral.push(objTotalVtasYearGeneral)
+        }
+
         /*
         this.totalVtasPorMesGeneral.splice(0, this.totalVtasPorMesGeneral.length);
         this.totalVtasPorMesGeneralFTyTJ.splice(0, this.totalVtasPorMesGeneralFTyTJ.length);
@@ -69,13 +105,20 @@ export class EstadistTiendaComponent implements OnInit {
     })
   }
 
+  onSelect(event: any) {
+    console.log(event);    
+  }
 
   updateData(){
+    console.log(this.yearVentas)
+
+    this.totalVtasYearGeneral = [...this.totalVtasYearGeneral]
 
   }
 
   updateData2(){
-
+    const userId = this._authService.getDecodedAccessToken(String(this._authService.getToken())).id
+    this.getVentasForStatisticsPorTienda(userId)
   }
 
 }
