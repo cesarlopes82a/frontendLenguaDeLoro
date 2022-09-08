@@ -20,10 +20,21 @@
                     <div *ngIf="loggedUser" class="sub-menu">                        
                         <div *ngFor="let tienda of loggedUser.tiendas " class="sub-menuTiendas ">
                             <!--<div *ngIf="itemMenuSeleccionadoId==tienda.store._id" class="test"></div>-->
-                            <a  [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(tienda.store.storeName, tienda.store._id, tienda.store.defaultListaDP)"><span>{{tienda.store.storeName}}</span></a>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <a [routerLink]="['/tienda', tienda.store._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(tienda.store.storeName, tienda.store._id, tienda.store.defaultListaDP)"><span>{{tienda.store.storeName}}</span></a>  
+                                </div>
+                                <div class="col-md-3" *ngIf="loggedUserRole==='adminMaster'">
+                                    <a (click)="deleteTienda(tienda.store._id)"><i class="fa-regular fa-trash-can" style="cursor: pointer; color:rgb(224, 87, 87); height: 20%; width: 20%;"></i></a>
+                                    
+                                </div>
+                            </div>
+                            
+                            
                             <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
                                 <div *ngIf="itemMenuSeleccionadoId==branch._id" class="test"></div>
                                     <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(branch.branchName, branch._id, branch.defaultListaDP)" ><i class="fa-solid fa-barcode"></i><span>{{branch.branchName}}</span></a>
+                                    
                                 
                             </div>
                         </div>

@@ -47,6 +47,10 @@ export class StoreService {
     return this._http.get(this.url + '/stores/')  
      
   }
+  eliminarTienda(storeId:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.delete(this.url+'/stores/deleteStore/'+storeId,{headers});
+  }
   
 
 }

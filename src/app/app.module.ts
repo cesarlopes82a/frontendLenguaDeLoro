@@ -24,6 +24,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatRadioModule} from '@angular/material/radio';
 
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignupComponent } from './components/signup/signup.component';
@@ -91,6 +92,8 @@ import { EstadistTiendaComponent } from './components/store/storeDashboard/store
 import { EditarProductov2Component } from './components/store/storeDashboard/storeProductos/editar-productov2/editar-productov2.component';
 import { RubrosComponent } from './components/store/storeDashboard/storeRubros/main/rubros/rubros.component';
 import { NuevorubroComponent } from './components/store/storeDashboard/storeRubros/dialogs/nuevorubro/nuevorubro.component';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+
 
 
 
@@ -152,12 +155,9 @@ import { NuevorubroComponent } from './components/store/storeDashboard/storeRubr
     RubrosComponent,
     NuevorubroComponent
     
-    
-    
-
-
   ],
   imports: [
+    MatSortModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -183,9 +183,10 @@ import { NuevorubroComponent } from './components/store/storeDashboard/storeRubr
     MatMenuModule,
     MatListModule,
     NgxChartsModule,
-    MatRadioModule
-    
+    MatRadioModule,
+
   ],
+
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     AuthGuard,

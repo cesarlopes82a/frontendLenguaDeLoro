@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BranchService } from 'src/app/services/branch.service';
 import { global } from 'src/app/services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-nueva-suc',
@@ -22,7 +23,8 @@ export class NuevaSucComponent implements OnInit {
 
   constructor(
     private _branchService: BranchService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private router:Router
   ) {   }
 
   ngOnInit(): void {
@@ -40,18 +42,40 @@ export class NuevaSucComponent implements OnInit {
       }
     )
   }
-  onSubmit(form: any){
-    console.log(this.sucursal)
-    this._branchService.saveBranch(this.sucursal).subscribe(
-      res => {
-        console.log(res)
-        window.location.reload();
-      },
-      err => {
-        console.log(<any>err)
-      }
-    )
+  reload(){
+    window.location.reload()
   }
+  onSubmit(form: any){
+     
+    this._branchService.saveBranch(this.sucursal)
+      .subscribe({
+        next: (v) => {
+          console.log(v)
+          this.router.navigate(['/sucursal/',v._id])          
+          setTimeout(this.reload, 200);
+         // window.location.reload();
+
+        },
+        error: (e) => {
+          
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Algo salió mal al intentar crear la nueva sucursal!',
+              footer: '<strong>ERROR: </a>' + e.error.message
+              //footer: '<a href="">Why do I have this issue?</a>'
+            })
+          
+
+          console.error(e)
+        },
+        complete: () => {
+          console.info('este es el complete despoes de agregar una tienda')
+          
+        }
+      })
+  }
+
   
 
 }

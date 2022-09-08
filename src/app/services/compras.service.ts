@@ -37,14 +37,14 @@ export class ComprasService {
   getComprasByBranch(branchId: string):Observable<any>{
     console.log("estoy dentro del getComprasByBranch desde el compras.service.ts")
     let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
-    
     return this._http.get(this.url+'/compras/'+branchId,{headers:cabeceras})
   }
   
   getComprasByBranchAndPopulateInfo(branchId: string):Observable<any>{
     console.log("estoy dentro del getComprasByBranch desde el compras.service.ts")
-    let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');
-    
+    let cabeceras = new HttpHeaders().set('Content-Type', 'application/json');    
     return this._http.get(this.url+'/compras/'+branchId+'/info',{headers:cabeceras})
   }
+
+  
 }

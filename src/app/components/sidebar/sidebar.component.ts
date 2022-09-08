@@ -6,6 +6,8 @@ import { global } from 'src/app/services/global';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ComprasService } from 'src/app/services/compras.service';
 import { SidenavService } from 'src/app/services/sidebar.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 
@@ -32,6 +34,9 @@ export class SidebarComponent implements OnInit {
   constructor(
     private _userService:UserService,
     private _authService:AuthService,
+    private _sidenavService: SidenavService,
+    private _storeService: StoreService,
+    private router: Router
   ) { 
     if (this._authService.loggedIn()){
       console.log("ESTOY LOGUEADOOOOOOOOO SIDEBARRRRRRRRR")
@@ -43,16 +48,15 @@ export class SidebarComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.loggedUserRole = String(localStorage.getItem("loggedUserRole"))    
+    this.loggedUserRole = String(localStorage.getItem("loggedUserRole"))  
+  
   }
 
   emitirItemMenuSeleccionado(itemMenuSeleccionado: string, itemMenuSeleccionadoId:string, defaultListaDP:any){
-    console.log("esta es la lista defaultttttt------------")
-    console.log(defaultListaDP)
+
     this.itemMenuSeleccionadoId = itemMenuSeleccionadoId
     this.itemMenuSeleccionado = itemMenuSeleccionado
-    console.log("el itemMenuSeleccionado")
-    console.log(this.itemMenuSeleccionado)
+
     
     localStorage.setItem("defaultListaDP", defaultListaDP)
 
@@ -61,15 +65,14 @@ export class SidebarComponent implements OnInit {
     
     console.log(ldpUpdated)
     if( ldpUpdated == "true"){
-      console.log("hay que actualizaaaarrr!!!!!!!!!!!!!!!!!!!!!!!!!! ")
+
       let ldpUpdatedTarget = String(String(localStorage.getItem("ldpUpdatedTarget")))     //Esta es la tienda o la sucursal seleccionada a la que se le modifico la Default ldp 
       let newLdpDefaultForTarget = String(localStorage.getItem("newLdpDefaultForTarget")) //Esto me dice cual es la ldp default que tengo que asignarle al ldpUpdatedTarget
       //recorro las tiendas y las branch para encontrar la ldp default que modifique/actualicé/asigné antes
       for (let i=0; i<this.loggedUser.tiendas.length; i++) {        
-        console.log("-target: " + ldpUpdatedTarget)
-        console.log("t: " + this.loggedUser.tiendas[i]._id)
+
         if(String(this.loggedUser.tiendas[i]._id) == ldpUpdatedTarget){
-          console.log("igualessssss-----------")
+  
           this.loggedUser.tiendas[i].defaultListaDP = newLdpDefaultForTarget          
           localStorage.setItem("ldpUpdated", "false")
           if(itemMenuSeleccionadoId==this.loggedUser.tiendas[i]._id){
@@ -80,7 +83,7 @@ export class SidebarComponent implements OnInit {
           for (let x=0; x < this.loggedUser.tiendas[i].branches.length; x++) {
             console.log("B: " + this.loggedUser.tiendas[i].branches[x]._id)
             if(String(this.loggedUser.tiendas[i].branches[x]._id) == ldpUpdatedTarget){
-              console.log("igualessssss-----------")
+ 
               this.loggedUser.tiendas[i].branches[x].defaultListaDP = newLdpDefaultForTarget
               localStorage.setItem("ldpUpdated", "false")
               if(itemMenuSeleccionadoId==this.loggedUser.tiendas[i].branches[x]._id){
@@ -97,7 +100,6 @@ export class SidebarComponent implements OnInit {
   }
  
   getUserByIdAndPopulateStores = async (userId:string) => {
-    console.log("le estoy pasando el if desde el sidebar a getUserByIdAndPopulateStores() " +userId )
     this._userService.getUserByIdAndPopulateStores(userId)
     .subscribe({
       next: (v) => {
@@ -120,6 +122,64 @@ export class SidebarComponent implements OnInit {
       complete: () => console.info('este es el complete') 
     })
   }
+
+  reload(){
+    window.location.reload()
+  }
  
+  deleteTienda(storeId:string){
+    console.log(storeId)
+    Swal.fire({
+      title: 'Eliminar TIENDA de forma permanente.',      
+      text: "¿esta seguro? Esta accion no puede revertirse!",
+      icon: 'warning',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'ELIMINAR',
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+
+        console.log(storeId)
+            
+        this._storeService.eliminarTienda(storeId).subscribe({
+          next: (v) => {
+            console.log("MENSAJE: eliminarTienda() - Finalizado Exitosamente!")
+            console.log(v)
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Tienda eliminada exitosamente!!',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.router.navigate(['/private'])
+            setTimeout(this.reload, 200);
+          },
+          error: (e) => {
+            console.error(e)
+            if(e.status == 500){
+              Swal.fire({
+                icon: 'error',
+                title: 'No es posible eliminar...',
+                text: 'Algo salió mal al intentar eliminar la tienda - DB error!',
+                //footer: '<a href="">Why do I have this issue?</a>'
+              })
+            }
+          
+          },
+          complete: () => {
+            
+          }
+        })
+
+
+       // Swal.fire('Saved!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
+  }
 
 }
