@@ -62,4 +62,10 @@ export class BranchService {
     return this._http.post(this.url + '/branches/ajustarStock/'+branchId,params,{headers}) 
   }
 
+  
+  eliminarSucursal(branchId:string):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.delete(this.url+'/branches/deleteBranch/'+branchId,{headers});
+  }
+
 }

@@ -89,7 +89,7 @@ export class StoreDashboardComponent implements OnInit {
               if(global.reloadNeeded==false){
                 let branchId = this.branchId
                 let title = ""
-                this.loggedUser.tiendas.every(function(tiendas:any) {
+                this.loggedUser.tiendas?.every(function(tiendas:any) {
                   if (title != ""){
                     return false
                   }

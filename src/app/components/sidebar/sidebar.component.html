@@ -33,7 +33,16 @@
                             
                             <div *ngFor="let branch of tienda.branches" class="sub-menuBranches">
                                 <div *ngIf="itemMenuSeleccionadoId==branch._id" class="test"></div>
-                                    <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(branch.branchName, branch._id, branch.defaultListaDP)" ><i class="fa-solid fa-barcode"></i><span>{{branch.branchName}}</span></a>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <a [routerLink]="['/sucursal', branch._id]" [routerLinkActive]="['actived']" (click)="emitirItemMenuSeleccionado(branch.branchName, branch._id, branch.defaultListaDP)" ><i class="fa-solid fa-barcode"></i><span>{{branch.branchName}}</span></a>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="loggedUserRole==='adminMaster'">
+                                        <a (click)="deleteSucursal(branch._id)"><i class="fa-solid fa-xmark" style="cursor: pointer; color:rgb(224, 87, 87); height: 20%; width: 20%;"></i></a>
+                                        
+                                    </div>
+                                </div>
+                                    
                                     
                                 
                             </div>

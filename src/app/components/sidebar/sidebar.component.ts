@@ -8,6 +8,7 @@ import { ComprasService } from 'src/app/services/compras.service';
 import { SidenavService } from 'src/app/services/sidebar.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { BranchService } from 'src/app/services/branch.service';
 
 
 
@@ -36,6 +37,7 @@ export class SidebarComponent implements OnInit {
     private _authService:AuthService,
     private _sidenavService: SidenavService,
     private _storeService: StoreService,
+    private _branchService: BranchService,
     private router: Router
   ) { 
     if (this._authService.loggedIn()){
@@ -126,6 +128,63 @@ export class SidebarComponent implements OnInit {
   reload(){
     window.location.reload()
   }
+
+  deleteSucursal(branchId:string){
+    console.log(branchId)
+    Swal.fire({
+      title: 'Eliminar SUCURSAL de forma permanente.',      
+      text: "¿esta seguro? Esta accion no puede revertirse!",
+      icon: 'warning',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'ELIMINAR',
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+
+        console.log(branchId)
+            
+        this._branchService.eliminarSucursal(branchId).subscribe({
+          next: (v) => {
+
+            console.log("MENSAJE: eliminarTienda() - Finalizado Exitosamente!")
+            console.log(v)
+            /*Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Tienda eliminada exitosamente!!',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            */
+            this.router.navigate(['/private'])
+            setTimeout(this.reload, 200);
+          },
+          error: (e) => {
+            console.error(e)
+            if(e.status == 500){
+              Swal.fire({
+                icon: 'error',
+                title: 'No es posible eliminar...',
+                text: 'Algo salió mal al intentar eliminar la tienda - DB error!',
+                //footer: '<a href="">Why do I have this issue?</a>'
+              })
+            }
+          
+          },
+          complete: () => {
+            
+          }
+        })
+
+
+       // Swal.fire('Saved!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
+  }
  
   deleteTienda(storeId:string){
     console.log(storeId)
@@ -145,15 +204,17 @@ export class SidebarComponent implements OnInit {
             
         this._storeService.eliminarTienda(storeId).subscribe({
           next: (v) => {
+
             console.log("MENSAJE: eliminarTienda() - Finalizado Exitosamente!")
             console.log(v)
-            Swal.fire({
+            /*Swal.fire({
               position: 'top-end',
               icon: 'success',
               title: 'Tienda eliminada exitosamente!!',
               showConfirmButton: false,
               timer: 1500
             })
+            */
             this.router.navigate(['/private'])
             setTimeout(this.reload, 200);
           },
