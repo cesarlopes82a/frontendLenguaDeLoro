@@ -15,6 +15,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-newldp',
@@ -127,6 +128,12 @@ export class NewldpComponent implements OnInit {
         
       },
       error: (e) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'algo salió mal!',
+          footer: '<strong>ERROR: </a>' + e.error
+        })
         console.log(e.error)
       },
       complete: () => console.info('complete') 
