@@ -179,6 +179,12 @@ hr {
     display: inline-block;
     vertical-align: middle;
 }
+.tm-img-timeline-small {
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    vertical-align: middle;
+}
 
 .tm-timeline-connector {
     width: 55px;
