@@ -71,25 +71,44 @@ export class VenderComponent implements OnInit {
 
   }
 
+  mensajeProdDesactivado(){
+    Swal.fire(
+      'Mensaje!',
+      'El producto NO se encuentra desactivado. No esta habilitado para la venta',
+      'warning'
+    )    
+  }
+  mensajePrecioNoValido(){
+    Swal.fire(
+      'Mensaje!',
+      'El producto tiene asignado un precio no valido!.',
+      'error'
+    )   
+  }
   ngOnInit(): void {
     this._ventasService.enviarProductoSeleccionado.subscribe( data => {
       console.log("VENDER<--COMPONENTE RECIBO EL PRODUCTO.................-------------")
       console.log(data.data)
+      console.log(data.data.product.desactivado.estado)
+      console.log(data.data.precioVenta)
       if(data.data.product.unidadMedida == "Unidades" && Number.isInteger(this.cantProdSeleccionado) == false){
         Swal.fire(
           'Mensaje!',
           'El producto NO se comercializa en fracciones.',
           'warning'
         ) 
-        this.cantProdSeleccionado = 1
-        
+        this.cantProdSeleccionado = 1          
+      } else if(data.data.product.desactivado.estado == true){
+        console.log("prod desactivado")          
+        setTimeout(this.mensajeProdDesactivado, 100);
+      } else if(data.data.precioVenta <= 0){
+        console.log("precio incorrecto")
+        setTimeout(this.mensajePrecioNoValido, 100);
+         
       } else {
         this.agregarProducto(data.data)
       }
-      
-        
-      
-      
+
     })
     this._ventasService.enviarCantProductoSeleccionado.subscribe( data => {
       console.log("enviarCantProductoSeleccionado<--COMPONENTE RECIBO cantidad.................-------------")
@@ -165,6 +184,10 @@ export class VenderComponent implements OnInit {
       if(`${result}` == "agregar"){
         this.openDialogVenta()
       }
+      if(`${result}` == "prodDesactivado"){
+        console.log("desaccccccs")
+      }
+      
       
     });
   }

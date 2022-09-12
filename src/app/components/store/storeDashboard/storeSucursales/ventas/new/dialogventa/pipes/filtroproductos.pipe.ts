@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform} from '@angular/core';
+import Swal from 'sweetalert2';
 import {VentasService} from '../../../../../../../../services/ventas.service';
 
 @Pipe({
@@ -21,12 +22,14 @@ export class FiltroproductosPipe implements PipeTransform {
     for(const product of value){
       
       if ((product.product.codigo.indexOf(arg) > -1) || (product.product.productName.toLowerCase().indexOf(arg.toLowerCase()) > -1) ){
-        if(product.product.codigo == arg){
-          this._ventasService.setEstadoCoinicidenciaFullCod(true)
-          this._ventasService.enviarProductoSeleccionado.emit({
-            data: product
-          })
-                       
+     //   console.log(product.product)
+        if(product.product.codigo == arg ){
+
+            this._ventasService.setEstadoCoinicidenciaFullCod(true)
+            this._ventasService.enviarProductoSeleccionado.emit({
+              data: product
+            })                  
+         
         }
         resultProducts.push(product)
 

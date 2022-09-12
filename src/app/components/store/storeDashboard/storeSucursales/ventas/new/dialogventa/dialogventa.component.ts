@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 import {VentasService} from '../../../../../../../services/ventas.service';
 
 
@@ -24,19 +25,43 @@ export class DialogventaComponent implements OnInit {
     
   ) { }
 
+  
   ngOnInit(): void {
+ 
     this._ventasService.enviarProductoSeleccionado.subscribe( data => {
       console.log("DIALOGCENTAaaaa.COMPONENTE RECIBO EL PRODUCTO.................-------------")
       console.log(data)
-      Promise.resolve().then(() =>{
-        this.limpiar()
-      })
+      if(data.data.product.desactivado.estado != true){
+        console.log("PRODUCTO DESACTIVADO!!!")
+
+
+      } else if(data.data.precioVenta <= 0 ){
+        console.log("PRECIO INCORRECTOOO!!!")
+      
+
+      } else {        
+        Promise.resolve().then(() =>{
+          this.limpiar()
+        }) 
+      }
+      
       
     //  this.dialogRef.close("salgoooooooooo")     
     })
-    this.listasdeprecios = this.data.listaSeleccionada
 
+    this.listasdeprecios = this.data.listaSeleccionada
+    
   }
+
+
+  mensajeProductoDesactivado(){
+    Swal.fire(
+      'The Internet?',
+      'That thing is still around?',
+      'question'
+    )
+  }
+
   clickFila(codigo:string){
     console.log("click acaaaa")
     console.log(codigo)
