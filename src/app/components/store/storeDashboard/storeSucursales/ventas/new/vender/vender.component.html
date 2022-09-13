@@ -151,19 +151,24 @@
               </mat-form-field>
             </form>
             -->
+            <hr>
+            <div class="container-fluid h-100">
+              <div class="row w-100">
+                <div class="col-md-10">
+                  <button class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 || saldoPendiente > 0" (click)="solicitarRegistrarCompra()"> Finalizar venta </button>
+                </div>
+                <div class="col">
+                  <button [routerLink]="['/sucursal/' + this.branchId + '/ventas/listar']" [routerLinkActive]="['actived']" class="btn btn-outline-danger" > Volver </button>
+                </div>
+              </div>
+          
+            </div>
+            <hr>
+            <p></p>
           </mat-card-content>
+
+          
         </mat-card>
-       <hr>
-        <div class="container-fluid h-100">
-          <div class="row w-100">
-            <div class="col-md-10">
-              <button class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 || saldoPendiente > 0" (click)="solicitarRegistrarCompra()"> Finalizar venta </button>
-            </div>
-            <div class="col">
-              <button [routerLink]="['/sucursal/' + this.branchId + '/ventas/listar']" [routerLinkActive]="['actived']" class="btn btn-outline-danger" > Volver </button>
-            </div>
-          </div>
-      
-        </div>
+       
       </form>
 

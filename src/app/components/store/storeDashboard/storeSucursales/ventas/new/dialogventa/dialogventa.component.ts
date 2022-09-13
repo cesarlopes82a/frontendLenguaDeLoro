@@ -40,11 +40,11 @@ export class DialogventaComponent implements OnInit {
       
 
       } else {        
-        Promise.resolve().then(() =>{
-          this.limpiar()
-        }) 
+        
       }
-      
+      Promise.resolve().then(() =>{
+        this.limpiar()
+      }) 
       
     //  this.dialogRef.close("salgoooooooooo")     
     })
