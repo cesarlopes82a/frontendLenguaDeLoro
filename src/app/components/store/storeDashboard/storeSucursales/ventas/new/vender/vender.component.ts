@@ -301,12 +301,21 @@ export class VenderComponent implements OnInit {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           this.montoEfectivo = this.totalVenta - this.montoTarjeta
+          console.log("/////////////////")
+          console.log(this.listaProdSeleccionados)
           this._ventasService.registrarVenta(this.listaProdSeleccionados, this.totalVenta, this.montoEfectivo, this.montoTarjeta, this.comentarioVenta, this.branchId, this.vendedorId).subscribe({
             next: (v) => {
               console.log("MENSAJE: Respuesta exitosa desde el backend")
               console.log(v)
 
-              Swal.fire('Saved!', '', 'success')
+              //Swal.fire('Saved!', '', 'success')
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Venta registrada exitosamente!!',
+                showConfirmButton: false,
+                timer: 1500
+              }) 
 
               //limpio todo para dejar listo para la procima venta
               this.listaProdSeleccionados.splice(0, this.listaProdSeleccionados.length);
