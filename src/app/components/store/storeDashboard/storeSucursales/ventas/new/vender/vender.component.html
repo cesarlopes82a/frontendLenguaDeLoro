@@ -1,11 +1,11 @@
 
-  <div class="card ">
+  <div class="card">
     <div class="card-header">
         Registro de venta: {{sucursalNombre}}
     </div>
     <div class="card-body">
       
-      <form #ventaForm="ngForm" (ngSubmit)="onSubmit(ventaForm)">
+      <form #ventaForm="ngForm" id="miform" (ngSubmit)="onSubmit(ventaForm)">
 
         <div class="form-row">
             <div class="form-group col-md-2">
@@ -155,7 +155,7 @@
             <div class="container-fluid h-100">
               <div class="row w-100">
                 <div class="col-md-10">
-                  <button class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 || saldoPendiente > 0" (click)="solicitarRegistrarCompra()"> Finalizar venta </button>
+                  <button #confirmVenta id="btnFinalizarVenta" class="btn btn-danger center-block" [disabled]="!ventaForm.form.valid || listaProdSeleccionados.length == 0 || saldoPendiente > 0" (click)="solicitarRegistrarCompra()" > Finalizar venta </button>
                 </div>
                 <div class="col">
                   <button [routerLink]="['/sucursal/' + this.branchId + '/ventas/listar']" [routerLinkActive]="['actived']" class="btn btn-outline-danger" > Volver </button>

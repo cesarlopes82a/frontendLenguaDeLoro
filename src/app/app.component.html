@@ -11,7 +11,7 @@
         <router-outlet></router-outlet>
     </mat-sidenav-content>
     -->
-   
+   <!--
     <mat-sidenav-container [inputSideNav]="sideNav">
         <mat-sidenav #sideNav mode="side" opened>
             <app-sidebar ></app-sidebar>
@@ -20,6 +20,11 @@
             <router-outlet [inputSideNav]="sideNav"></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
+-->
 
-
-
+<mat-sidenav-container [inputSideNav]="sideNav">
+    <mat-sidenav #sideNav mode="side" opened>
+        <app-sidebar ></app-sidebar>
+    </mat-sidenav>
+    <router-outlet ></router-outlet>
+</mat-sidenav-container>

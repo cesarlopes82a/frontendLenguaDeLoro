@@ -79,6 +79,8 @@ export class DialogventaComponent implements OnInit {
   }
   
   addProduct(codigo: string){
+  //  var aux=document.getElementById('btnFinalizarVenta').focus();
+    
     console.log("---------")
     console.log(codigo)
     if(this.cantProductos !=0 ){

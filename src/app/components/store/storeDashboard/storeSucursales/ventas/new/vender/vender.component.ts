@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListadepreciosService } from '../../../../../../../services/listadeprecios.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,6 +27,7 @@ export interface prodSeleccionadoVta {
   ]
 })
 export class VenderComponent implements OnInit {
+  @ViewChild('confirmVenta') confirmVenta!: ElementRef;
   public sucursalNombre = String(localStorage.getItem('itemMenuSeleccionado'))
   public vendedorName!: string;
   public vendedorRole!: string;
@@ -188,6 +189,11 @@ export class VenderComponent implements OnInit {
         console.log("desaccccccs")
       }
       
+      console.log("############################FOCUS")
+
+      this.confirmVenta.nativeElement.focus();
+      
+      
       
     });
   }
@@ -256,15 +262,7 @@ export class VenderComponent implements OnInit {
 
 
   onSubmit(form: any){
-    console.log("los prodddddddddddddddddddddddd")
-    console.log(this.listaProdSeleccionados)
-    console.log(this.listaProdSeleccionados.length)
-    for (let [index, lista] of this.listaProdSeleccionados.entries()) {
-      console.log(lista)
-  
-
-    console.log("onsubmitttttttttt")
-    }
+   
   }
   solicitarRegistrarCompra(){
 
@@ -328,7 +326,8 @@ export class VenderComponent implements OnInit {
       
               //--------------------------------------------
               
-                      
+
+            //  var input = Document.getElementById("btnFinalizarVenta").focus();
             },
             error: (e) => console.error(e),
             complete: () => console.info('complete') 
@@ -341,5 +340,6 @@ export class VenderComponent implements OnInit {
       
     }
   }
+
 
 }
