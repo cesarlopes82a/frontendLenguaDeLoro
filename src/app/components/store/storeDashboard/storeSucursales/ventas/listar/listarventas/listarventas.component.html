@@ -34,6 +34,10 @@
                     <button type="submit" class="btn btn-primary" (click)="aplicarFiltro()">Filtrar</button>
                 </div>
                 <div class="col-md-2">
+                    <button mat-raised-button class="text-secondary bg-warning" (click)="openDialogGraphVenta()">graficar<mat-icon> bar_chart</mat-icon></button>
+                    
+                </div>
+                <div class="col-md-2">
                     <mat-form-field appearance="fill">
                         <mat-label>Vendedor</mat-label>
                         <mat-select [(value)]="selectedUser" >
@@ -41,8 +45,11 @@
                           <mat-option [value]="option._id" *ngFor="let option of usrsFoundEnVentas">{{ option.username}}</mat-option>
                           
                         </mat-select>
-                      </mat-form-field>
+                    </mat-form-field>
+                      
                 </div>
+                
+                
 
                 
             </div>

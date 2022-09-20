@@ -93,6 +93,7 @@ import { EditarProductov2Component } from './components/store/storeDashboard/sto
 import { RubrosComponent } from './components/store/storeDashboard/storeRubros/main/rubros/rubros.component';
 import { NuevorubroComponent } from './components/store/storeDashboard/storeRubros/dialogs/nuevorubro/nuevorubro.component';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { DialographvtasComponent } from './components/store/storeDashboard/storeSucursales/ventas/listar/listarventas/dialographvtas/dialographvtas.component';
 
 
 
@@ -153,7 +154,8 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
     EstadistTiendaComponent,
     EditarProductov2Component,
     RubrosComponent,
-    NuevorubroComponent
+    NuevorubroComponent,    
+    DialographvtasComponent
     
   ],
   imports: [

@@ -135,7 +135,7 @@ export class StockComponent implements OnInit {
               }
               if(transaction.prodId == this.branchFullInfo.stock[i].product._id){
                 let objAjuste = {
-                  //fechaAjuste: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                  //fechaAjuste: new Date().toLocaleDateString().slice(0, 19).replace('T', ' '),
                   fechaAjuste: new Date().toISOString().slice(0, 19).replace('T', ' '),
                   accion: "Se ajusta stock de mercaderias - Valor: " + this.branchFullInfo.stock[i].cantidad + " - NuevoValor: " + `${result}` ,
                   userName: localStorage.getItem("loggedUserName"),

@@ -3,8 +3,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { VentasService } from 'src/app/services/ventas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
+
 import {FormGroup, FormControl} from '@angular/forms';
 import Swal from 'sweetalert2'
+import { DialographvtasComponent } from './dialographvtas/dialographvtas.component';
 
 
 export class TableExpandableRowsExample {
@@ -58,8 +61,14 @@ export class ListarventasComponent implements OnInit {
   public totalVtasPendienteCobro:number =0
   public fechaActual =  new Date().toISOString().slice(0, 19).replace('T', ' ')
   dataSource!: MatTableDataSource<any>;
+  /*
   public startDate:string = new Date().toISOString().split('T')[0];
   public endDate:string = new Date().toISOString().split('T')[0];
+  */
+  public date = new Date(); // Or the date you'd like converted.
+  public startDate:string =new Date(this.date.getTime() - (this.date.getTimezoneOffset() * 60000)).toISOString();
+  public endDate:string = new Date(this.date.getTime() - (this.date.getTimezoneOffset() * 60000)).toISOString();
+  
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),
@@ -74,7 +83,8 @@ export class ListarventasComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router,
     public _ventasService:VentasService,
-    private cd:ChangeDetectorRef
+    private cd:ChangeDetectorRef,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -87,14 +97,30 @@ export class ListarventasComponent implements OnInit {
     
   }
   eliminarProducto(transaction:any){
- 
-    console.log("qwewq")
 
   }
 
+  openDialogGraphVenta(){
+    const dialogRef = this.dialog.open(DialographvtasComponent,{
+      width:'70%',
+      height:'70%',
+      data:{
+        'listaSeleccionada':this.dataSource,
+      }  
+    }); 
+   
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if(`${result}` == "close"){
+        console.log("cierrrooo")
+      }
+      
+    });
+  }
+
   aplicarFiltro(){
-    let startDate:string = new Date(this.startDate).toISOString().split('T')[0];
-    let endDate:string = new Date(this.endDate).toISOString().split('T')[0];
+    let startDate:string = new Date(this.startDate).toLocaleDateString().split('T')[0];
+    let endDate:string = new Date(this.endDate).toLocaleDateString().split('T')[0];
 
     console.log("*****----------******")
     console.log(startDate)
@@ -102,7 +128,7 @@ export class ListarventasComponent implements OnInit {
 
     let ELEMENT_DATA: any[] = []
     for (let i=0; i<this.ventasByBranchId.length; i++) {    
-      let fechaVta:string = new Date(this.ventasByBranchId[i].fechaDeVta).toISOString().split('T')[0];
+      let fechaVta:string = new Date(this.ventasByBranchId[i].fechaDeVta).toLocaleDateString().split('T')[0];
 
 
       if((fechaVta >= startDate && fechaVta <= endDate) && (this.selectedUser=="Todos" || this.selectedUser == this.ventasByBranchId[i].userId._id)){
@@ -123,20 +149,21 @@ export class ListarventasComponent implements OnInit {
         }
 
           /*
-          anulada: false,
-          anuladaPor: "",
-          anuladaFecha: this.fechaActual
-          }
-          if(this.ventasByBranchId[i].anulada){
-            VentaELEMENT_DATA.anulada =  this.ventasByBranchId[i].anulada.anulada,
-            VentaELEMENT_DATA.anuladaPor = this.ventasByBranchId[i].anulada.anuladaPor,
-            VentaELEMENT_DATA.anuladaFecha = this.ventasByBranchId[i].anulada.anuladaFecha
-          }
+            [
+              {
+                "name": "Germany",
+                "value": 40632,
+                "extra": {
+                  "code": "de"
+                }
+              },
           */
+
 
         ELEMENT_DATA.push(VentaELEMENT_DATA) 
       }
     }
+
 
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.getTotalVentas()

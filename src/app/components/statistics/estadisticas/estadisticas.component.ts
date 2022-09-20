@@ -106,13 +106,11 @@ export class EstadisticasGlobalComponent implements OnInit {
   }
 
   updateData2(){
-    console.log("2222222222222222" + this.yearVentas)
     const userId = this._authService.getDecodedAccessToken(String(this._authService.getToken())).id
     this.getVentasForStatistics1(userId)
 
   }
   
-
   getVentasForStatistics1 = async (userId:string) => {
     console.log("MENSAJE: Obteniendo VentasForStatistics para userId: " +userId + "year:" +this.yearVentas )
     this._ventasService.getVentasForStatistics1(userId, this.yearVentas)

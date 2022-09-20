@@ -58,9 +58,16 @@ export class ComprasComponent implements OnInit {
   public quieroEliminarEsteRegistro!:string;
   public sucursalNombre!: string
   public totalCompras!: number
+/*
+  public startDate:string = this.formato(new Date().toLocaleDateString().split('T')[0])
+  public endDate:string = this.formato(new Date().toLocaleDateString().split('T')[0]);
+  */
+  //public startDate:string = this.formato(new Date().toLocaleDateString().split('T')[0])
+  public date = new Date(); // Or the date you'd like converted.
+  public startDate:string =new Date(this.date.getTime() - (this.date.getTimezoneOffset() * 60000)).toISOString();
+  public endDate:string = new Date(this.date.getTime() - (this.date.getTimezoneOffset() * 60000)).toISOString();
 
-  public startDate:string = new Date().toISOString().split('T')[0];
-  public endDate:string = new Date().toISOString().split('T')[0];
+
   range = new UntypedFormGroup({
     start: new UntypedFormControl(),
     end: new UntypedFormControl(),
@@ -84,6 +91,14 @@ export class ComprasComponent implements OnInit {
     )
 
     this.getComprasByBranchAndPopulateInfo(this.branchId)
+
+  }
+
+  formato(texto:string){
+    
+      var info = texto.split('/').reverse().join('-');
+      return info;
+ 
   }
 
   async getComprasByBranchAndPopulateInfo(branchId:string){
@@ -133,6 +148,7 @@ export class ComprasComponent implements OnInit {
 
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         this.getTotalCompras()
+        this.aplicarFiltro()
 
       }
     })
@@ -157,12 +173,14 @@ export class ComprasComponent implements OnInit {
   }
   aplicarFiltro(){
 
-    let startDate:string = new Date(this.startDate).toISOString().split('T')[0];
-    let endDate:string = new Date(this.endDate).toISOString().split('T')[0];
+    let startDate:string = new Date(this.startDate).toLocaleDateString().split('T')[0];
+    let endDate:string = new Date(this.endDate).toLocaleDateString().split('T')[0];
+
+
 
     let ELEMENT_DATA: any[] = []
     for (let i=0; i<this.comprasByBranchAndPopulatedInfo.length; i++) {
-      let fechaVta:string = new Date(this.comprasByBranchAndPopulatedInfo[i].fechaDeCompra).toISOString().split('T')[0];
+      let fechaVta:string = new Date(this.comprasByBranchAndPopulatedInfo[i].fechaDeCompra).toLocaleDateString().split('T')[0];
 
       if((fechaVta >= startDate && fechaVta <= endDate) && (this.proveedorSelected=="Todos" || this.proveedorSelected == this.comprasByBranchAndPopulatedInfo[i].proveedorId._id)){
 
@@ -292,3 +310,5 @@ export class ComprasComponent implements OnInit {
   
 
 }
+
+
